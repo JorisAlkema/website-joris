@@ -4,6 +4,7 @@ theme = 'hugo-bearcub'
 copyright = '© [Joris Duurt Cornelis Alkema]'
 
 enableRobotsTXT = true
+defaultContentLanguage = 'nl'
 
 # --- ENGLISH CONFIGURATION ---
 [languages.en]
