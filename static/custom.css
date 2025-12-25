@@ -1,0 +1,18 @@
+.lang-tag {
+	font-size: 0.8em;
+	background-color: #eee; /* Light gray background */
+	color: #333;
+	padding: 2px 6px;
+	border-radius: 4px;
+	margin-left: 10px;
+	vertical-align: middle;
+	text-transform: uppercase;
+  }
+  
+  /* Dark mode support if Bearcub uses media queries */
+  @media (prefers-color-scheme: dark) {
+	.lang-tag {
+	  background-color: #444;
+	  color: #fff;
+	}
+  }

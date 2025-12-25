@@ -1,0 +1,46 @@
+{{ define "main" }}
+<main>
+
+  {{ .Content }}
+
+  <ul class="blog-list">
+    {{/* 1. Create an empty slice to hold pages */}}
+    {{ $allPages := slice }}
+
+    {{/* 2. Loop through ALL defined languages (Sites) */}}
+    {{ range .Sites }}
+      {{/* Get regular pages from the 'blog' section of this language */}}
+      {{ $sectionPages := where .RegularPages "Section" "blog" }}
+      {{ $allPages = $allPages | append $sectionPages }}
+    {{ end }}
+
+    {{/* 3. Sort all aggregated pages by Date (newest first) */}}
+    {{ $sortedPages := sort $allPages "Date" "desc" }}
+
+    {{/* 4. The Loop */}}
+    {{ range $sortedPages }}
+    <li>
+      <span>
+        <i>
+          <time datetime='{{ .Date.Format "2006-01-02" }}' pubdate>
+            {{ .Date.Format (default "02 Jan, 2006" .Site.Params.dateFormat) }}
+          </time>
+        </i>
+      </span>
+      
+      <a href="{{ .Permalink }}">
+        {{ .Title }}
+      </a>
+
+      {{/* 5. The Logic: If this post's language is different from the current site's language */}}
+      {{ if ne .Language.Lang $.Language.Lang }}
+        <span class="lang-tag">
+           {{/* Shows '🇳🇱' or '🇬🇧' based on config */}}
+           {{ .Language.LanguageName }} 
+        </span>
+      {{ end }}
+    </li>
+    {{ end }}
+  </ul>
+</main>
+{{ end }}
