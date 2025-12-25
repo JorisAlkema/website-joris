@@ -10,7 +10,7 @@ enableRobotsTXT = true
   languageName = "en-UK 🇬🇧"
   languageCode = "en-gb"
   contentDir = "content"
-  weight = 1
+  weight = 2
 
   # English Menu
   [[languages.en.menu.main]]
@@ -44,7 +44,7 @@ enableRobotsTXT = true
   languageName = "NL 🇳🇱"
   languageCode = "nl-nl"
   contentDir = "content.nl"
-  weight = 2
+  weight = 1
 
   # Dutch Menu (Translated!)
   [[languages.nl.menu.main]]
