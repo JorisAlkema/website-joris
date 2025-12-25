@@ -1,7 +1,7 @@
 baseURL = 'https://jorisalkema.nl/'
 languageCode = 'en-us'
 title = "ᕕ( ᐛ )ᕗ Joris's website"
-theme = 'hugo-bearblog'
+theme = 'hugo-bearcub'
 copyright = '© [Joris Duurt Cornelis Alkema]'
 
 # BearBlog specific settings
