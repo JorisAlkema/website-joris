@@ -5,7 +5,9 @@ date = "2025-12-25T15:44:04+01:00"
 tags = ["travel", "motorcycle"]
 +++
 
-August 2025 I went on solo motorcycle vacation to Norway for 8 days. While I did document this on Polarsteps, I myself really prefer anything in plain-text format. It will mostly be a travel blog, with a short list of tips (dervied from faults I made) for (any) motorcycle trip.
+August 2025 I went on solo motorcycle vacation to Norway for 8 days. While I did document this on Polarsteps, I myself really prefer anything in plain-text format. It will mostly be a travel blog, with a short list of tips (derived from faults I made) for (any) motorcycle trip.
+
+{{< figure src="/images/motor.jpg" caption="My pretty cb500x 2019" >}}
 
 **Roads**
 I got some insider tips from someone I met in Hirthals who lives in Hagesund. Which totally changed my experience. In no specific order:
@@ -22,6 +24,8 @@ I got some insider tips from someone I met in Hirthals who lives in Hagesund. Wh
 - If you are in good cardiovascular shape, this hike will be very easy. Can be done on sneakers. I have even seen people carrying hiking pole's, which is nonsense.
 - Can be done in 3hrs with a 45min break at the top.
 - Parking is very expensive, cheaper for motorcycles. The amenities are very nice, so I don't mind it.
+
+{{< figure src="/images/lysefjorden.jpg" caption="lysefjorden" >}}
 
 Even if you're not going on any sort of hiking vacation, but are in the area, I would still recommend it. Other hikes such as
 - Kjeragbolten
