@@ -19,11 +19,6 @@ defaultContentLanguage = 'nl'
     url = "/"
     weight = 10
   [[languages.nl.menu.main]]
-    identifier = "about"
-    name = "Over mij"
-    url = "/about/"
-    weight = 20
-  [[languages.nl.menu.main]]
     identifier = "resume"
     name = "CV"
     url = "/resume.pdf"
@@ -51,11 +46,6 @@ defaultContentLanguage = 'nl'
     name = "Home"
     url = "/"
     weight = 10
-  [[languages.en.menu.main]]
-    identifier = "about"
-    name = "About"
-    url = "/about/"
-    weight = 20
   [[languages.en.menu.main]]
     identifier = "resume"
     name = "Resume"

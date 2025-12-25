@@ -7,7 +7,7 @@ tags= ["travel", "motorcycle"]
 
 August 2025 I went on solo motorcycle vacation to Norway for 8 days. While I did document this on Polarsteps, I myself really prefer anything in plain-text format. It will mostly be a travel blog, with a short list of tips (derived from faults I made) for (any) motorcycle trip.
 
-{{< figure src="/images/motor.jpg" caption="My pretty cb500x 2019" >}}
+{{< img-responsive src="/images/motor.jpg" caption="My pretty cb500x" >}}
 
 **Roads**
 I got some insider tips from someone I met in Hirthals who lives in Hagesund. Which totally changed my experience. In no specific order:
@@ -17,15 +17,15 @@ I got some insider tips from someone I met in Hirthals who lives in Hagesund. Wh
 - Don't take the ferry at kinsarvik, but take the Hardangerbrua.
 - I took the 7 from Bergen to Voss, which is quite nice. But the E16 is probably better.
 
-{{< figure src="/images/lyseboten.jpg" caption="Lyseboten" >}}
+{{< img-responsive src="/images/lyseboten.jpg" caption="Lyseboten" width="100%" >}}
 
 **Preikestolen** I did the ["famous"](https://www.visitnorway.com/places-to-go/fjord-norway/ryfylke/the-lysefjord-area/hiking-to-preikestolen/) hike and wanted to give the following remarks. 
 
 - If you are in good cardiovascular shape, this hike will be very easy. Can be done on sneakers. I have even seen people carrying hiking pole's, which is nonsense.
-- Can be done in 3hrs with a 45min break at the top.
+- Can be done in 3hrs including a 45min break at the top.
 - Parking is very expensive, cheaper for motorcycles. The amenities are very nice, so I don't mind it.
 
-{{< figure src="/images/lysefjorden.jpg" caption="lysefjorden" >}}
+{{< img-responsive src="/images/lysefjorden.jpg" caption="lysefjorden" >}}
 
 Even if you're not going on any sort of hiking vacation, but are in the area, I would still recommend it. Other hikes such as
 - Kjeragbolten

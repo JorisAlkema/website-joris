@@ -1,0 +1,57 @@
+{{ define "main" }}
+  <h1>All Topics</h1>
+
+  {{/* 1. Create a storage map for our merged tags */}}
+  {{ $mergedTags := dict }}
+
+  {{/* 2. Loop through ALL languages (Dutch, English, etc.) */}}
+  {{ range .Site.Sites }}
+    {{ $lang := .Language.Lang }}
+    {{/* Loop through tags in this specific language */}}
+    {{ range $name, $taxonomy := .Taxonomies.tags }}
+      
+      {{/* Get existing data for this tag if we already found it in another language */}}
+      {{ $currentData := index $mergedTags $name }}
+      
+      {{ $newCount := $taxonomy.Count }}
+      {{ $newLink := $taxonomy.Page.RelPermalink }}
+      
+      {{ if $currentData }}
+        {{/* If tag exists, add to count */}}
+        {{ $totalCount := add (index $currentData "count") $newCount }}
+        
+        {{/* If the tag belongs to the CURRENT language (the one the user is viewing), prefer that link */}}
+        {{ $bestLink := index $currentData "link" }}
+        {{ if eq $lang $.Language.Lang }}
+             {{ $bestLink = $newLink }}
+        {{ end }}
+
+        {{/* Update the map */}}
+        {{ $mergedTags = merge $mergedTags (dict $name (dict "count" $totalCount "link" $bestLink)) }}
+      {{ else }}
+        {{/* If tag is new, create it */}}
+        {{ $mergedTags = merge $mergedTags (dict $name (dict "count" $newCount "link" $newLink)) }}
+      {{ end }}
+      
+    {{ end }}
+  {{ end }}
+
+  {{/* 3. Render the Merged List */}}
+  <ul>
+    {{/* We must extract keys to sort them alphabetically */}}
+    {{ range $name, $data := $mergedTags }}
+       {{ $.Scratch.Add "tagNames" (slice $name) }}
+    {{ end }}
+    
+    {{/* Sort the names and loop through them */}}
+    {{ range sort ($.Scratch.Get "tagNames") }}
+      {{ $data := index $mergedTags . }}
+      <li>
+        <a href="{{ index $data "link" }}">
+           {{ . }} </a>
+        <small>({{ index $data "count" }})</small>
+      </li>
+    {{ end }}
+  </ul>
+
+{{ end }}

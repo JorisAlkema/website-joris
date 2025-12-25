@@ -28,7 +28,7 @@ Een paar cocktails later zag onze blonde Prins Joris een soortgenoot. Ja ja, een
 
 Inmiddels 12 uur. Oogjes dicht, snaveltjes toe. Al met al een geslaagde eerste dag!!
 
-{{< figure src="/images/dag1.jpg" caption="Het team" >}}
+{{< img-responsive src="/images/dag1.jpg" caption="Het team" >}}
 
 ## 17 Augustus ~ Dag 2
 
@@ -79,7 +79,7 @@ Moe maar voldaan besloten de mannen horizontaal te gaan omdat morgen de digitale
 Dag 2 was een groot succes!
 We kijken uit naar morgen.
 
-{{< figure src="/images/dag2.jpg" caption="Monopoli" >}}
+{{< img-responsive src="/images/dag2.jpg" caption="Monopoli" >}}
 
 ## 18 Augustus ~ Dag 3
 
@@ -130,7 +130,7 @@ Omdat er de volgende ochtend* een auto opgehaald moest worden en we nu echt inge
 Al met al wederom een geslaagde laatste dag in Bari gehad, wat voelen we ons rijk!
 Tot morgen!
 
-{{< figure src="/images/dag3.jpg" caption="Polignano a Mare" >}}
+{{< img-responsive src="/images/dag3.jpg" caption="Polignano a Mare" >}}
 
 ## 19 augustus ~ Dag 4
 
@@ -173,7 +173,7 @@ Met neusjes goed gevuld met cultuur en die van Gijs met snot kunnen we concluder
 
 Tot morgen!
 
-{{< figure src="/images/dag4.jpg"  caption="Matera" >}}
+{{< img-responsive src="/images/dag4.jpg"  caption="Matera" >}}
 
 ## 20 Augustus ~ Dag 5
 
@@ -223,7 +223,7 @@ Eenmaal thuis realiseerden we dat er nog één ding ontbrak aan de dag. En dat w
 
 Tot morgen!
 
-{{< figure src="/images/dag5.jpg" caption="Snikheet in de metro" >}}
+{{< img-responsive src="/images/dag5.jpg" caption="Snikheet in de metro" >}}
 
 ## 21 August ~ Dag 6
 
@@ -260,7 +260,7 @@ Rechter oog linker bal vertrokken de mannen van de bar. Behalve Ydo, die bleef n
 Nadat alle mannen herenigt waren, en hadden belooooofd om morgen vroeg op te staan gingen ze op een oor om lekker nog ff uit te draaien.
 Tot morgen!
 
-{{< figure src="/images/dag6.jpg" caption="Napoli pubcrawl." >}}
+{{< img-responsive src="/images/dag6.jpg" caption="Napoli pubcrawl." >}}
 
 ## 22 augustus ~ Dag 7
 
