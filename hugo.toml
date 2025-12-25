@@ -4,6 +4,21 @@ title = "ᕕ( ᐛ )ᕗ Joris's website"
 theme = 'hugo-bearcub'
 copyright = '© [Joris Duurt Cornelis Alkema]'
 
+hideUntranslated = false
+enableRobotsTXT = true
+
+[languages]
+  [languages.en]
+    title = "Bear Cub"
+    languageName = "en-UK 🇬🇧"
+    LanguageCode = "en-UK"
+    contentDir = "content"
+  [languages.pt]
+    title = "Bear Cub"
+    languageName = "NL 🇳🇱"
+    LanguageCode = "nl"
+    contentDir = "content.pt"
+
 # BearBlog specific settings
 [params]
   description = "A minimal blog."
