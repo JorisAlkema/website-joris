@@ -6,41 +6,6 @@ copyright = '© [Joris Duurt Cornelis Alkema]'
 enableRobotsTXT = true
 defaultContentLanguage = 'nl'
 
-# --- ENGLISH CONFIGURATION ---
-[languages.en]
-  languageName = "en-UK 🇬🇧"
-  languageCode = "en-gb"
-  contentDir = "content"
-  weight = 2
-
-  # English Menu
-  [[languages.en.menu.main]]
-    identifier = "home"
-    name = "Home"
-    url = "/"
-    weight = 10
-  [[languages.en.menu.main]]
-    identifier = "about"
-    name = "About"
-    url = "/about/"
-    weight = 20
-  [[languages.en.menu.main]]
-    identifier = "resume"
-    name = "Resume"
-    url = "/resume.pdf"
-    weight = 30
-  [[languages.en.menu.main]]
-    identifier = "blog"
-    name = "Blog"
-    url = "/blog/"
-    weight = 40
-  [[languages.en.menu.main]]
-    identifier = "tags"
-    name = "Tags"
-    url = "/tags/"
-    weight = 50
-
-# --- DUTCH CONFIGURATION ---
 [languages.nl]
   languageName = "NL 🇳🇱"
   languageCode = "nl-nl"
@@ -69,6 +34,39 @@ defaultContentLanguage = 'nl'
     url = "/blog/"
     weight = 40
   [[languages.nl.menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 50
+
+[languages.en]
+  languageName = "en-UK 🇬🇧"
+  languageCode = "en-gb"
+  contentDir = "content"
+  weight = 2
+
+  # English Menu
+  [[languages.en.menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 10
+  [[languages.en.menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 20
+  [[languages.en.menu.main]]
+    identifier = "resume"
+    name = "Resume"
+    url = "/resume.pdf"
+    weight = 30
+  [[languages.en.menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/blog/"
+    weight = 40
+  [[languages.en.menu.main]]
     identifier = "tags"
     name = "Tags"
     url = "/tags/"

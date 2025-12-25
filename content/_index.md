@@ -1,12 +1,12 @@
 ---
 title: "Home"
 ---
-**Hi, I'm Joris Alkema.** 
+**Hoi, ik ben Joris Alkema.**
 
-I am a student and sport fanatic. I currently live in Leiden where I am a last year master student in Computer Science. I am a bad 5K runner and probably a worse swimmer.
+Ik ben student en sportfanaat. Ik woon momenteel in Leiden, waar ik laatstejaars masterstudent Informatica ben. Ik ben een slechte 5km-hardloper en waarschijnlijk een nog slechtere zwemmer.
 
-This blog is mainly to document my life and structure my thoughts, and I have a lot of other intrests i'd like to write about. In practise, this blog will be a mess.
+Deze blog is vooral bedoeld om mijn leven vast te leggen en mijn gedachten te ordenen. Daarnaast heb ik nog veel andere interesses waar ik graag over wil schrijven. In de praktijk zal deze blog waarschijnlijk een rommeltje worden.
 
-I have been working as a freelance system administrator, but rencently have taken on a ML operations / cloud engineering job, and hope to expand into ML engineering in the future as well.
+Ik ben werkzaam geweest als freelance systeembeheerder, maar ben onlangs begonnen als ML Operations / Cloud Engineer. In de toekomst hoop ik door te groeien richting ML Engineering.
 
-Curious about my work? check my [resume](/resume.pdf) for all the nitty-gritty details.
+Nieuwsgierig naar mijn werk? Bekijk mijn [CV](/resume.pdf) voor alle details.
