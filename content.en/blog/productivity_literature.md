@@ -20,5 +20,7 @@ I primarily read non-fiction, and therefore also read some books that are about 
 	- This book was quite an eye-opener for me. It made me realize that time management is a fool's errand, and that trying to do everything is a recipe for unhappiness. I read it after the other books, and I think it broke down a lot of the ideas I had about productivity and time management that I thought were true. I really enjoyed the philosophical approach of the book, and it made me rethink my approach to productivity.
 - **7 Habits of Highly Effective People** by Stephen Covey
 	- I have this book on the to-read list, but have not read it yet. Judging from my new perspective on productivity, I am not sure if I will read it anytime soon. As far as I know, it does seem like quite an overhyped book as well.
+- **Thinking, fast and slow** by Daniel Kahneman
+	- While not strictly a productivity book, it does provide insights into how our minds work, and how we can make better decisions. It is quite dense, and I am about halfway. It is a good book, but I am not sure if I can keep my 'slow thinking' hat on for the entire book.
 
 So yea, read 4000 weeks if you want to rethink your approach to productivity. Read De kunst van Kaizen if you want practical tips on how to build habits. The other books are not worth your time in my opinion.
