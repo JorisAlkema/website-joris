@@ -1,8 +1,8 @@
 +++
-title = "Norway motorcycle vacation"
-date = "2025-12-25T15:44:04+01:00"
+title= "Norway motorcycle vacation"
+date= "2025-12-25T15:44:04+01:00"
 
-tags = ["travel", "motorcycle"]
+tags= ["travel", "motorcycle"]
 +++
 
 August 2025 I went on solo motorcycle vacation to Norway for 8 days. While I did document this on Polarsteps, I myself really prefer anything in plain-text format. It will mostly be a travel blog, with a short list of tips (derived from faults I made) for (any) motorcycle trip.

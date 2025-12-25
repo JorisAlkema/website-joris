@@ -9,7 +9,7 @@ defaultContentLanguage = 'nl'
 [languages.nl]
   languageName = "NL 🇳🇱"
   languageCode = "nl-nl"
-  contentDir = "content.nl"
+  contentDir = "content"
   weight = 1
 
   # Dutch Menu (Translated!)
@@ -42,7 +42,7 @@ defaultContentLanguage = 'nl'
 [languages.en]
   languageName = "en-UK 🇬🇧"
   languageCode = "en-gb"
-  contentDir = "content"
+  contentDir = "content.en"
   weight = 2
 
   # English Menu

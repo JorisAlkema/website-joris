@@ -7,6 +7,6 @@ Ik ben student en sportfanaat. Ik woon momenteel in Leiden, waar ik laatstejaars
 
 Deze blog is vooral bedoeld om mijn leven vast te leggen en mijn gedachten te ordenen. Daarnaast heb ik nog veel andere interesses waar ik graag over wil schrijven. In de praktijk zal deze blog waarschijnlijk een rommeltje worden.
 
-Ik ben werkzaam geweest als freelance systeembeheerder, maar ben onlangs begonnen als ML Operations / Cloud Engineer. In de toekomst hoop ik door te groeien richting ML Engineering.
+Ik ben werkzaam als freelance systeembeheerder, maar ben onlangs ook begonnen als ML Operations / Cloud Engineer. In de toekomst hoop ik ook uit te kunnen breiden richting ML Engineering.
 
 Nieuwsgierig naar mijn werk? Bekijk mijn [CV](/resume.pdf) voor alle details.
