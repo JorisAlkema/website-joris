@@ -1,5 +1,4 @@
 baseURL = 'https://jorisalkema.nl/'
-languageCode = 'en-us'
 title = "ᕕ( ᐛ )ᕗ Joris's website"
 theme = 'hugo-bearcub'
 copyright = '© [Joris Duurt Cornelis Alkema]'
@@ -7,49 +6,74 @@ copyright = '© [Joris Duurt Cornelis Alkema]'
 hideUntranslated = false
 enableRobotsTXT = true
 
-[languages]
-  [languages.en]
-	title = "ᕕ( ᐛ )ᕗ Joris's website"
-    languageName = "en-UK 🇬🇧"
-    LanguageCode = "en-UK"
-    contentDir = "content"
-  [languages.pt]
-	title = "ᕕ( ᐛ )ᕗ Joris's website"
-    languageName = "NL 🇳🇱"
-    LanguageCode = "nl"
-    contentDir = "content.nl"
+# --- ENGLISH CONFIGURATION ---
+[languages.en]
+  languageName = "en-UK 🇬🇧"
+  languageCode = "en-gb"
+  contentDir = "content"
+  weight = 1
 
-# BearBlog specific settings
-[params]
-  description = "A minimal blog."
-
-[menu]
-  [[menu.main]]
+  # English Menu
+  [[languages.en.menu.main]]
     identifier = "home"
     name = "Home"
     url = "/"
     weight = 10
-
-  [[menu.main]]
+  [[languages.en.menu.main]]
     identifier = "about"
     name = "About"
     url = "/about/"
     weight = 20
-
-	[[menu.main]]
-	identifier = "resume"
-	name = "Resume"
-	url = "/resume.pdf"
-	weight = 30
-
-  [[menu.main]]
+  [[languages.en.menu.main]]
+    identifier = "resume"
+    name = "Resume"
+    url = "/resume.pdf"
+    weight = 30
+  [[languages.en.menu.main]]
     identifier = "blog"
     name = "Blog"
     url = "/blog/"
     weight = 40
-
-  [[menu.main]]
+  [[languages.en.menu.main]]
     identifier = "tags"
     name = "Tags"
     url = "/tags/"
     weight = 50
+
+# --- DUTCH CONFIGURATION ---
+[languages.nl]
+  languageName = "NL 🇳🇱"
+  languageCode = "nl-nl"
+  contentDir = "content.nl"
+  weight = 2
+
+  # Dutch Menu (Translated!)
+  [[languages.nl.menu.main]]
+    identifier = "home"
+    name = "Thuis"
+    url = "/"
+    weight = 10
+  [[languages.nl.menu.main]]
+    identifier = "about"
+    name = "Over mij"
+    url = "/about/"
+    weight = 20
+  [[languages.nl.menu.main]]
+    identifier = "resume"
+    name = "CV"
+    url = "/resume.pdf"
+    weight = 30
+  [[languages.nl.menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/blog/"
+    weight = 40
+  [[languages.nl.menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 50
+
+# BearBlog specific settings
+[params]
+  description = "A minimal blog."
