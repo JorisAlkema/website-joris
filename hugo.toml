@@ -9,11 +9,37 @@ copyright = '© [Joris Duurt Cornelis Alkema]'
   description = "A minimal blog."
 
 [menu]
+  # 1. Home (Points to the main page)
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 10
+
+  # 2. About (Points to content/about.md)
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 20
+
+  # 3. Resume (Points to content/resume.md)
+  [[menu.main]]
+    identifier = "resume"
+    name = "Resume"
+    url = "/resume/"
+    weight = 30
+
+  # 4. Blog (Points to the list of all posts)
   [[menu.main]]
     identifier = "blog"
     name = "Blog"
     url = "/blog/"
+    weight = 40
+
+  # 5. Tags (Points to the automatic tag list)
   [[menu.main]]
     identifier = "tags"
     name = "Tags"
     url = "/tags/"
+    weight = 50
