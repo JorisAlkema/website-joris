@@ -1,6 +1,6 @@
 baseURL = 'https://jorisalkema.nl/'
 languageCode = 'en-us'
-title = 'ᕕ( ᐛ )ᕗ Joris's website'
+title = 'Joris's website'
 theme = 'hugo-bearblog'
 copyright = '© [Joris Duurt Cornelis Alkema]'
 
