@@ -1,0 +1,19 @@
+baseURL = 'https://jorisalkema.nl/'
+languageCode = 'en-us'
+title = 'Joris Alkema'
+theme = 'hugo-bearblog'
+copyright = '© [Joris Duurt Cornelis Alkema]'
+
+# BearBlog specific settings
+[params]
+  description = "A minimal blog."
+
+[menu]
+  [[menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/blog/"
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
