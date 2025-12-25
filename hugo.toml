@@ -64,6 +64,6 @@ defaultContentLanguage = 'nl'
 
 # BearBlog specific settings
 [params]
-  description = "A minimal blog."
+  description = "Joris Alkema's personal blog"
 
 disableKinds = ["RSS"]
