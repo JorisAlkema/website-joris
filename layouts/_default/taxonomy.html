@@ -1,0 +1,30 @@
+{{ define "main" }}
+  
+  {{/* 1. Get the current tag name (e.g., 'motor') */}}
+  {{ $currentTag := .Data.Term }}
+  
+  <h1>Tag: {{ .Title }}</h1>
+
+  <ul>
+    {{/* 2. Loop through ALL languages (Dutch, English, etc.) */}}
+    {{ range .Site.Sites }}
+      
+      {{/* 3. Check if this language has the tag we are looking for */}}
+      {{ with index .Taxonomies.tags $currentTag }}
+        
+        {{/* 4. If found, list the pages from this language */}}
+        {{ range .Pages }}
+          <li>
+            <span style="text-transform: uppercase; font-size: 0.8em; color: #666;">
+                [{{ .Language.LanguageName }}]
+            </span>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            <time>{{ .Date.Format "2006-01-02" }}</time>
+          </li>
+        {{ end }}
+
+      {{ end }}
+    {{ end }}
+  </ul>
+
+{{ end }}

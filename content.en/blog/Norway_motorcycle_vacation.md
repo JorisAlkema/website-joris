@@ -1,6 +1,6 @@
 +++
 title= "Norway motorcycle vacation"
-date= "2025-12-25T15:44:04+01:00"
+date= "2025-08-26T15:44:04+01:00"
 
 tags= ["travel", "motorcycle"]
 +++
@@ -25,7 +25,7 @@ I got some insider tips from someone I met in Hirthals who lives in Hagesund. Wh
 - Can be done in 3hrs including a 45min break at the top.
 - Parking is very expensive, cheaper for motorcycles. The amenities are very nice, so I don't mind it.
 
-{{< img-responsive src="/images/lysefjorden.jpg" caption="lysefjorden" >}}
+{{< img-responsive src="/images/lysefjorden.jpg" caption="Lysefjorden" >}}
 
 Even if you're not going on any sort of hiking vacation, but are in the area, I would still recommend it. Other hikes such as
 - Kjeragbolten
