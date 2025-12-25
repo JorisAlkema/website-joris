@@ -24,7 +24,7 @@ copyright = '© [Joris Duurt Cornelis Alkema]'
 	[[menu.main]]
 	identifier = "resume"
 	name = "Resume"
-	url = "/files/cv-joris-alkema-dec-2025.pdf"
+	url = "/resume.pdf"
 	weight = 30
 
   [[menu.main]]
