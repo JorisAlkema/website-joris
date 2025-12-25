@@ -130,7 +130,7 @@ Omdat er de volgende ochtend* een auto opgehaald moest worden en we nu echt inge
 Al met al wederom een geslaagde laatste dag in Bari gehad, wat voelen we ons rijk!
 Tot morgen!
 
-{{< figure src="/images/dag4.jpg" caption="Polignano a Mare" >}}
+{{< figure src="/images/dag3.jpg" caption="Polignano a Mare" >}}
 
 ## 19 augustus ~ Dag 4
 
