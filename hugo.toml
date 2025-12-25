@@ -9,15 +9,15 @@ enableRobotsTXT = true
 
 [languages]
   [languages.en]
-    title = "Bear Cub"
+	title = "ᕕ( ᐛ )ᕗ Joris's website"
     languageName = "en-UK 🇬🇧"
     LanguageCode = "en-UK"
     contentDir = "content"
   [languages.pt]
-    title = "Bear Cub"
+	title = "ᕕ( ᐛ )ᕗ Joris's website"
     languageName = "NL 🇳🇱"
     LanguageCode = "nl"
-    contentDir = "content.pt"
+    contentDir = "content.nl"
 
 # BearBlog specific settings
 [params]

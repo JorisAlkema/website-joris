@@ -9,4 +9,4 @@ This blog is mainly to document my life and structure my thoughts, and I have a 
 
 I have been working as a freelance system administrator, but rencently have taken on a ML operations / cloud engineering job, and hope to expand into ML engineering in the future as well.
 
-Curious about my work? check my resume for all the nitty-gritty details.
+Curious about my work? check my [resume](/resume.pdf) for all the nitty-gritty details.
