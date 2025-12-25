@@ -3,7 +3,6 @@ title = "ᕕ( ᐛ )ᕗ Joris's website"
 theme = 'hugo-bearcub'
 copyright = '© [Joris Duurt Cornelis Alkema]'
 
-hideUntranslated = false
 enableRobotsTXT = true
 
 # --- ENGLISH CONFIGURATION ---
