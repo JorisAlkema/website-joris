@@ -1,12 +1,12 @@
 +++
 date = '2025-12-25T23:04:26+01:00'
-title = 'Productivity_literature'
+title = 'My productivity literature review'
 tags = ['reading']
 +++
 
 I primarily read non-fiction, and therefore also read some books that are about productivity, habits, and you could say fall into the dreaded 'self-help' category. I find some books better than others, and I thought it would be nice to make a list and give a reason why I think some books are worth reading.
 
-{{< img-responsive src="/images/books.jpg" caption="Cover image of books in this blog post - generated with Nano Banana Pro" width="100%" >}}
+{{< img-responsive src="/images/books.jpg" caption="Cover image of books in this blog post - generated with Nano Banana Pro" width="80%" >}}
 
 - **Atomic Habits** by James Clear
 	- I believe this book to be quite overhyped. Most of its actually useful content can be summarized a few pages. However, it does a good job of explaining how habits work, and gives some practical tips on how to build good habits and break bad ones. For me, it did not provide any insights into how one can actually **do the work**, but rather how to set up your life in a way that makes it easier.
