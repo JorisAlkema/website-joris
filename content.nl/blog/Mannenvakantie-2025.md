@@ -28,7 +28,7 @@ Een paar cocktails later zag onze blonde Prins Joris een soortgenoot. Ja ja, een
 
 Inmiddels 12 uur. Oogjes dicht, snaveltjes toe. Al met al een geslaagde eerste dag!!
 
-{{< figure src="/images/dag1-bari.jpg" caption="Het team" >}}
+{{< figure src="/images/dag1.jpg" caption="Het team" >}}
 
 ## 17 Augustus ~ Dag 2
 

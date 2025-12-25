@@ -76,3 +76,5 @@ enableRobotsTXT = true
 # BearBlog specific settings
 [params]
   description = "A minimal blog."
+
+disableKinds = ["RSS"]

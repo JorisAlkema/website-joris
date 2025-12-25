@@ -2,14 +2,6 @@
 title = "Norway motorcycle vacation"
 date = "2025-12-25T15:44:04+01:00"
 
-#
-# description is optional
-#
-# description = "An optional description for SEO. If not provided, an automatically created summary will be used."
-# ![A beautiful sunset](/images/sunset.jpg)
-# beter: {{< figure src="/images/sunset.jpg" title="The Golden Hour" caption="I took this photo in The Hague." >}}
-#
-
 tags = ["travel", "motorcycle"]
 +++
 
@@ -23,6 +15,7 @@ I got some insider tips from someone I met in Hirthals who lives in Hagesund. Wh
 - Don't take the ferry at kinsarvik, but take the Hardangerbrua.
 - I took the 7 from Bergen to Voss, which is quite nice. But the E16 is probably better.
 
+{{< figure src="/images/lyseboten.jpg" caption="Lyseboten" >}}
 
 **Preikestolen** I did the ["famous"](https://www.visitnorway.com/places-to-go/fjord-norway/ryfylke/the-lysefjord-area/hiking-to-preikestolen/) hike and wanted to give the following remarks. 
 
@@ -37,8 +30,8 @@ Even if you're not going on any sort of hiking vacation, but are in the area, I 
 
 Are all considerably more challenging and need some planning. Preikestolen gets you 80% of the fun, for 20% of the work :)
 
-Finally, without any specific order, a list of mistakes and tips I made on this vacation because I was young (just turned 22) and stupid:
+Finally, without any specific order, a list of mistakes I made on this vacation because I was young (just turned 22) and stupid, and some tips:
 - Norway is quite wet late August. Plan accordingly, I did not. 
-- Note that a motorcycle chain wears (and stretches) faster at the end of its lifespan. For goodnes's sake, go with fresh tires and a properly serviced clutch and chain. 
+- Note that a motorcycle chain wears (and stretches) faster at the end of its lifespan. For goodness's sake, go with fresh tires and a properly serviced clutch and chain. 
 - While some ferry's run quite frequently, others do not. Check the schedule beforehand.
 - Sign up for a [AutoPass](https://www.autopass.no/en/) account to make tolls easier.
