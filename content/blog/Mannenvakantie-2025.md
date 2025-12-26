@@ -4,6 +4,9 @@ date: 2025-08-25
 draft: false
 description: "Het verslag van de legendarische mannenvakantie in Italië."
 tags: ["travel"]
+build:
+  list: never
+  render: always
 ---
 
 Ja ja het is zover!!
