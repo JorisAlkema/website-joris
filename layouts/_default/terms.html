@@ -1,5 +1,5 @@
 {{ define "main" }}
-  <h1>All Topics</h1>
+  <h1>{{ if eq .Language.Lang "nl" }}Alle onderwerpen{{ else }}All Topics{{ end }}</h1>
 
   {{/* 1. Create a storage map for our merged tags */}}
   {{ $mergedTags := dict }}
@@ -44,13 +44,15 @@
     {{ end }}
     
     {{/* Sort the names and loop through them */}}
-    {{ range sort ($.Scratch.Get "tagNames") }}
+    {{ range sort (default (slice) ($.Scratch.Get "tagNames")) }}
       {{ $data := index $mergedTags . }}
       <li>
         <a href="{{ index $data "link" }}">
            {{ . }} </a>
         <small>({{ index $data "count" }})</small>
       </li>
+    {{ else }}
+      <li>{{ if eq .Language.Lang "nl" }}Nog geen onderwerpen.{{ else }}No topics yet.{{ end }}</li>
     {{ end }}
   </ul>
 

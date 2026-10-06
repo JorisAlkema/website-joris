@@ -5,6 +5,7 @@ copyright = '© [Joris Duurt Cornelis Alkema]'
 
 enableRobotsTXT = true
 defaultContentLanguage = 'nl'
+disableKinds = ['rss']
 
 [languages.nl]
   languageName = "NL 🇳🇱"
@@ -48,7 +49,7 @@ defaultContentLanguage = 'nl'
     weight = 10
   [[languages.en.menu.main]]
     identifier = "resume"
-    name = "Resume"
+    name = "CV"
     url = "/resume.pdf"
     weight = 30
   [[languages.en.menu.main]]
@@ -64,6 +65,4 @@ defaultContentLanguage = 'nl'
 
 # BearBlog specific settings
 [params]
-  description = "Joris Alkema's personal blog"
-
-disableKinds = ["RSS"]
+  description = "Joris Alkema — cloud, platform and MLOps engineering, network science research, and personal writing."

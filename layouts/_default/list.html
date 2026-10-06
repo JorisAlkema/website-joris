@@ -1,6 +1,4 @@
 {{ define "main" }}
-<main>
-
   {{ .Content }}
 
   <ul class="blog-list">
@@ -40,7 +38,8 @@
         </span>
       {{ end }}
     </li>
+    {{ else }}
+    <li>{{ if eq .Language.Lang "nl" }}Er staan momenteel geen openbare blogposts online.{{ else }}There are no public blog posts at the moment.{{ end }}</li>
     {{ end }}
   </ul>
-</main>
 {{ end }}
