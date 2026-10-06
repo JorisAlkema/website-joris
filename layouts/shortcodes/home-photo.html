@@ -1,0 +1,12 @@
+{{- $photo := resources.Get "images/joris-hiking.jpg" -}}
+{{- $small := $photo.Resize "640x webp q85" -}}
+{{- $large := $photo.Resize "1280x webp q85" -}}
+<figure style="margin: 1.5rem auto; max-width: 480px;">
+  <img src="{{ $small.RelPermalink }}"
+       srcset="{{ $small.RelPermalink }} 640w, {{ $large.RelPermalink }} 1280w"
+       sizes="(min-width: 520px) 480px, calc(100vw - 40px)"
+       width="{{ $small.Width }}" height="{{ $small.Height }}"
+       alt="{{ .Get "alt" }}"
+       decoding="async" fetchpriority="high"
+       style="display: block; width: 100%; height: auto;">
+</figure>
