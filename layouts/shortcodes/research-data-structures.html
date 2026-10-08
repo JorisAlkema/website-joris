@@ -1,0 +1,17 @@
+<figure class="data-structures" aria-labelledby="structures-heading">
+  <div class="figure-heading" id="structures-heading">02 · The working state, side by side</div>
+  <div class="structure-scroll" tabindex="0" role="region" aria-label="Three data-structure tables; scroll horizontally on a narrow screen">
+    <div class="structure-tables">
+      <div><h3>Node arrays</h3><table><thead><tr><th>Node</th><th>Degree</th><th>Triangles</th></tr></thead><tbody>
+        <tr><td>a</td><td>2</td><td>1</td></tr><tr><td>d</td><td>1</td><td>0</td></tr><tr><td>w</td><td>3</td><td>1</td></tr><tr><td>x</td><td>2</td><td>1</td></tr>
+      </tbody></table></div>
+      <div><h3>Class-count map</h3><table><thead><tr><th>Signature</th><th>Size</th></tr></thead><tbody>
+        <tr><td>(2, 1)</td><td>2</td></tr><tr><td>(1, 0)</td><td>1</td></tr><tr><td>(3, 1)</td><td>1</td></tr>
+      </tbody></table></div>
+      <div><h3>Edge-score cache</h3><table><thead><tr><th>Edge</th><th>ΔU</th></tr></thead><tbody>
+        <tr><td>w–a</td><td>−2</td></tr><tr><td>a–x</td><td>−1</td></tr><tr><td>w–x</td><td>−2</td></tr><tr><td>w–d</td><td>−1</td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+  <figcaption>A four-node example with edges w–a, a–x, w–x, and w–d. The arrays describe each node; the map counts matching signatures; the cache stores the predicted change in unique nodes. A score of −2 means two fewer unique nodes.</figcaption>
+</figure>

@@ -1,0 +1,5 @@
+{{- $number := .Get "number" -}}
+<section class="algorithm" aria-labelledby="algorithm-{{ $number }}-title">
+  <div class="algorithm-header"><span class="algorithm-index" aria-hidden="true">{{ $number }}</span><p class="code-label" id="algorithm-{{ $number }}-title">{{ .Get "title" }}</p><span class="algorithm-kind">Pseudocode</span></div>
+  {{ transform.Highlight (trim .Inner "\n\r") "python" "noClasses=false,lineNos=inline" | replaceRE `<span class="ln">` `<span class="ln" aria-hidden="true">` | safeHTML }}
+</section>

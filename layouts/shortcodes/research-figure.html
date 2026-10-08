@@ -1,0 +1,9 @@
+{{- $desktop := .Page.Resources.Get (.Get "src") -}}
+{{- $mobile := .Page.Resources.Get (.Get "mobile") -}}
+<figure class="wide-figure">
+  <picture{{ if in (slice "assets/data-structures.svg" "assets/class-targeted.svg" "assets/results.svg") (.Get "src") }} class="readable-diagram"{{ end }}>
+    {{- with $mobile }}<source media="(max-width: 650px)" srcset="{{ .RelPermalink }}">{{ end -}}
+    <img src="{{ $desktop.RelPermalink }}" alt="{{ .Get "alt" }}" loading="lazy" style="display:block;width:100%;height:auto;background:transparent;">
+  </picture>
+  <figcaption><p>{{ .Get "caption" }}</p></figcaption>
+</figure>
