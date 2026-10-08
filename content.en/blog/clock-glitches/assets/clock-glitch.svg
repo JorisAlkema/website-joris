@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 224" role="img" aria-labelledby="title desc">
+  <title id="title">A regular clock and a clock with a glitch</title>
+  <desc id="desc">The lower waveform has a short interruption that adds an extra clock edge. The highlighted interval illustrates a timing disturbance, not a measured trace.</desc>
+  <style>
+    :root{--ink:#dce2e9;--muted:#bac3ce;--normal:#9baebe;--glitch:#c2a797;--grid:#414852}
+    @media print{ :root{--ink:#333;--muted:#555;--normal:#586f84;--glitch:#826b60;--grid:#ddd} }
+    text{font-family:system-ui,sans-serif;font-size:16px;fill:var(--muted)}
+    .wave{fill:none;stroke-width:2.5;stroke-linejoin:round}
+  </style>
+  <text x="8" y="64">Normal clock</text>
+  <text x="8" y="151">With a glitch</text>
+  <path d="M150 76H510M150 166H510" fill="none" stroke="var(--grid)" stroke-width="1"/>
+  <path class="wave" stroke="var(--normal)" d="M150 76H175V44H210V76H245V44H280V76H315V44H350V76H385V44H420V76H455V44H490V76H510"/>
+  <rect x="323" y="122" width="25" height="56" rx="4" fill="var(--glitch)" opacity=".16"/>
+  <path class="wave" stroke="var(--normal)" d="M150 166H175V134H210V166H245V134H280V166H315V134H332V166H339V134H350V166H385V134H420V166H455V134H490V166H510"/>
+  <path class="wave" stroke="var(--glitch)" d="M323 134H332V166H339V134H348"/>
+  <path d="M335 180V193" fill="none" stroke="var(--glitch)" stroke-width="1.5"/>
+  <text x="335" y="214" text-anchor="middle" style="fill:var(--glitch)">Extra clock edge</text>
+</svg>
