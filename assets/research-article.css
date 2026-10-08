@@ -1,0 +1,52 @@
+/* Article additions to the existing Bearcub typography and narrow layout. */
+html{font-size:16px;color-scheme:dark}body{box-sizing:border-box;font-size:1.125rem}*{box-sizing:border-box}
+main,article,.prose{min-width:0}h1{font-size:2rem;line-height:1.25;letter-spacing:-.025em}h2{font-size:1.45rem;line-height:1.35;margin:2.2em 0 .8em}h3{font-size:1.15rem;line-height:1.4;margin:1.8em 0 .7em}
+p{line-height:1.7;margin:0 0 1.2em}.article-header{margin-top:2rem}.standfirst{font-size:1.05rem;line-height:1.75}.byline{font-size:.875rem;font-style:normal!important;color:#adb5bd}.intro{margin-top:1.8rem}
+.equation{margin:1.5rem 0;padding:0 0 0 1rem;border-left:1px solid #89939e;overflow-wrap:anywhere}.equation>span{display:block}.equation small{display:block;font-size:.875rem;color:#adb5bd;margin-top:.4rem}
+figure{margin:2.2rem 0 2.5rem}.figure-heading{font-size:.9375rem;line-height:1.5;margin-bottom:.85rem;padding-top:.8rem;border-top:1px solid #414852}.figure-number{font-weight:normal;margin-right:.6rem;color:#adb5bd}.wide-figure img{display:block;width:100%;height:auto;background:transparent;color-scheme:dark}.readable-diagram img{max-width:480px;margin-inline:auto}.wide-figure figcaption{font-size:1rem;line-height:1.65;margin-top:1rem;font-style:normal;color:#bac3ce}
+.search-steps{padding-left:1.5rem}.search-steps li{line-height:1.65;margin:.6rem 0}.publication{border-left:2px solid #414852;margin:1.4rem 0 2.5rem;padding:.15rem 0 .15rem 1rem;color:#adb5bd}.publication h2{font-size:1rem;line-height:1.45;font-weight:500;color:#bac3ce;margin:.35rem 0 .45rem}.publication-label{font-size:.75rem!important;letter-spacing:.06em;text-transform:uppercase}.publication p{font-size:.85rem;line-height:1.55;margin:0 0 .5rem}.publication cite{font-style:normal}.publication-authors{font-size:.8rem!important}.thesis-credit{margin-top:.7rem;font-size:.85rem;line-height:1.55}.thesis-credit summary{cursor:pointer;width:fit-content}.thesis-credit summary:focus-visible{outline:2px solid #8cc2dd;outline-offset:4px}.thesis-credit[open] summary{margin-bottom:.5rem}.thesis-credit p{margin-bottom:0}.publication+p{font-size:1.2rem;line-height:1.65;color:#d5dde5;max-width:58ch}.skip-link{top:5px}footer{font-size:.875rem}
+@media(max-width:650px){body{padding:20px}h1{font-size:1.7rem}h2{font-size:1.35rem}.article-header{margin-top:1.5rem}.publication+p{font-size:1.1rem}}
+figcaption{text-align:left}figcaption>p{text-align:left;font-style:normal;color:inherit}p{hyphens:none}
+
+/* Implementation explanations: native tables and selectable pseudocode. */
+.code-label{font-size:.95rem;font-weight:600;color:#dce2e9;margin:1.6rem 0 .4rem}
+pre{max-width:100%;margin:.4rem 0 1.6rem;overflow:auto;border-block:1px solid #414852;padding:1rem 0;tab-size:4}
+pre code{background:transparent;color:#d4dce5;padding:0;white-space:pre;font-size:.9375rem;line-height:1.65;overflow:visible;display:block;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.structure-scroll{overflow-x:auto;padding-bottom:.5rem}.structure-scroll:focus-visible{outline:2px solid #8cc2dd;outline-offset:4px}
+.structure-tables{display:grid;grid-template-columns:1.05fr 1fr 1fr;gap:1.4rem;min-width:640px}
+.structure-tables h3{font-size:1rem;margin:.6rem 0 1rem;font-weight:600}
+.structure-tables table{font-size:1rem;line-height:1.7;table-layout:auto}
+.structure-tables th,.structure-tables td{border:0;padding:.3rem .25rem;text-align:left;font-variant-numeric:tabular-nums}
+.structure-tables th{border-bottom:1px solid #616873;font-weight:400;font-size:.875rem;color:#bac3ce}
+.structure-tables td:last-child{text-align:right}.structure-tables th:last-child{text-align:right}
+.structure-tables table{border:0}.benchmark-note{font-size:1rem;color:#bac3ce}
+@media print{pre{overflow:visible;border-color:#ddd;break-inside:avoid;padding:.7rem 0}pre code{font-size:8pt;line-height:1.5;color:#333;white-space:pre-wrap;overflow-wrap:anywhere}.code-label{color:#333;break-after:avoid}.structure-scroll{overflow:visible}.structure-tables{min-width:0;gap:1rem}.structure-tables table{font-size:9pt}.structure-tables th{font-size:8pt;color:#555}.structure-tables h3{font-size:10pt}.benchmark-note{color:#555}}
+
+@page{size:A4;margin:16mm}
+@media print{html{font-size:10pt;color-scheme:light}body{max-width:none;padding:0;background:white;color:#333}h1,h2,h3,strong,b{color:#222}a{color:#333}nav,footer,body>header,.skip-link{display:none}.article-header{margin-top:0}.byline,.equation small,.wide-figure figcaption,.publication-label,.figure-number{color:#555}.prose p,.search-steps li{line-height:1.5}h2,h3{break-after:avoid}figure,.equation,.publication{break-inside:avoid}figure{margin:1.4rem 0}.wide-figure img{max-height:300px;object-fit:contain;color-scheme:light}.readable-diagram img{max-height:none;max-width:300px}.figure-heading{font-size:8.5pt;border-top-color:#ddd}.wide-figure figcaption{font-size:8pt}.publication{margin-top:1.5rem;border-top-color:#ccc}.publication h2{font-size:12pt}.publication p{font-size:8.5pt}code{background:#f2f2f2;color:#333}p{orphans:3;widows:3}}
+
+
+/* Reading rhythm and restrained algorithm listings. */
+h1,h2,h3{text-wrap:balance}p{text-wrap:pretty}h2,h3{scroll-margin-top:1.5rem}
+.standfirst,content>p:first-child{font-size:1.2rem;line-height:1.65;color:#d5dde5;max-width:58ch}
+article a,content a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
+article a:focus-visible,content a:focus-visible{outline:2px solid #8cc2dd;outline-offset:3px}
+p code{font-size:.92em;border-radius:3px;background:#282e38;color:#dce2e9;padding:.12em .3em}
+.algorithm{margin:2rem 0 2.2rem;min-width:0}
+.algorithm-header{display:flex;align-items:baseline;gap:.7rem;margin-bottom:.7rem;line-height:1.4}
+.algorithm-index{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.85rem;color:#9ca8b6;font-variant-numeric:tabular-nums}
+.algorithm .code-label{margin:0;font-size:1rem;font-weight:600;line-height:1.4;color:#dce2e9}
+.algorithm-kind{margin-left:auto;font-size:.8rem;white-space:nowrap;color:#a7b4c3}
+.algorithm .highlight{min-width:0}
+.algorithm pre{margin:0;border-block:1px solid #414852;background:#20232c;padding:.9rem 0;overflow:auto;scrollbar-color:#616873 #20232c}
+.algorithm pre:focus-visible{outline:2px solid #8cc2dd;outline-offset:3px}
+.algorithm code{display:block;min-width:max-content;padding-right:1rem;font-size:.9375rem;line-height:1.75;color:#dce2e9;background:transparent;white-space:normal;font-variant-ligatures:none}
+.algorithm .line{display:flex;min-height:1.75em}.algorithm .cl{display:block;flex:1;white-space:pre}
+.algorithm .ln{display:inline-block;flex:0 0 2.8em;width:2.8em;padding:0 .75em 0 .25em!important;margin:0!important;text-align:right;color:#8390a0;font-size:.85em;user-select:none;font-variant-numeric:tabular-nums}
+.algorithm .k,.algorithm .kc,.algorithm .kn,.algorithm .kp,.algorithm .kr,.algorithm .ow{color:#a9c5dd;font-weight:600}
+.algorithm .nf,.algorithm .nb,.algorithm .nc{color:#b5cbbb;font-weight:400}
+.algorithm .m,.algorithm .mi,.algorithm .mf,.algorithm .s,.algorithm .s1,.algorithm .s2{color:#cbbbaa}
+.algorithm .c,.algorithm .c1,.algorithm .cm,.algorithm .cs{color:#a1afbf;font-style:italic}
+.algorithm .o,.algorithm .p{color:#bac5d1}.algorithm .err{background:transparent;color:inherit}
+@media(max-width:650px){.algorithm-kind{display:none}.algorithm code{font-size:.9rem}.standfirst,content>p:first-child{font-size:1.1rem}.algorithm-header{gap:.5rem}}
+@media print{.algorithm{break-inside:avoid;margin:1.2rem 0}.algorithm-header{break-after:avoid;margin-bottom:.4rem}.algorithm .code-label{color:#333;font-size:9pt}.algorithm-index,.algorithm-kind{color:#666}.algorithm pre{background:transparent;border-color:#ddd;overflow:visible;padding:.5rem 0}.algorithm code{font-size:8pt;line-height:1.5;min-width:0;padding-right:0;color:#333}.algorithm .line{min-height:1.5em}.algorithm .cl{white-space:pre-wrap;overflow-wrap:anywhere}.algorithm .ln{color:#777}.algorithm .k,.algorithm .kc,.algorithm .kn,.algorithm .kp,.algorithm .kr,.algorithm .ow{color:#365a75}.algorithm .nf,.algorithm .nb,.algorithm .nc{color:#42604f}.algorithm .c,.algorithm .c1,.algorithm .cm,.algorithm .cs{color:#666}.algorithm .m,.algorithm .mi,.algorithm .mf,.algorithm .s,.algorithm .s1,.algorithm .s2{color:#765c46}.algorithm .o,.algorithm .p{color:#555}p code{color:#333;background:#f2f2f2}}
