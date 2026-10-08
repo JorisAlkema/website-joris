@@ -2,20 +2,27 @@
 title = "Making network anonymization practical"
 date = 2026-10-08
 author = "Joris D.C. Alkema"
+tags = ["network science", "privacy", "algorithms", "optimization"]
 description = "How my MSc thesis and accepted paper developed faster and more effective search for network anonymization."
 draft = false
 style = "research-article.css"
 +++
 
+{{< research-publication >}}
+
 A practical look at speeding up network anonymization: what to update, what to cache, and how to use the time saved to find better solutions.
 
 Suppose someone knows that you have seven contacts, and that three pairs of those contacts also know each other. If only one person in a published network fits that description, removing your name has not done much to hide you.
 
-That was the starting point for my MSc thesis at Leiden University. I studied how to make fewer people stand out in a network by removing a small number of connections.
+This is why sharing network data takes more than removing names. We want researchers to study the connections, while reducing the risk that those connections identify people. [Earlier work](https://cs.colgate.edu/~mhay/assets/publications/hay2008resisting.pdf) studied this risk; the challenge is turning an anonymity model into something we can compute and improve on larger networks.
 
-The work had two connected parts: **avoid the repeated work in the existing algorithm, then use the faster implementation to explore better choices.** The accepted paper is a condensed and refined version of this thesis work. This post follows the project as a whole, from profiling to the search methods that worked best.
+My MSc thesis at Leiden University started with an existing greedy algorithm developed by my supervisor, Prof. Dr. Frank W. Takes, and presented in [joint work with Rachel de Jong and Mark van der Loo](https://arxiv.org/abs/2605.12062). It repeatedly chooses a connection to remove based on the immediate improvement in anonymity. The implementation was available, but slow. I was interested in optimizing it.
 
-The final evaluation gives a 1,907× geometric-mean speedup while preserving greedy’s choices. Adding problem-specific guidance and revisiting earlier choices improves the mean reduction in unique nodes from 73.5% to 85.7%, within the same 5% deletion budget.
+The project developed from there: **avoid repeated work, then use the faster implementation to explore better choices.** Making evaluation cheaper meant I could investigate more search strategies. The broader aim is to make effective network anonymization practical as networks get larger.
+
+Across 17 test networks, the median solver time fell from 17 minutes to under half a second while preserving the greedy algorithm’s choices. Further changes to the search improved the results within the same deletion budget.
+
+This post follows that process, from profiling the original implementation to finding better deletion sets.
 
 The C++ implementation is available in [OptiAnon](https://github.com/JorisAlkema/optianon/tree/paper/2026-fast-effective-search). The pseudocode below leaves out bookkeeping so we can focus on how the methods work.
 
@@ -25,13 +32,15 @@ For each node, we count its neighbours and the triangles it belongs to. A triang
 
 signature = (degree, triangle count) — Degree is the number of neighbours.
 
-Nodes with the same signature belong to the same group. A group with one member makes that node unique. Our objective is to reduce the number of unique nodes while deleting **at most 5% of the original edges**.
+Earlier work by Rachel, Mark, and Frank developed [efficient ways to compare neighbourhood structure](https://doi.org/10.1145/3604908). Here, we use a simpler description: degree and triangle count, matched exactly.
+
+Nodes with the same signature belong to the same group. A group with one member makes that node unique. Our objective is to reduce the number of unique nodes while deleting **at most 5% of the original edges**, following the [budgeted anonymization setting](https://arxiv.org/abs/2409.16163) from their earlier work.
 
 That budget limits how much we change the network. It does not guarantee that every later analysis will be unaffected, or that a person with more detailed knowledge cannot identify someone. It gives us a specific problem we can measure and optimize.
 
 ## First, find the repeated work
 
-I started with a greedy algorithm. At each step, it tries every remaining edge and picks the deletion that gives the best immediate change in the number of unique nodes.
+The reference greedy algorithm tries every remaining edge at each step and picks the deletion that gives the best immediate change in the number of unique nodes.
 
 {{< research-algorithm number="01" title="The reference greedy loop" >}}
 best = current deletion set
@@ -58,7 +67,7 @@ Arrays make those updates straightforward: `degree[node]` and `triangles[node]`.
 
 For uniqueness, the important boundary is a group size of one. Going from two members to one creates a unique node; going from one to two removes one. Going from five to four changes nothing in the unique-node total.
 
-In one thesis profiling example, Arenas email went from about **235 seconds to 127 seconds** after maintaining node counters, then to **2.35 seconds** after maintaining the groups and unique-node count as well. These are timings for that example, rather than the final aggregate benchmark. Avoiding the full-graph scan was the much bigger gain.
+When I profiled the algorithm on the Arenas email network, runtime dropped from about **235 seconds to 127 seconds** after maintaining node counters, then to **2.35 seconds** after maintaining the groups and unique-node count as well. These timings show the effect of each change on that network. Avoiding the full-graph scan was the much bigger gain.
 
 {{< research-data-structures >}}
 
@@ -152,7 +161,7 @@ The implementation still checks candidate dependency lists for changed signature
 
 We also retain the best deletion set seen so far. The budget is a maximum, and later deletions do not necessarily improve uniqueness. Returning the best prefix avoids throwing away an earlier, better result.
 
-On the final 17-network benchmark, FastTracking reproduces greedy’s choices with a **1,907× geometric-mean speedup**. Median solver time drops from 17.0 minutes to 0.447 seconds. The relevant code is in [the cached search](https://github.com/JorisAlkema/optianon/blob/paper/2026-fast-effective-search/src/algorithms/fast_tracking.cpp) and [the graph-state updates](https://github.com/JorisAlkema/optianon/blob/paper/2026-fast-effective-search/src/graph_state.cpp).
+On the final 17-network benchmark, FastTracking reproduces greedy’s choices with a **1,907× geometric-mean speedup**. Median solver time drops from 17.0 minutes to 0.447 seconds.
 
 ## Use the faster loop to explore better choices
 
@@ -163,8 +172,6 @@ There were trade-offs. Shortlisting candidates could save time but miss useful e
 ### Think of signatures as positions
 
 An ego network is a node, its neighbours, and the connections between them. Its signature gives us coordinates: degree on one axis, triangle count on the other. Several nodes at the same position form a shared group; a position occupied by one node marks a unique node.
-
-The thesis used ego-network size and edge count: (1 + degree, degree + triangles). For the paper, we wrote the same grouping directly as (degree, triangles). The coordinates change, but which nodes match does not.
 
 This picture suggests why immediate gain is not the whole story. A node can move once and remain unique, then join a shared group after another deletion. The thesis’s distance analysis also found that nodes closer to another occupied state were more often resolved on the benchmark.
 
@@ -216,7 +223,7 @@ return best
 
 Restoring 80% of the deletion set reopens a substantial part of the solution while preserving some choices. Accepting equally good replacements lets later rounds start from a different set without worsening the current uniqueness count.
 
-The repair step uses the original total budget, including edges still deleted. It does not get another 5% allowance each round. The [LNS implementation](https://github.com/JorisAlkema/optianon/blob/paper/2026-fast-effective-search/src/algorithms/lns.cpp) handles restoration and repair through the same graph-state updates.
+The repair step uses the original total budget, including edges still deleted. It does not get another 5% allowance each round.
 
 CT-LNS reaches a mean uniqueness reduction of **85.7%**. It improves on greedy on 16 of the 17 networks and ties on the remaining one. Its median solver time is 1.160 seconds, with a geometric-mean speedup of 356× over the reference.
 
@@ -232,6 +239,4 @@ There is more to test: richer attacker knowledge, the effect of deletions on lat
 
 The thesis records the broader exploration. The accepted paper condenses and refines the same project around its two main contributions: **an exact speedup, and better edge selection using the state we already maintain.**
 
-You can inspect or build the code from the [paper code tag on GitHub](https://github.com/JorisAlkema/optianon/tree/paper/2026-fast-effective-search). Start with [the graph-state types](https://github.com/JorisAlkema/optianon/blob/paper/2026-fast-effective-search/include/optianon.h), then [the deletion preview](https://github.com/JorisAlkema/optianon/blob/paper/2026-fast-effective-search/src/graph_state.cpp) and [the shared search loop](https://github.com/JorisAlkema/optianon/blob/paper/2026-fast-effective-search/src/algorithms/fast_tracking.cpp).
-
-{{< research-publication >}}
+You can inspect or build the code from the [paper code tag on GitHub](https://github.com/JorisAlkema/optianon/tree/paper/2026-fast-effective-search).
