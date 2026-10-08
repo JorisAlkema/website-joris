@@ -1,9 +1,13 @@
 {{- $desktop := .Page.Resources.Get (.Get "src") -}}
 {{- $mobile := .Page.Resources.Get (.Get "mobile") -}}
+{{- $raster := in (slice "jpeg" "png" "webp") $desktop.MediaType.SubType -}}
+{{- if $raster -}}
+  {{- $desktop = $desktop.Process "webp q90" -}}
+{{- end -}}
 <figure class="wide-figure">
   <picture{{ if in (slice "assets/data-structures.svg" "assets/class-targeted.svg" "assets/results.svg") (.Get "src") }} class="readable-diagram"{{ end }}>
     {{- with $mobile }}<source media="(max-width: 650px)" srcset="{{ .RelPermalink }}">{{ end -}}
-    <img src="{{ $desktop.RelPermalink }}" alt="{{ .Get "alt" }}" loading="lazy" style="display:block;width:100%;height:auto;background:transparent;">
+    <img src="{{ $desktop.RelPermalink }}" alt="{{ .Get "alt" }}" loading="lazy" decoding="async"{{ if $raster }} width="{{ $desktop.Width }}" height="{{ $desktop.Height }}"{{ end }} style="display:block;width:100%;height:auto;background:transparent;">
   </picture>
-  <figcaption><p>{{ .Get "caption" }}</p></figcaption>
+  <figcaption>{{ .Get "caption" | markdownify }}</figcaption>
 </figure>

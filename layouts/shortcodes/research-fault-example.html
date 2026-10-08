@@ -1,0 +1,16 @@
+{{- $input := .Page.Resources.Get "assets/mnist-zero.jpg" -}}
+<figure class="fault-example">
+  <div class="fault-setup">
+    <div class="fault-input">
+      <p>MNIST input</p>
+      <img src="{{ $input.RelPermalink }}" width="104" height="104" alt="MNIST handwritten digit zero." loading="lazy" decoding="async">
+    </div>
+    <div class="fault-calculation">
+      <p>Inside the hidden-layer loop</p>
+      <pre><code><span class="fault-trigger">trigger_high();</span>
+h[j] += w[j * X + i]
+      * input[i];</code></pre>
+    </div>
+  </div>
+  <figcaption>The trigger signals ChipWhisperer before a pixel is multiplied by its weight and added to a neuron’s total. Changing the delay and glitch width targets different moments during execution.</figcaption>
+</figure>
