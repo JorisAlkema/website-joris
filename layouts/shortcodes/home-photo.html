@@ -2,10 +2,10 @@
 {{- $small := $photo.Resize "480x webp q90" -}}
 {{- $medium := $photo.Resize "960x webp q90" -}}
 {{- $large := $photo.Resize "1440x webp q90" -}}
-<figure style="margin: 1.5rem auto; max-width: 480px;">
+<figure style="margin: 1.5rem auto; max-width: 340px;">
   <img src="{{ $small.RelPermalink }}"
        srcset="{{ $small.RelPermalink }} 480w, {{ $medium.RelPermalink }} 960w, {{ $large.RelPermalink }} 1440w"
-       sizes="(min-width: 520px) 480px, calc(100vw - 40px)"
+       sizes="(min-width: 380px) 340px, calc(100vw - 40px)"
        width="{{ $small.Width }}" height="{{ $small.Height }}"
        alt="{{ .Get "alt" }}"
        decoding="async" fetchpriority="high"

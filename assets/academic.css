@@ -1,0 +1,40 @@
+/* Plain academic stylesheet, replacing the theme's dark style. */
+@font-face{font-family:"CMU Serif";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/cmu-serif-500-roman.woff2") format("woff2")}
+@font-face{font-family:"CMU Serif";font-style:italic;font-weight:400;font-display:swap;src:url("/fonts/cmu-serif-500-italic.woff2") format("woff2")}
+@font-face{font-family:"CMU Serif";font-style:normal;font-weight:700;font-display:swap;src:url("/fonts/cmu-serif-700-roman.woff2") format("woff2")}
+@font-face{font-family:"CMU Serif";font-style:italic;font-weight:700;font-display:swap;src:url("/fonts/cmu-serif-700-italic.woff2") format("woff2")}
+@font-face{font-family:"CMU Typewriter Text";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/cmu-typewriter-text-500-roman.woff2") format("woff2")}
+
+html{color-scheme:light dark}
+:root{--fg:#000;--bg:#fff;--mut:#555;--g1:#777;--g2:#aaa;--g3:#ccc;--fill:#bbb;--row:#ddd;--acc:#c00;--accbg:#fbdada;--link:#00c;--visited:#551a8b;--uniq:#a33;--uniqbg:#f4d4d4;--stale:#4a6fa5;--stalebg:#dfe7f2}
+@media(prefers-color-scheme:dark){:root{--fg:#e6e6e6;--bg:#141414;--mut:#a0a0a0;--g1:#8c8c8c;--g2:#5c5c5c;--g3:#363636;--fill:#6a6a6a;--row:#303030;--acc:#ff6b6b;--accbg:#4a2323;--link:#8ab4f8;--visited:#c58af9;--uniq:#d98080;--uniqbg:#4a2b2b;--stale:#8aa6cc;--stalebg:#283445}}
+body{font-family:"CMU Serif","Latin Modern Roman","Computer Modern",Georgia,serif;font-size:19px;line-height:1.45;color:var(--fg);background:var(--bg);max-width:40em;margin:0 auto;padding:1.5em 1.2em 2em;text-align:left;overflow-wrap:break-word}
+a{color:var(--link)}a:visited{color:var(--visited)}
+h1,h2,h3,h4{font-weight:700;line-height:1.25;color:var(--fg)}
+h1{font-size:1.5em;margin:1.2em 0 .3em}h2{font-size:1.2em;margin:1.6em 0 .5em}h3{font-size:1.05em;margin:1.3em 0 .4em}
+p{margin:0 0 .9em}
+.title{text-decoration:none;color:var(--fg)}.title h1{font-size:1.15em;margin:0 0 .2em;font-weight:400}
+body>header{border-bottom:1px solid var(--fg);padding-bottom:.4em;margin-bottom:1.2em}
+nav a{margin-right:1em}
+nav a.disabled{color:var(--g1);cursor:not-allowed}
+content{display:block}
+code,pre,kbd{font-family:"CMU Typewriter Text","Latin Modern Mono",Courier,monospace;font-size:.95em}
+code{background:none;padding:0;color:inherit}
+pre{overflow-x:auto;margin:1em 0}pre code{display:block;padding:0;white-space:pre}
+blockquote{margin:1em 2em;font-style:italic}
+img{max-width:100%;height:auto}
+figure{margin:1.5em 0}
+figcaption{font-size:.9em;line-height:1.4}
+figcaption>p{margin:0;text-align:left}
+table{border-collapse:collapse;border-top:1.5px solid var(--fg);border-bottom:1.5px solid var(--fg)}
+th,td{padding:.15em .6em;text-align:left;border:0}
+thead th{border-bottom:.75px solid var(--fg);font-weight:400}
+p.byline{font-style:italic;margin-top:0}
+ul.blog-list{padding-left:0;list-style:none}ul.blog-list li{margin-bottom:.4em}
+ul.blog-list li>span:first-child{display:inline-block;min-width:7.5em}
+.lang-tag{font-size:.8em;margin-left:.5em;color:var(--mut)}
+a.blog-tags{margin-right:.8em;font-size:.9em}
+.skip-link{position:absolute;transform:translateY(-600%);background:var(--bg);padding:4px}.skip-link:focus{transform:none}
+footer{margin-top:3em;font-size:.8em;text-align:center;color:var(--mut)}
+hr{border:0;border-top:1px solid var(--fg)}
+@media(max-width:600px){body{font-size:17px;padding:1em}}
