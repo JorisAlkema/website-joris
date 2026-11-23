@@ -1,0 +1,8 @@
+{{- /* Self-playing algorithm animation. Usage: {{< research-anim scene="race" script="assets/anon-anim.js" title="…" >}}caption{{< /research-anim >}} */ -}}
+{{- $js := .Page.Resources.Get (.Get "script") -}}
+<figure class="anim-figure" data-anim="{{ .Get "scene" }}"{{ with .Get "image" }}{{ with $.Page.Resources.Get . }} data-image="{{ .RelPermalink }}"{{ end }}{{ end }}>
+  {{- with .Get "title" }}<div class="figure-heading">{{ . }}</div>{{ end }}
+  <div class="anim-stage" aria-hidden="true"></div>
+  {{- with .Inner }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>
+{{- with $js }}<script src="{{ (. | minify | fingerprint).RelPermalink }}" defer></script>{{ end -}}

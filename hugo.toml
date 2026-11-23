@@ -1,7 +1,7 @@
 baseURL = 'https://jorisalkema.nl/'
-title = "ᕕ( ᐛ )ᕗ Joris's website"
+title = "Joris Alkema"
 theme = 'hugo-bearcub'
-copyright = '© [Joris Duurt Cornelis Alkema]'
+copyright = '© Joris D.C. Alkema'
 
 enableRobotsTXT = true
 defaultContentLanguage = 'nl'
@@ -65,4 +65,5 @@ disableKinds = ['rss']
 
 # BearBlog specific settings
 [params]
+  themeStyle = "academic"
   description = "Joris Alkema — cloud, platform and MLOps engineering, network science research, and personal writing."
