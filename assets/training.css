@@ -83,11 +83,15 @@
 .tr-unit{color:var(--mut);font-size:.85em}
 
 /* Training log */
-.tr-day{fill:var(--fg);fill-opacity:0;stroke:var(--g3);stroke-width:.6}
-.tr-day-int{fill:var(--acc);fill-opacity:.42;stroke:var(--acc);stroke-width:.6}
-.tr-day-race{fill:var(--acc);fill-opacity:1;stroke:var(--fg);stroke-width:1.6}
-.tr-swimdot{fill:var(--bg);stroke:var(--fg);stroke-width:1}
-.tr-bar-part{fill-opacity:.45}
+.tr-log{width:100%;border:0;margin:.4em 0;font-variant-numeric:tabular-nums}
+.tr-log td{padding:.3em 0;vertical-align:top;border-bottom:.5px solid var(--g3)}
+.tr-log-wk{width:4.2em;white-space:nowrap;color:var(--mut);font-size:.9em;padding-top:.35em!important}
+.tr-log-track{display:flex;align-items:center;gap:.5em}
+.tr-log-track span{display:block;height:.75em;background:var(--fill);min-width:1px}
+.tr-log-track span.tr-log-race{background:var(--acc)}
+.tr-log-track b{font-weight:400;white-space:nowrap}
+.tr-log-what{font-size:.8em;color:var(--mut)}
+.tr-log-now .tr-log-track span{background:none;border:1px dashed var(--g1)}
 
 /* Interval panels */
 .tr-panels{display:grid;grid-template-columns:1fr 1fr;gap:.4em 1em}
@@ -107,3 +111,5 @@
 @media(max-width:600px){.tr-hide-s{display:none}}
 .tr-val{font-size:13px;fill:var(--fg)}
 .tr-line-big{stroke-width:2}
+.tr-break{stroke:var(--acc);stroke-width:4;stroke-linecap:round}
+.tr-break-t{fill:var(--acc)!important}

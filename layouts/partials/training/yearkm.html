@@ -1,6 +1,6 @@
 {{- /* Cumulative running km through each year, by day of year. Lines are labelled at
      their end. A year whose data starts late begins at its first run. Args: years, nl. */ -}}
-{{- $nl := .nl }}{{ $years := .years -}}
+{{- $nl := .nl }}{{ $years := .years }}{{ $breaks := .breaks -}}
 {{- $W := 560.0 }}{{ $H := 240.0 }}{{ $L := 40.0 }}{{ $R := 70.0 }}{{ $Tp := 10.0 }}{{ $B := 24.0 -}}
 {{- $pw := sub $W (add $L $R) }}{{ $ph := sub $H (add $Tp $B) }}{{ $bot := add $Tp $ph -}}
 {{- $max := 100.0 }}{{ range $years }}{{ $max = math.Max $max .total_km }}{{ end -}}
@@ -35,6 +35,18 @@
     <polyline class="{{ if $cur }}tr-line{{ else }}tr-line tr-line-old{{ end }}" points="{{ delimit $pts " " }}"/>
     <text class="tr-tick{{ if not $cur }} tr-mut{{ end }}" x="{{ printf "%.1f" (add $lx 5) }}" y="{{ printf "%.1f" (add $ly 4) }}">{{ $yr.year }}: {{ lang.FormatNumber 0 $yr.total_km }} km</text>
   {{- end }}
+  {{- /* injury breaks: a thick red stretch on that year's line */}}
+  {{- range $breaks }}
+    {{- $f := time.AsTime .from }}{{ $t := time.AsTime .to }}{{ $lab := .label }}
+    {{- range $years }}{{ if eq .year $f.Year }}
+      {{- $km := 0.0 }}{{ range .points }}{{ if le .doy $f.YearDay }}{{ $km = .km }}{{ end }}{{ end }}
+      {{- $x1 := add $L (mul (div (float (sub $f.YearDay 1)) 365.0) $pw) }}
+      {{- $x2 := add $L (mul (div (float $t.YearDay) 365.0) $pw) }}
+      {{- $y := sub $bot (mul (div $km $ymax) $ph) }}
+      <line class="tr-break" x1="{{ printf "%.1f" $x1 }}" x2="{{ printf "%.1f" $x2 }}" y1="{{ printf "%.1f" $y }}" y2="{{ printf "%.1f" $y }}"><title>{{ time.Format "2 Jan 2006" $f }} – {{ time.Format "2 Jan 2006" $t }}</title></line>
+      <text class="tr-tick tr-break-t" x="{{ printf "%.1f" (div (add $x1 $x2) 2) }}" y="{{ printf "%.1f" (add $y 16) }}" text-anchor="middle">{{ if eq $lab "broken leg" }}{{ if $nl }}been gebroken{{ else }}broken leg{{ end }}{{ else }}{{ $lab }}{{ end }}</text>
+    {{- end }}{{ end }}
+  {{- end }}
   {{- /* where the previous year stood on today's date */}}
   {{- if ge $nY 2 }}
     {{- $prev := index $years (sub $nY 2) }}{{ $cur := index $years (sub $nY 1) }}
@@ -50,8 +62,8 @@
   <text class="tr-tick" transform="translate(11 {{ add $Tp (div $ph 2) }}) rotate(-90)" text-anchor="middle">km</text>
 </svg>
 <figcaption>{{ if $nl -}}
-Opgetelde hardloopkilometers door het jaar heen.{{ range $years }}{{ with .first }} De data van {{ (time.AsTime .).Year }} begint op {{ time.Format "2 January" (time.AsTime .) }}; daarvoor is niets bekend, niet nul.{{ end }}{{ end }}
+Opgetelde hardloopkilometers door het jaar heen.{{ range $years }}{{ with .first }} De data van {{ (time.AsTime .).Year }} begint op {{ time.Format "2 January" (time.AsTime .) }}; daarvoor is niets bekend, niet nul.{{ end }}{{ end }}{{ range $breaks }} Rood: {{ time.Format "2 January" (time.AsTime .from) }} tot en met {{ time.Format "2 January 2006" (time.AsTime .to) }}, been gebroken, niet gelopen.{{ end }}
 {{- else -}}
-Running distance added up through each year.{{ range $years }}{{ with .first }} Data for {{ (time.AsTime .).Year }} starts on {{ time.Format "2 January" (time.AsTime .) }}; before that it is unknown, not zero.{{ end }}{{ end }}
+Running distance added up through each year.{{ range $years }}{{ with .first }} Data for {{ (time.AsTime .).Year }} starts on {{ time.Format "2 January" (time.AsTime .) }}; before that it is unknown, not zero.{{ end }}{{ end }}{{ range $breaks }} Red: {{ time.Format "2 January" (time.AsTime .from) }} to {{ time.Format "2 January 2006" (time.AsTime .to) }}, broken leg, no running.{{ end }}
 {{- end }}</figcaption>
 </figure>

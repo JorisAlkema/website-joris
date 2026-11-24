@@ -1,0 +1,27 @@
+{{- /* Training log: the last weeks, newest first. One row per week with a bar for
+     the running km and a short line on what the week held. Args: rows, nl. */ -}}
+{{- $nl := .nl -}}
+{{- $max := 10.0 }}{{ range .rows }}{{ $max = math.Max $max .km }}{{ end -}}
+<table class="tr-log">
+  <tbody>
+  {{- range .rows }}
+    {{- $parts := slice }}
+    {{- $r := int .runs }}{{ $i := int .intervals }}{{ $sw := int .swims }}
+    {{- if $r }}{{ $parts = $parts | append (printf "%d %s%s" $r (cond (eq $r 1) (cond $nl "loop" "run") (cond $nl "lopen" "runs")) (cond (gt $i 0) (printf " (%d %s)" $i (cond $nl "interval" (cond (eq $i 1) "interval" "intervals"))) "")) }}{{ end }}
+    {{- if .races }}{{ $parts = $parts | append (cond $nl "wedstrijd" "race") }}{{ end }}
+    {{- if $sw }}{{ $parts = $parts | append (cond $nl (printf "%d× zwemmen" $sw) (printf "%d %s" $sw (cond (eq $sw 1) "swim" "swims"))) }}{{ end }}
+    <tr{{ if .partial }} class="tr-log-now"{{ end }}>
+      <td class="tr-log-wk">{{ time.Format "2 Jan" (time.AsTime .week) }}</td>
+      <td class="tr-log-bar">
+        <div class="tr-log-track"><span style="width:{{ printf "%.1f" (mul (div .km $max) 100) }}%"{{ if .races }} class="tr-log-race"{{ end }}></span><b>{{ lang.FormatNumber 1 .km }} km</b></div>
+        <div class="tr-log-what">{{ if .partial }}{{ if $nl }}deze week{{ else }}this week{{ end }}{{ if $parts }}: {{ end }}{{ end }}{{ delimit $parts ", " }}</div>
+      </td>
+    </tr>
+  {{- end }}
+  </tbody>
+</table>
+<p class="tr-note">{{ if $nl -}}
+Hardloopkilometers per week (maandag tot en met zondag), nieuwste boven. Rode balk: week met een wedstrijd.
+{{- else -}}
+Running distance per week (Monday to Sunday), newest at the top. Red bar: a week with a race.
+{{- end }}</p>

@@ -1,5 +1,5 @@
 {{- /* Running volume per calendar quarter, newest first. Args: rows, nl. */ -}}
-{{- $nl := .nl -}}
+{{- $nl := .nl }}{{ $breaks := .breaks -}}
 <table class="tr-table tr-qt">
   <thead><tr>
     <th>{{ if $nl }}Kwartaal{{ else }}Quarter{{ end }}</th>
@@ -11,7 +11,9 @@
   <tbody>
   {{- range .rows }}
     <tr>
-      <td class="tr-nowrap">{{ replace .quarter "Q" (cond $nl "K" "Q") }}{{ if .partial }}*{{ end }}</td>
+      {{- $q := .quarter }}{{ $hurt := false }}
+      {{- range $breaks }}{{ $f := time.AsTime .from }}{{ if eq $q (printf "%d Q%d" $f.Year (add (div (sub (int $f.Month) 1) 3) 1)) }}{{ $hurt = true }}{{ end }}{{ end }}
+      <td class="tr-nowrap">{{ replace .quarter "Q" (cond $nl "K" "Q") }}{{ if .partial }}*{{ end }}{{ if $hurt }}†{{ end }}</td>
       <td class="num">{{ lang.FormatNumber 0 .run_km }}</td>
       <td class="num">{{ lang.FormatNumber 1 .km_per_week }}</td>
       <td class="num">{{ .run_n }}</td>
@@ -20,4 +22,4 @@
   {{- end }}
   </tbody>
 </table>
-<p class="tr-note">* {{ if $nl }}Lopend kwartaal.{{ else }}Current quarter.{{ end }}</p>
+<p class="tr-note">* {{ if $nl }}Lopend kwartaal.{{ else }}Current quarter.{{ end }}{{ range $breaks }} † {{ if $nl }}Been gebroken, niet gelopen van {{ time.Format "2 January" (time.AsTime .from) }} tot en met {{ time.Format "2 January 2006" (time.AsTime .to) }}.{{ else }}Broken leg, no running from {{ time.Format "2 January" (time.AsTime .from) }} to {{ time.Format "2 January 2006" (time.AsTime .to) }}.{{ end }}{{ end }}</p>

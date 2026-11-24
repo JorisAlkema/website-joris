@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T12:28:07Z",
+ "updated": "2026-11-24T12:31:13Z",
  "pbs": [
   {
    "event": "800 m",
@@ -333,1074 +333,116 @@
    "best_pace": "3:32"
   }
  ],
- "calendar": {
-  "start": "2026-06-01",
-  "today": "2026-11-24",
-  "days": [
-   {
-    "date": "2026-06-01",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-06-02",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-03",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-04",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-06-05",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-06-06",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-07",
-    "km": 10.5,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-08",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-09",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-06-10",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-06-11",
-    "km": 2.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-06-12",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-13",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-14",
-    "km": 3.4,
-    "kind": "race",
-    "swim": false
-   },
-   {
-    "date": "2026-06-15",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-16",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-17",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-06-18",
-    "km": 7.2,
-    "kind": "int",
-    "swim": true
-   },
-   {
-    "date": "2026-06-19",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-20",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-21",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-22",
-    "km": 9.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-23",
-    "km": 2.9,
-    "kind": "race",
-    "swim": false
-   },
-   {
-    "date": "2026-06-24",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-25",
-    "km": 7.5,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-26",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-27",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-28",
-    "km": 1.9,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-29",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-06-30",
-    "km": 5.6,
-    "kind": "int",
-    "swim": true
-   },
-   {
-    "date": "2026-07-01",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-02",
-    "km": 4.7,
-    "kind": "int",
-    "swim": true
-   },
-   {
-    "date": "2026-07-03",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-04",
-    "km": 5.9,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-05",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-06",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-07",
-    "km": 4.6,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-07-08",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-09",
-    "km": 8.1,
-    "kind": "race",
-    "swim": false
-   },
-   {
-    "date": "2026-07-10",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-11",
-    "km": 8.5,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-12",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-07-13",
-    "km": 14.1,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-14",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-15",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-16",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-07-17",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-18",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-19",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-20",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-21",
-    "km": 5.9,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-07-22",
-    "km": 5.5,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-23",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-24",
-    "km": 5.0,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-07-25",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-26",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-27",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-28",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-29",
-    "km": 5.6,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-30",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-07-31",
-    "km": 2.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-01",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-02",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-03",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-04",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-05",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-06",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-07",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-08",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-09",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-10",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-11",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-12",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-13",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-14",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-15",
-    "km": 2.9,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-16",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-17",
-    "km": 6.9,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-18",
-    "km": 11.5,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-08-19",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-20",
-    "km": 7.2,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-08-21",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-22",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-23",
-    "km": 6.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-24",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-25",
-    "km": 6.7,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-08-26",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-27",
-    "km": 5.7,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-28",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-29",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-30",
-    "km": 7.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-08-31",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-01",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-02",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-03",
-    "km": 7.6,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-09-04",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-05",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-06",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-07",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-09-08",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-09",
-    "km": 8.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-09-10",
-    "km": 6.6,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-09-11",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-12",
-    "km": 14.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-13",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-09-14",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-15",
-    "km": 4.4,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-09-16",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-17",
-    "km": 6.5,
-    "kind": "int",
-    "swim": true
-   },
-   {
-    "date": "2026-09-18",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-19",
-    "km": 6.4,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-20",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-09-21",
-    "km": 8.5,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-22",
-    "km": 7.5,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-23",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-24",
-    "km": 7.4,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-09-25",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-26",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-27",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-28",
-    "km": 7.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-09-29",
-    "km": 10.6,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-09-30",
-    "km": 8.1,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-10-01",
-    "km": 5.4,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-10-02",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-03",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-04",
-    "km": 11.4,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-10-05",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-06",
-    "km": 7.3,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-10-07",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-08",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-09",
-    "km": 3.5,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-10",
-    "km": 9.0,
-    "kind": "race",
-    "swim": false
-   },
-   {
-    "date": "2026-10-11",
-    "km": 5.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-12",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-10-13",
-    "km": 8.9,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-10-14",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-15",
-    "km": 6.5,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-10-16",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-17",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-18",
-    "km": 7.9,
-    "kind": "race",
-    "swim": false
-   },
-   {
-    "date": "2026-10-19",
-    "km": 9.5,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-10-20",
-    "km": 9.3,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-10-21",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-22",
-    "km": 7.1,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-10-23",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-24",
-    "km": 6.5,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-25",
-    "km": 6.5,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-26",
-    "km": 7.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-27",
-    "km": 10.9,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-10-28",
-    "km": 5.5,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-29",
-    "km": 8.8,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-10-30",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-10-31",
-    "km": 5.6,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-01",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-02",
-    "km": 7.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-03",
-    "km": 6.3,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-11-04",
-    "km": 6.1,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-05",
-    "km": 10.9,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-11-06",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-07",
-    "km": 5.5,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-08",
-    "km": 6.4,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-09",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-10",
-    "km": 9.6,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-11-11",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-12",
-    "km": 9.2,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-11-13",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-14",
-    "km": 6.3,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-15",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-16",
-    "km": 7.7,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-11-17",
-    "km": 10.7,
-    "kind": "int",
-    "swim": true
-   },
-   {
-    "date": "2026-11-18",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-19",
-    "km": 10.2,
-    "kind": "int",
-    "swim": false
-   },
-   {
-    "date": "2026-11-20",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-21",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-22",
-    "km": 5.9,
-    "kind": "",
-    "swim": false
-   },
-   {
-    "date": "2026-11-23",
-    "km": 0.0,
-    "kind": "",
-    "swim": true
-   },
-   {
-    "date": "2026-11-24",
-    "km": 0.0,
-    "kind": "",
-    "swim": false
-   }
-  ]
- },
+ "log": [
+  {
+   "week": "2026-11-23",
+   "km": 0.0,
+   "runs": 0,
+   "intervals": 0,
+   "races": 0,
+   "swims": 1,
+   "partial": true
+  },
+  {
+   "week": "2026-11-16",
+   "km": 34.5,
+   "runs": 4,
+   "intervals": 3,
+   "races": 0,
+   "swims": 1,
+   "partial": false
+  },
+  {
+   "week": "2026-11-09",
+   "km": 25.1,
+   "runs": 3,
+   "intervals": 2,
+   "races": 0,
+   "swims": 0,
+   "partial": false
+  },
+  {
+   "week": "2026-11-02",
+   "km": 42.2,
+   "runs": 6,
+   "intervals": 1,
+   "races": 0,
+   "swims": 1,
+   "partial": false
+  },
+  {
+   "week": "2026-10-26",
+   "km": 37.8,
+   "runs": 5,
+   "intervals": 2,
+   "races": 0,
+   "swims": 0,
+   "partial": false
+  },
+  {
+   "week": "2026-10-19",
+   "km": 38.9,
+   "runs": 5,
+   "intervals": 2,
+   "races": 0,
+   "swims": 1,
+   "partial": false
+  },
+  {
+   "week": "2026-10-12",
+   "km": 23.3,
+   "runs": 3,
+   "intervals": 2,
+   "races": 1,
+   "swims": 1,
+   "partial": false
+  },
+  {
+   "week": "2026-10-05",
+   "km": 24.8,
+   "runs": 4,
+   "intervals": 1,
+   "races": 1,
+   "swims": 0,
+   "partial": false
+  },
+  {
+   "week": "2026-09-28",
+   "km": 42.5,
+   "runs": 5,
+   "intervals": 3,
+   "races": 0,
+   "swims": 1,
+   "partial": false
+  },
+  {
+   "week": "2026-09-21",
+   "km": 23.4,
+   "runs": 3,
+   "intervals": 0,
+   "races": 0,
+   "swims": 1,
+   "partial": false
+  },
+  {
+   "week": "2026-09-14",
+   "km": 17.3,
+   "runs": 3,
+   "intervals": 2,
+   "races": 0,
+   "swims": 2,
+   "partial": false
+  },
+  {
+   "week": "2026-09-07",
+   "km": 28.6,
+   "runs": 3,
+   "intervals": 1,
+   "races": 0,
+   "swims": 3,
+   "partial": false
+  }
+ ],
  "year_km": [
   {
    "year": 2025,
@@ -2175,6 +1217,13 @@
    "total_km": 1013.9,
    "runs": 156,
    "km_at_today": 1013.9
+  }
+ ],
+ "breaks": [
+  {
+   "from": "2025-10-19",
+   "to": "2025-12-08",
+   "label": "broken leg"
   }
  ],
  "weekly": [

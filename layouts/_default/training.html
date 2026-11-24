@@ -53,7 +53,7 @@
 
 {{/* ---------------------------------------------------------------- calendar */}}
 <h2>{{ if $nl }}Trainingslog{{ else }}Training log{{ end }}</h2>
-{{ partial "training/calendar.html" (dict "cal" $d.calendar "nl" $nl) }}
+{{ partial "training/log.html" (dict "rows" $d.log "nl" $nl) }}
 
 {{/* ---------------------------------------------------------------- intervals */}}
 {{- with $d.key_sessions }}
@@ -63,11 +63,11 @@
 
 {{/* ---------------------------------------------------------------- year over year */}}
 <h2>{{ if $nl }}Kilometers per jaar{{ else }}Distance per year{{ end }}</h2>
-{{ partial "training/yearkm.html" (dict "years" $d.year_km "nl" $nl) }}
+{{ partial "training/yearkm.html" (dict "years" $d.year_km "breaks" $d.breaks "nl" $nl) }}
 
 {{/* ---------------------------------------------------------------- quarters */}}
 <h2>{{ if $nl }}Per kwartaal{{ else }}By quarter{{ end }}</h2>
-{{ partial "training/quarters.html" (dict "rows" $d.quarters "nl" $nl) }}
+{{ partial "training/quarters.html" (dict "rows" $d.quarters "breaks" $d.breaks "nl" $nl) }}
 
 {{/* ---------------------------------------------------------------- swimming */}}
 <h2>{{ $T.swim }}</h2>
