@@ -1,29 +1,47 @@
-{{- /* Running and swimming per calendar quarter, newest first. Args: rows, nl, T. */ -}}
+{{- /* Running and swimming per calendar quarter, newest first, as one table. Args: rows, nl, T. */ -}}
 {{- $nl := .nl }}{{ $T := .T -}}
-{{- $max := 1.0 }}{{ range .rows }}{{ $max = math.Max $max .run_km }}{{ end -}}
-<div class="tr-quarters">
-{{- range .rows }}
-  <div class="tr-q">
-    <div class="tr-q-head">{{ replace .quarter "Q" (cond $nl "K" "Q") }}{{ if .partial }} <span class="tr-muted tr-smaller">({{ if $nl }}tot nu{{ else }}so far{{ end }})</span>{{ end }}</div>
-    <div class="tr-q-bar" aria-hidden="true"><span style="width:{{ printf "%.0f" (mul (div .run_km $max) 100) }}%"></span></div>
-    <dl class="tr-q-stats">
-      <div class="tr-q-sport">{{ $T.run }}</div>
-      <div><dt>km</dt><dd>{{ lang.FormatNumber 0 .run_km }}</dd></div>
-      <div><dt>{{ if $nl }}km/week{{ else }}km/week{{ end }}</dt><dd>{{ lang.FormatNumber 1 .km_per_week }}</dd></div>
-      <div><dt>{{ if $nl }}lopen{{ else }}runs{{ end }}</dt><dd>{{ .run_n }}</dd></div>
-      <div><dt>{{ if $nl }}langste{{ else }}max{{ end }}</dt><dd>{{ with .max_run_km }}{{ lang.FormatNumber 1 . }} km{{ else }}–{{ end }}</dd></div>
-      <div><dt>{{ if $nl }}gem. tempo{{ else }}avg pace{{ end }}</dt><dd>{{ with .run_pace }}{{ . }}{{ else }}–{{ end }}</dd></div>
-      <div class="tr-q-sport">{{ $T.swim }}</div>
-      <div><dt>km</dt><dd>{{ lang.FormatNumber 1 .swim_km }}</dd></div>
-      <div><dt>{{ if $nl }}sessies{{ else }}swims{{ end }}</dt><dd>{{ .swim_n }}</dd></div>
-      <div><dt>/100 m</dt><dd>{{ with .swim_pace_100 }}{{ . }}{{ else }}–{{ end }}</dd></div>
-      <div><dt>SWOLF</dt><dd>{{ with .swolf }}{{ . }}{{ else }}–{{ end }}</dd></div>
-    </dl>
-  </div>
-{{- end }}
+<div class="tr-scroll">
+<table class="tr-table tr-qt">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="4" class="tr-group">{{ $T.run }}</th>
+      <th class="tr-sep"></th>
+      <th colspan="4" class="tr-group">{{ $T.swim }} <span class="tr-h-sub">(25 m)</span></th>
+    </tr>
+    <tr>
+      <th>{{ if $nl }}Kwartaal{{ else }}Quarter{{ end }}</th>
+      <th class="num">km</th>
+      <th class="num">km/wk</th>
+      <th class="num">{{ if $nl }}langste{{ else }}longest{{ end }}</th>
+      <th class="num">/km</th>
+      <th class="tr-sep"></th>
+      <th class="num">km</th>
+      <th class="num">{{ if $nl }}keer{{ else }}swims{{ end }}</th>
+      <th class="num">/100 m</th>
+      <th class="num">SWOLF</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{- range .rows }}
+    <tr>
+      <td class="tr-nowrap">{{ replace .quarter "Q" (cond $nl "K" "Q") }}{{ if .partial }}<span class="tr-muted">*</span>{{ end }}</td>
+      <td class="num">{{ lang.FormatNumber 0 .run_km }}</td>
+      <td class="num">{{ lang.FormatNumber 1 .km_per_week }}</td>
+      <td class="num">{{ with .max_run_km }}{{ lang.FormatNumber 1 . }}{{ else }}–{{ end }}</td>
+      <td class="num">{{ with .run_pace }}{{ . }}{{ else }}–{{ end }}</td>
+      <td class="tr-sep"></td>
+      <td class="num">{{ if .swim_n }}{{ lang.FormatNumber 1 .swim_km }}{{ else }}–{{ end }}</td>
+      <td class="num">{{ if .swim_n }}{{ .swim_n }}{{ else }}–{{ end }}</td>
+      <td class="num">{{ with .swim_pace_100 }}{{ . }}{{ else }}–{{ end }}</td>
+      <td class="num">{{ with .swolf }}{{ . }}{{ else }}–{{ end }}</td>
+    </tr>
+  {{- end }}
+  </tbody>
+</table>
 </div>
 <p class="tr-note">{{ if $nl -}}
-Balk: hardloopkilometers ten opzichte van het drukste kwartaal. Tempo's zijn gemiddelden over bewegende tijd, inclusief rustige duurlopen. Zwemmen: alleen trainingen in een 25 m-bad; tempo zonder rust aan de kant, SWOLF is seconden plus slagen per baan (lager is efficiënter).
+* Lopend kwartaal. Langste loop in km. Looptempo is het gemiddelde over alle lopen (bewegende tijd), dus inclusief rustige duurlopen. Zwemtempo zonder rust aan de kant; SWOLF is seconden plus slagen per baan, lager is beter.
 {{- else -}}
-Bar: running distance relative to the busiest quarter. Paces are averages over moving time, easy runs included. Swimming: 25 m pool sessions only; pace excludes rest at the wall, SWOLF is seconds plus strokes per length (lower is more efficient).
+* Current quarter. Longest run in km. Running pace is the average over all runs (moving time), easy runs included. Swim pace excludes rest at the wall; SWOLF is seconds plus strokes per length, lower is better.
 {{- end }}</p>
