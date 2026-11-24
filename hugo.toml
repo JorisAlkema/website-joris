@@ -31,8 +31,8 @@ disableKinds = ['rss']
     weight = 40
   [[languages.nl.menu.main]]
     identifier = "training"
-    name = "Hardlopen"
-    url = "/hardlopen/"
+    name = "Sport"
+    url = "/sport/"
     weight = 45
   [[languages.nl.menu.main]]
     identifier = "tags"
@@ -64,8 +64,8 @@ disableKinds = ['rss']
     weight = 40
   [[languages.en.menu.main]]
     identifier = "training"
-    name = "Running"
-    url = "/en/running/"
+    name = "Sport"
+    url = "/en/sport/"
     weight = 45
   [[languages.en.menu.main]]
     identifier = "tags"
