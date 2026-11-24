@@ -20,8 +20,4 @@
   {{- end }}
   </tbody>
 </table>
-<p class="tr-note">{{ if $nl -}}
-Tempo over de herhalingen zelf, zonder de rust ertussen. Herhalingen zijn uit de snelheid van het horloge gehaald en afgerond op 100 m, dus de tempo's zijn bij benadering.
-{{- else -}}
-Pace over the reps only, without the rest between them. Reps are taken from the watch's speed and rounded to 100 m, so the paces are approximate.
-{{- end }}</p>
+<p class="tr-note">{{ if $nl }}Tempo over de herhalingen, zonder rust; bij benadering.{{ else }}Pace over the reps, without rest; approximate.{{ end }}</p>

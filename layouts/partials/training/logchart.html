@@ -1,0 +1,29 @@
+{{- /* Week columns for the training log. Args: rows, nl, big (phone version). */ -}}
+{{- $rows := .rows }}{{ $nl := .nl }}{{ $big := .big -}}
+{{- $n := len $rows -}}
+{{- $max := 10.0 }}{{ range $rows }}{{ $max = math.Max $max .km }}{{ end -}}
+{{- $W := cond $big 380.0 560.0 }}{{ $L := 62.0 }}{{ $R := 4.0 }}{{ $Tp := 18.0 }}{{ $ph := 130.0 -}}
+{{- $bot := add $Tp $ph }}{{ $cw := div (sub $W (add $L $R)) (float $n) }}{{ $bw := mul $cw 0.62 -}}
+{{- $H := add $bot 66 -}}
+<figure class="tr-fig">
+<svg class="tr-chart" viewBox="0 0 {{ $W }} {{ $H }}" role="img" aria-label="{{ if $nl }}Kilometers per week{{ else }}Distance per week{{ end }}">
+  <text class="tr-tick tr-mut" x="0" y="{{ sub $bot 4 }}">km</text>
+  <text class="tr-tick tr-mut" x="0" y="{{ add $bot 36 }}">{{ if $nl }}interval{{ else }}intervals{{ end }}</text>
+  <text class="tr-tick tr-mut" x="0" y="{{ add $bot 54 }}">{{ if $nl }}zwemmen{{ else }}swims{{ end }}</text>
+  {{- range $i, $w := $rows }}
+    {{- $cx := add $L (mul $cw (add (float $i) 0.5)) }}
+    {{- $h := mul (div $w.km $max) $ph }}
+    <rect class="tr-col{{ if $w.races }} tr-col-race{{ end }}{{ if $w.partial }} tr-col-now{{ end }}" x="{{ printf "%.1f" (sub $cx (div $bw 2)) }}" y="{{ printf "%.1f" (sub $bot $h) }}" width="{{ printf "%.1f" $bw }}" height="{{ printf "%.1f" (math.Max $h 0.5) }}"/>
+    <text class="tr-val" x="{{ printf "%.1f" $cx }}" y="{{ printf "%.1f" (sub (sub $bot $h) 5) }}" text-anchor="middle">{{ lang.FormatNumber 0 $w.km }}</text>
+    <text class="tr-tick{{ if $w.partial }} tr-mut{{ end }}" x="{{ printf "%.1f" $cx }}" y="{{ add $bot 15 }}" text-anchor="middle">{{ time.Format "2 Jan" (time.AsTime $w.week) }}</text>
+    {{- range $k := seq (int $w.intervals) }}{{ if $w.intervals }}
+    <circle class="tr-dot-int" cx="{{ printf "%.1f" (add (sub $cx (mul 4.5 (sub (float (int $w.intervals)) 1))) (mul 9 (float (sub $k 1)))) }}" cy="{{ add $bot 32 }}" r="3.2"/>
+    {{- end }}{{ end }}
+    {{- range $k := seq (int $w.swims) }}{{ if $w.swims }}
+    <circle class="tr-dot-swim" cx="{{ printf "%.1f" (add (sub $cx (mul 4.5 (sub (float (int $w.swims)) 1))) (mul 9 (float (sub $k 1)))) }}" cy="{{ add $bot 50 }}" r="3.2"/>
+    {{- end }}{{ end }}
+  {{- end }}
+  <line class="tr-axis" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ $bot }}" y2="{{ $bot }}"/>
+</svg>
+<figcaption>{{ if $nl }}Hardloopkilometers per week (datum is de maandag). Rood: week met een wedstrijd.{{ else }}Running distance per week (date is the Monday). Red: a week with a race.{{ end }}</figcaption>
+</figure>

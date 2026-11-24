@@ -22,4 +22,4 @@
   {{- end }}
   </tbody>
 </table>
-<p class="tr-note">* {{ if $nl }}Lopend kwartaal.{{ else }}Current quarter.{{ end }}{{ range $breaks }} † {{ if $nl }}Been gebroken, niet gelopen van {{ time.Format "2 January" (time.AsTime .from) }} tot en met {{ time.Format "2 January 2006" (time.AsTime .to) }}.{{ else }}Broken leg, no running from {{ time.Format "2 January" (time.AsTime .from) }} to {{ time.Format "2 January 2006" (time.AsTime .to) }}.{{ end }}{{ end }}</p>
+<p class="tr-note">* {{ if $nl }}lopend kwartaal{{ else }}current quarter{{ end }}{{ with $breaks }} · † {{ if $nl }}been gebroken{{ else }}broken leg{{ end }}{{ end }}</p>

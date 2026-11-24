@@ -83,15 +83,23 @@
 .tr-unit{color:var(--mut);font-size:.85em}
 
 /* Training log */
-.tr-log{width:100%;border:0;margin:.4em 0;font-variant-numeric:tabular-nums}
-.tr-log td{padding:.3em 0;vertical-align:top;border-bottom:.5px solid var(--g3)}
-.tr-log-wk{width:4.2em;white-space:nowrap;color:var(--mut);font-size:.9em;padding-top:.35em!important}
-.tr-log-track{display:flex;align-items:center;gap:.5em}
-.tr-log-track span{display:block;height:.75em;background:var(--fill);min-width:1px}
-.tr-log-track span.tr-log-race{background:var(--acc)}
-.tr-log-track b{font-weight:400;white-space:nowrap}
-.tr-log-what{font-size:.8em;color:var(--mut)}
-.tr-log-now .tr-log-track span{background:none;border:1px dashed var(--g1)}
+.tr-lead{margin:.2em 0 .4em}
+.tr-lead b{font-weight:700}
+.tr-col{fill:var(--fill)}
+.tr-col-race{fill:var(--acc)}
+.tr-col-now{fill:none;stroke:var(--g1);stroke-dasharray:3 2}
+.tr-dot-int{fill:var(--acc)}
+.tr-dot-swim{fill:none;stroke:var(--fg);stroke-width:1.2}
+
+/* PB strip */
+.tr-pb-group{margin:.5em 0 1em}
+.tr-pb-head{font-style:italic;border-bottom:.75px solid var(--fg);padding-bottom:.15em;margin-bottom:.4em}
+.tr-pb-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.6em 1em}
+.tr-pb-ev{font-size:.85em;color:var(--mut)}
+.tr-pb-t{font-size:2em;line-height:1.1;font-variant-numeric:tabular-nums}
+.tr-pb-t sup{font-size:.4em}
+.tr-pb-sub{font-size:.75em;color:var(--mut)}
+@media(max-width:600px){.tr-pb-row{grid-template-columns:repeat(2,1fr)}.tr-pb-t{font-size:1.7em}}
 
 /* Interval panels */
 .tr-panels{display:grid;grid-template-columns:1fr 1fr;gap:.4em 1em}
@@ -111,5 +119,7 @@
 @media(max-width:600px){.tr-hide-s{display:none}}
 .tr-val{font-size:13px;fill:var(--fg)}
 .tr-line-big{stroke-width:2}
-.tr-break{stroke:var(--acc);stroke-width:4;stroke-linecap:round}
-.tr-break-t{fill:var(--acc)!important}
+.tr-break{stroke:var(--acc);stroke-opacity:.55;stroke-width:2.2;stroke-linecap:round}
+.tr-break-t{fill:var(--mut)!important;font-size:11px}
+.tr-mob{display:none}
+@media(max-width:600px){.tr-desk{display:none}.tr-mob{display:block}}

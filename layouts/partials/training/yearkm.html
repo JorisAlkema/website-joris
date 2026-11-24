@@ -61,9 +61,5 @@
   <line class="tr-axis" x1="{{ $L }}" x2="{{ $L }}" y1="{{ $Tp }}" y2="{{ $bot }}"/>
   <text class="tr-tick" transform="translate(11 {{ add $Tp (div $ph 2) }}) rotate(-90)" text-anchor="middle">km</text>
 </svg>
-<figcaption>{{ if $nl -}}
-Opgetelde hardloopkilometers door het jaar heen.{{ range $years }}{{ with .first }} De data van {{ (time.AsTime .).Year }} begint op {{ time.Format "2 January" (time.AsTime .) }}; daarvoor is niets bekend, niet nul.{{ end }}{{ end }}{{ range $breaks }} Rood: {{ time.Format "2 January" (time.AsTime .from) }} tot en met {{ time.Format "2 January 2006" (time.AsTime .to) }}, been gebroken, niet gelopen.{{ end }}
-{{- else -}}
-Running distance added up through each year.{{ range $years }}{{ with .first }} Data for {{ (time.AsTime .).Year }} starts on {{ time.Format "2 January" (time.AsTime .) }}; before that it is unknown, not zero.{{ end }}{{ end }}{{ range $breaks }} Red: {{ time.Format "2 January" (time.AsTime .from) }} to {{ time.Format "2 January 2006" (time.AsTime .to) }}, broken leg, no running.{{ end }}
-{{- end }}</figcaption>
+<figcaption>{{ if $nl }}Hardloopkilometers opgeteld per jaar.{{ range $years }}{{ with .first }} Gegevens vanaf {{ time.Format "2 January 2006" (time.AsTime .) }}.{{ end }}{{ end }}{{ else }}Running distance added up per year.{{ range $years }}{{ with .first }} Data from {{ time.Format "2 January 2006" (time.AsTime .) }}.{{ end }}{{ end }}{{ end }}</figcaption>
 </figure>

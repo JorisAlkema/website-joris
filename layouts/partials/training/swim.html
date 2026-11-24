@@ -5,11 +5,7 @@
 {{- $qs := slice }}{{ range .quarters }}{{ $qs = $qs | append . }}{{ end -}}
 {{- $qs = sort $qs "quarter" "asc" -}}
 {{- $qs = where $qs "swim_n" ">" 0 -}}
-<p>{{ if $nl -}}
-{{ $s.count }} trainingen in een 25 m-bad sinds {{ time.Format "January 2006" (time.AsTime $s.since) }}, samen {{ lang.FormatNumber 1 $s.total_km }} km.
-{{- else -}}
-{{ $s.count }} sessions in a 25 m pool since {{ time.Format "January 2006" (time.AsTime $s.since) }}, {{ lang.FormatNumber 1 $s.total_km }} km in total.
-{{- end }}</p>
+<p>{{ if $nl }}{{ $s.count }} trainingen in een 25 m-bad, samen {{ lang.FormatNumber 0 $s.total_km }} km.{{ else }}{{ $s.count }} sessions in a 25 m pool, {{ lang.FormatNumber 0 $s.total_km }} km in total.{{ end }}</p>
 {{- with $qs }}
 {{- $n := len $qs -}}
 {{- $W := 560.0 }}{{ $H := 250.0 }}{{ $L := 74.0 }}{{ $R := 24.0 }}{{ $Tp := 26.0 }}{{ $ph := 130.0 -}}
@@ -41,10 +37,6 @@
   <text class="tr-tick tr-mut" x="0" y="{{ add $bot 46 }}">{{ if $nl }}trainingen{{ else }}sessions{{ end }}</text>
   <text class="tr-tick tr-mut" x="0" y="{{ add $bot 66 }}">SWOLF</text>
 </svg>
-<figcaption>{{ if $nl -}}
-Gemiddeld zwemtempo per 100 m per kwartaal in een 25 m-bad; lager is sneller. Tempo is de tijd van de gezwommen banen gedeeld door de afstand, zonder rust aan de kant. SWOLF is per baan de tijd in seconden plus het aantal slagen (lager is efficiënter). * Lopend kwartaal.
-{{- else -}}
-Average swim pace per 100 m per quarter in a 25 m pool; lower is faster. Pace is the time of the swum lengths divided by the distance, without rest at the wall. SWOLF is, per length, the time in seconds plus the stroke count (lower is more efficient). * Current quarter.
-{{- end }}</figcaption>
+<figcaption>{{ if $nl }}Gemiddeld tempo per 100 m in een 25 m-bad, zonder rust. SWOLF: seconden plus slagen per baan; lager is beter.{{ else }}Average pace per 100 m in a 25 m pool, without rest. SWOLF: seconds plus strokes per length; lower is better.{{ end }}</figcaption>
 </figure>
 {{- end }}

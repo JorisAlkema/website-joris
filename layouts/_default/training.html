@@ -16,39 +16,33 @@
 {{/* ---------------------------------------------------------------- PBs */}}
 <h2>{{ if $nl }}Persoonlijke records{{ else }}Personal bests{{ end }}</h2>
 {{- $n := 0 }}
-<div class="tr-scroll">
-<table class="tr-table tr-pbt">
-  <thead><tr>
-    <th></th><th class="num">{{ if $nl }}Tijd{{ else }}Time{{ end }}</th><th class="num">{{ if $nl }}Tempo{{ else }}Pace{{ end }}</th>
-    <th>{{ if $nl }}Datum{{ else }}Date{{ end }}</th><th class="tr-hide-s">{{ if $nl }}Waar{{ else }}Where{{ end }}</th>
-  </tr></thead>
-  <tbody>
-    <tr class="tr-grp"><td colspan="5">{{ $T.run }}</td></tr>
-    {{- range $d.pbs }}
-    <tr>
-      <td>{{ .event }}</td>
-      <td class="num">{{ .time }}{{ with .split_of }}{{ $n = add $n 1 }}<sup>{{ $n }}</sup>{{ end }}</td>
-      <td class="num">{{ .pace }}<span class="tr-unit"> /km</span></td>
-      <td class="tr-nowrap">{{ time.Format "Jan 2006" (time.AsTime .date) }}</td>
-      <td class="tr-hide-s">{{ replaceRE ` \d+(\.\d+)? km$` "" (replaceRE `^.*\((.*)\)$` "$1" .race) }}</td>
-    </tr>
-    {{- end }}
-    <tr class="tr-grp"><td colspan="5">{{ $T.swim }} <span class="tr-h-sub">({{ if $nl }}vrije slag, 25 m-bad{{ else }}freestyle, 25 m pool{{ end }})</span></td></tr>
-    {{- range $d.swim.pbs }}
-    <tr>
-      <td>{{ .event }}</td>
-      <td class="num">{{ .time }}</td>
-      <td class="num">{{ .pace_100 }}<span class="tr-unit"> /100 m</span></td>
-      <td class="tr-nowrap">{{ time.Format "Jan 2006" (time.AsTime .date) }}</td>
-      <td class="tr-hide-s tr-muted">{{ if $nl }}in training{{ else }}in training{{ end }}</td>
-    </tr>
-    {{- end }}
-  </tbody>
-</table>
+<div class="tr-pb-group">
+  <div class="tr-pb-head">{{ $T.run }}</div>
+  <div class="tr-pb-row">
+  {{- range $d.pbs }}
+    <div class="tr-pb">
+      <div class="tr-pb-ev">{{ .event }}</div>
+      <div class="tr-pb-t">{{ .time }}{{ with .split_of }}{{ $n = add $n 1 }}<sup>{{ $n }}</sup>{{ end }}</div>
+      <div class="tr-pb-sub">{{ .pace }} /km · {{ time.Format "Jan 2006" (time.AsTime .date) }}</div>
+    </div>
+  {{- end }}
+  </div>
+</div>
+<div class="tr-pb-group">
+  <div class="tr-pb-head">{{ $T.swim }} <span class="tr-h-sub">{{ if $nl }}vrije slag, 25 m-bad{{ else }}freestyle, 25 m pool{{ end }}</span></div>
+  <div class="tr-pb-row">
+  {{- range $d.swim.pbs }}
+    <div class="tr-pb">
+      <div class="tr-pb-ev">{{ .event }}</div>
+      <div class="tr-pb-t">{{ .time }}</div>
+      <div class="tr-pb-sub">{{ .pace_100 }} /100 m · {{ time.Format "Jan 2006" (time.AsTime .date) }}</div>
+    </div>
+  {{- end }}
+  </div>
 </div>
 {{- $k := 0 }}
 {{- range $d.pbs }}{{ with .split_of }}{{ $k = add $k 1 }}
-<p class="tr-note"><sup>{{ $k }}</sup> {{ if $nl }}Tussentijd bij 5 km in de {{ . }}, gemeten met het horloge.{{ else }}Split at 5 km in the {{ . }}, measured by the watch.{{ end }}</p>
+<p class="tr-note"><sup>{{ $k }}</sup> {{ $r := replaceRE ` [\d.]+ km$` "" . }}{{ if $nl }}5 km-tussentijd in de {{ $r }}.{{ else }}5 km split in the {{ $r }}.{{ end }}</p>
 {{- end }}{{ end }}
 
 {{/* ---------------------------------------------------------------- calendar */}}
