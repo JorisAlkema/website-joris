@@ -20,7 +20,7 @@
 .tr-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(8.2em,1fr));gap:.5em;margin:.6em 0}
 .tr-card{border:1px solid var(--g3);padding:.35em .55em .4em}
 .tr-ev{font-size:.88em}
-.tr-big{font-size:1.45em;font-variant-numeric:tabular-nums;line-height:1.2}
+.tr-big{font-size:1.35em;font-variant-numeric:tabular-nums;line-height:1.2}
 .tr-small{font-size:.78em;color:var(--mut)}
 
 /* Figures */
@@ -54,3 +54,23 @@
   .tr-table{font-size:.8em}
   .tr-stats{gap:.2em 1em}
 }
+
+/* PBs: running and swimming side by side */
+.tr-pbs{display:grid;grid-template-columns:3fr 2fr;gap:1.2em}
+.tr-pbs h3{margin:.2em 0 0;font-size:1em}
+.tr-h-sub{font-weight:400;color:var(--mut)}
+.tr-pbs .tr-cards{grid-template-columns:repeat(auto-fill,minmax(7.2em,1fr))}
+.tr-fn{font-size:.5em;vertical-align:super;line-height:0;margin-left:.1em}
+@media(max-width:700px){.tr-pbs{grid-template-columns:1fr;gap:.4em}}
+
+/* Quarters */
+.tr-quarters{display:grid;grid-template-columns:repeat(auto-fill,minmax(14em,1fr));gap:.6em;margin:.6em 0}
+.tr-q{border:1px solid var(--g3);padding:.4em .6em .5em}
+.tr-q-head{font-weight:700}
+.tr-q-bar{height:3px;background:var(--row);margin:.25em 0 .4em}
+.tr-q-bar span{display:block;height:100%;background:var(--fg)}
+.tr-q-stats{display:grid;grid-template-columns:repeat(5,auto);gap:.1em .7em;margin:0;font-size:.88em;font-variant-numeric:tabular-nums}
+.tr-q-stats dt{font-size:.75em;color:var(--mut)}
+.tr-q-stats dd{margin:0}
+.tr-q-sport{grid-column:1/-1;font-size:.78em;font-style:italic;margin-top:.2em}
+.tr-pt{fill:var(--fill)}

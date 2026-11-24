@@ -8,100 +8,72 @@
 {{- $T := dict
   "intro" (cond $nl "Trainingsdata van mijn Garmin-horloge, dagelijks bijgewerkt. Ik loop middellange afstand (800 m tot 5 km) en zwem één keer per week." "Training data from my Garmin watch, updated daily. I run middle distance (800 m to 5 km) and swim once a week.")
   "updated" (cond $nl "Bijgewerkt" "Updated")
-  "totals" (cond $nl "Totalen" "Totals")
-  "week" (cond $nl "Deze week" "This week")
-  "month" (cond $nl "Deze maand" "This month")
-  "year" (cond $nl "Dit jaar" "This year")
   "run" (cond $nl "Hardlopen" "Running")
   "swim" (cond $nl "Zwemmen" "Swimming")
-  "sessions" (cond $nl "sessies" "sessions")
+  "free" (cond $nl "vrije slag" "freestyle")
   "time" (cond $nl "tijd" "time")
   "Time" (cond $nl "Tijd" "Time")
   "pbs" (cond $nl "Persoonlijke records" "Personal bests")
-  "races" (cond $nl "Wedstrijden" "Races")
   "date" (cond $nl "Datum" "Date")
-  "race" (cond $nl "Wedstrijd" "Race")
   "dist" (cond $nl "Afstand" "Distance")
   "pace" (cond $nl "Tempo" "Pace")
   "hr" (cond $nl "Gem. hartslag" "Avg HR")
+  "quarters" (cond $nl "Per kwartaal" "By quarter")
   "weekly" (cond $nl "Kilometers per week" "Weekly distance")
-  "fitness" (cond $nl "Vorm (VDOT)" "Fitness (VDOT)")
   "recent" (cond $nl "Recente trainingen" "Recent activities")
   "long" (cond $nl "parcours te lang" "course long")
   "short" (cond $nl "parcours te kort" "course short")
-  "scaled" (cond $nl "tijd omgerekend naar" "time scaled to")
+  "scaled" (cond $nl "tijd met de formule van Riegel omgerekend naar" "time scaled with Riegel's formula to")
   "measured" (cond $nl "gemeten" "measured")
 -}}
 <p>{{ $T.intro }} <span class="tr-muted">{{ $T.updated }}: {{ time.Format "2 January 2006" (time.AsTime $d.updated) }}.</span></p>
 
-{{/* ---------------------------------------------------------------- totals */}}
-<h2>{{ $T.totals }}</h2>
-<div class="tr-scroll">
-<table class="tr-table tr-totals">
-  <thead>
-    <tr><th></th><th colspan="3" class="tr-group">{{ $T.run }}</th><th colspan="2" class="tr-group">{{ $T.swim }}</th></tr>
-    <tr><th></th><th class="num">km</th><th class="num">{{ $T.sessions }}</th><th class="num">{{ $T.time }}</th><th class="num">km</th><th class="num">{{ $T.sessions }}</th></tr>
-  </thead>
-  <tbody>
-  {{- range slice "week" "month" "year" }}
-    {{- $p := index $d.totals . }}
-    <tr>
-      <td>{{ index $T . }}</td>
-      <td class="num">{{ lang.FormatNumber 1 $p.run_km }}</td>
-      <td class="num">{{ $p.run_n }}</td>
-      <td class="num">{{ $p.run_time }}</td>
-      <td class="num">{{ lang.FormatNumber 1 $p.swim_km }}</td>
-      <td class="num">{{ $p.swim_n }}</td>
-    </tr>
-  {{- end }}
-  </tbody>
-</table>
-</div>
-
 {{/* ---------------------------------------------------------------- PBs */}}
 <h2>{{ $T.pbs }}</h2>
-{{- $n := 0 }}
-<div class="tr-cards">
-{{- range $d.pbs }}
-  <div class="tr-card">
-    <div class="tr-ev">{{ .event }}</div>
-    <div class="tr-big">{{ .time }}</div>
-    <div class="tr-small">{{ time.Format "2 Jan 2006" (time.AsTime .date) }}{{ with .course }}{{ $n = add $n 1 }}<sup>{{ $n }}</sup>{{ end }}</div>
-  </div>
-{{- end }}
+<div class="tr-pbs">
+  <section>
+    <h3>{{ $T.run }}</h3>
+    {{- $n := 0 }}
+    <div class="tr-cards">
+    {{- range $d.pbs }}
+      <div class="tr-card">
+        <div class="tr-ev">{{ .event }}</div>
+        <div class="tr-big">{{ .time }}{{ with .course }}{{ $n = add $n 1 }}<sup class="tr-fn">{{ $n }}</sup>{{ end }}</div>
+        <div class="tr-small">{{ .pace }} /km<br>{{ time.Format "Jan 2006" (time.AsTime .date) }}{{ if eq .event "6.2 km" }}, Singelloop{{ end }}</div>
+      </div>
+    {{- end }}
+    </div>
+  </section>
+  <section>
+    <h3>{{ $T.swim }} <span class="tr-h-sub">({{ $T.free }})</span></h3>
+    <div class="tr-cards">
+    {{- range $d.swim.pbs }}
+      <div class="tr-card">
+        <div class="tr-ev">{{ .event }}</div>
+        <div class="tr-big">{{ .time }}</div>
+        <div class="tr-small">{{ .pace_100 }} /100 m<br>{{ time.Format "Jan 2006" (time.AsTime .date) }}</div>
+      </div>
+    {{- end }}
+    </div>
+  </section>
 </div>
-{{- $m := 0 }}
-{{- range $d.pbs }}{{ $km := .distance_km }}{{ with .course }}{{ $m = add $m 1 }}
-<p class="tr-note"><sup>{{ $m }}</sup> {{ index $T .side }} ({{ $T.measured }} {{ lang.FormatNumber 2 .measured_km }} km in {{ .measured_time }}); {{ $T.scaled }} {{ lang.FormatNumber 0 $km }} km.</p>
+{{- $k := 0 }}
+{{- range $d.pbs }}{{ $km := .distance_km }}{{ with .course }}{{ $k = add $k 1 }}
+<p class="tr-note"><sup>{{ $k }}</sup> {{ index $T .side }} ({{ $T.measured }} {{ lang.FormatNumber 2 .measured_km }} km in {{ .measured_time }}); {{ $T.scaled }} {{ lang.FormatNumber 0 $km }} km.</p>
 {{- end }}{{ end }}
+<p class="tr-note">{{ if $nl -}}
+Hardlopen: wedstrijden. Zwemmen: snelste aaneengesloten banen vrije slag binnen één training, zonder rust ertussen, uit de baandata van het horloge; geen officiële wedstrijdtijden.
+{{- else -}}
+Running: races. Swimming: fastest consecutive freestyle lengths within one training session, without rest in between, from the watch's length data; not official race times.
+{{- end }}</p>
+
+{{/* ---------------------------------------------------------------- quarters */}}
+<h2>{{ $T.quarters }}</h2>
+{{ partial "training/quarters.html" (dict "rows" $d.quarters "nl" $nl "T" $T) }}
 
 {{/* ---------------------------------------------------------------- weekly km */}}
 <h2>{{ $T.weekly }}</h2>
 {{ partial "training/weekly.html" (dict "rows" (last 52 $d.weekly) "nl" $nl) }}
-
-{{/* ---------------------------------------------------------------- VDOT */}}
-<h2>{{ $T.fitness }}</h2>
-{{ partial "training/vdot.html" (dict "line" $d.vdot "races" $d.races "nl" $nl) }}
-
-{{/* ---------------------------------------------------------------- races */}}
-<h2>{{ $T.races }}</h2>
-<div class="tr-scroll">
-<table class="tr-table">
-  <thead><tr><th>{{ $T.date }}</th><th>{{ $T.race }}</th><th class="num">{{ $T.Time }}</th><th class="num">{{ $T.pace }}</th><th class="num">VDOT</th></tr></thead>
-  <tbody>
-  {{- range $d.races }}
-    <tr>
-      <td class="tr-nowrap">{{ time.Format "2 Jan 2006" (time.AsTime .date) }}</td>
-      <td>{{ .label }}{{ with .course }}<br><span class="tr-muted tr-smaller">{{ index $T .side }}: {{ lang.FormatNumber 2 .measured_km }} km {{ $T.measured }} in {{ .measured_time }}</span>{{ end }}</td>
-      <td class="num">{{ .time }}{{ if .course }}*{{ end }}</td>
-      <td class="num">{{ .pace }}</td>
-      <td class="num">{{ with .vdot }}{{ lang.FormatNumber 1 . }}{{ else }}–{{ end }}</td>
-    </tr>
-  {{- end }}
-  </tbody>
-</table>
-</div>
-<p class="tr-note">* {{ if $nl }}Tijd omgerekend naar de officiële afstand met de formule van Riegel (exponent 1,06). VDOT volgens Daniels, alleen voor 3 tot 10 km; de 3000 m indoor telt als 5 km-equivalent.{{ else }}Time scaled to the official distance with Riegel's formula (exponent 1.06). VDOT after Daniels, for 3 to 10 km only; the indoor 3000 m counts as a 5 km equivalent.{{ end }}</p>
 
 {{/* ---------------------------------------------------------------- recent */}}
 <h2>{{ $T.recent }}</h2>
@@ -109,6 +81,6 @@
 
 {{/* ---------------------------------------------------------------- swimming */}}
 <h2>{{ $T.swim }}</h2>
-{{ partial "training/swim.html" (dict "swim" $d.swim "weekly" (last 52 $d.weekly) "nl" $nl "T" $T) }}
+{{ partial "training/swim.html" (dict "swim" $d.swim "nl" $nl "T" $T) }}
 {{- end }}
 {{ end }}
