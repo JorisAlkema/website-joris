@@ -21,10 +21,6 @@
   "quarters" (cond $nl "Per kwartaal" "By quarter")
   "weekly" (cond $nl "Kilometers per week" "Weekly distance")
   "recent" (cond $nl "Recente trainingen" "Recent activities")
-  "long" (cond $nl "parcours te lang" "course long")
-  "short" (cond $nl "parcours te kort" "course short")
-  "scaled" (cond $nl "tijd met de formule van Riegel omgerekend naar" "time scaled with Riegel's formula to")
-  "measured" (cond $nl "gemeten" "measured")
 -}}
 <p>{{ $T.intro }} <span class="tr-muted">{{ $T.updated }}: {{ time.Format "2 January 2006" (time.AsTime $d.updated) }}.</span></p>
 
@@ -38,7 +34,7 @@
     {{- range $d.pbs }}
       <div class="tr-card">
         <div class="tr-ev">{{ .event }}</div>
-        <div class="tr-big">{{ .time }}{{ with .course }}{{ $n = add $n 1 }}<sup class="tr-fn">{{ $n }}</sup>{{ end }}</div>
+        <div class="tr-big">{{ .time }}{{ with .split_of }}{{ $n = add $n 1 }}<sup class="tr-fn">{{ $n }}</sup>{{ end }}</div>
         <div class="tr-small">{{ .pace }} /km<br>{{ time.Format "Jan 2006" (time.AsTime .date) }}{{ if eq .event "6.2 km" }}, Singelloop{{ end }}</div>
       </div>
     {{- end }}
@@ -58,14 +54,9 @@
   </section>
 </div>
 {{- $k := 0 }}
-{{- range $d.pbs }}{{ $km := .distance_km }}{{ with .course }}{{ $k = add $k 1 }}
-<p class="tr-note"><sup>{{ $k }}</sup> {{ index $T .side }} ({{ $T.measured }} {{ lang.FormatNumber 2 .measured_km }} km in {{ .measured_time }}); {{ $T.scaled }} {{ lang.FormatNumber 0 $km }} km.</p>
+{{- range $d.pbs }}{{ with .split_of }}{{ $k = add $k 1 }}
+<p class="tr-note"><sup>{{ $k }}</sup> {{ if $nl }}Tussentijd bij 5 km in de {{ . }}, gemeten met het horloge.{{ else }}Split at 5 km in the {{ . }}, measured by the watch.{{ end }}</p>
 {{- end }}{{ end }}
-<p class="tr-note">{{ if $nl -}}
-Hardlopen: wedstrijden. Zwemmen: snelste aaneengesloten banen vrije slag binnen één training, zonder rust ertussen, uit de baandata van het horloge; geen officiële wedstrijdtijden.
-{{- else -}}
-Running: races. Swimming: fastest consecutive freestyle lengths within one training session, without rest in between, from the watch's length data; not official race times.
-{{- end }}</p>
 
 {{/* ---------------------------------------------------------------- quarters */}}
 <h2>{{ $T.quarters }}</h2>

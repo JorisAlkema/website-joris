@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T11:06:19Z",
+ "updated": "2026-11-24T11:10:50Z",
  "pbs": [
   {
    "event": "800 m",
@@ -8,7 +8,7 @@
    "pace": "2:36",
    "date": "2026-06-14",
    "race": "800 m (Groningen)",
-   "course": null
+   "split_of": null
   },
   {
    "event": "1000 m",
@@ -17,7 +17,7 @@
    "pace": "2:45",
    "date": "2026-06-23",
    "race": "1000 m track",
-   "course": null
+   "split_of": null
   },
   {
    "event": "3000 m indoor",
@@ -26,20 +26,16 @@
    "pace": "3:22",
    "date": "2026-03-07",
    "race": "3000 m indoor (Apeldoorn)",
-   "course": null
+   "split_of": null
   },
   {
    "event": "5K",
    "distance_km": 5.0,
-   "time": "18:07",
-   "pace": "3:37",
-   "date": "2026-03-15",
-   "race": "5K (The Hague)",
-   "course": {
-    "side": "long",
-    "measured_km": 5.26,
-    "measured_time": "19:07"
-   }
+   "time": "18:10",
+   "pace": "3:38",
+   "date": "2026-04-17",
+   "race": "Singelloop Leiden 6.2 km",
+   "split_of": "Singelloop Leiden 6.2 km"
   },
   {
    "event": "6.2 km",
@@ -48,20 +44,7 @@
    "pace": "3:37",
    "date": "2026-04-17",
    "race": "Singelloop Leiden 6.2 km",
-   "course": null
-  },
-  {
-   "event": "10K",
-   "distance_km": 10.0,
-   "time": "38:25",
-   "pace": "3:50",
-   "date": "2026-03-21",
-   "race": "10K (Eindhoven)",
-   "course": {
-    "side": "short",
-    "measured_km": 9.31,
-    "measured_time": "35:37"
-   }
+   "split_of": null
   }
  ],
  "races": [
