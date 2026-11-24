@@ -1,0 +1,27 @@
+{{- /* The latest interval sessions as a table. Args: rows, nl. */ -}}
+{{- $nl := .nl -}}
+<table class="tr-table tr-ks">
+  <thead><tr>
+    <th>{{ if $nl }}Datum{{ else }}Date{{ end }}</th>
+    <th>{{ if $nl }}Training{{ else }}Session{{ end }}</th>
+    <th class="num tr-hide-s">{{ if $nl }}km snel{{ else }}km fast{{ end }}</th>
+    <th class="num">{{ if $nl }}gem. /km{{ else }}avg /km{{ end }}</th>
+    <th class="num">{{ if $nl }}snelste{{ else }}fastest{{ end }}</th>
+  </tr></thead>
+  <tbody>
+  {{- range .rows }}
+    <tr>
+      <td class="tr-nowrap">{{ time.Format "2 Jan" (time.AsTime .date) }}</td>
+      <td>{{ replace (replace .title "threshold" (cond $nl "drempel" "threshold")) "×" "&#8239;×&#8239;" | safeHTML }}</td>
+      <td class="num tr-hide-s">{{ lang.FormatNumber 1 .rep_km }}</td>
+      <td class="num">{{ .avg_pace }}</td>
+      <td class="num">{{ .best_pace }}</td>
+    </tr>
+  {{- end }}
+  </tbody>
+</table>
+<p class="tr-note">{{ if $nl -}}
+Tempo over de herhalingen zelf, zonder de rust ertussen. Herhalingen zijn uit de snelheid van het horloge gehaald en afgerond op 100 m, dus de tempo's zijn bij benadering.
+{{- else -}}
+Pace over the reps only, without the rest between them. Reps are taken from the watch's speed and rounded to 100 m, so the paces are approximate.
+{{- end }}</p>

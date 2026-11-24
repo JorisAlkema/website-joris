@@ -56,9 +56,9 @@
 {{ partial "training/calendar.html" (dict "cal" $d.calendar "nl" $nl) }}
 
 {{/* ---------------------------------------------------------------- intervals */}}
-{{- with $d.intervals.bins }}
-<h2>{{ if $nl }}Intervallen{{ else }}Intervals{{ end }}</h2>
-{{ partial "training/intervals.html" (dict "iv" $d.intervals "nl" $nl) }}
+{{- with $d.key_sessions }}
+<h2>{{ if $nl }}Laatste intervaltrainingen{{ else }}Latest interval sessions{{ end }}</h2>
+{{ partial "training/sessions.html" (dict "rows" . "nl" $nl) }}
 {{- end }}
 
 {{/* ---------------------------------------------------------------- year over year */}}
