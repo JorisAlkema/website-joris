@@ -1,5 +1,5 @@
 {{- /* Swimming (25 m pool): pace and SWOLF per session, sharing a time axis.
-     Args: swim, nl, T. Both panels put "better" at the top. */ -}}
+     Args: swim, nl, T. Pace: faster is higher. SWOLF: normal axis (lower values lower). */ -}}
 {{- $s := .swim }}{{ $nl := .nl -}}
 {{- $rows := $s.sessions -}}
 <p>{{ if $nl -}}
@@ -20,17 +20,18 @@
 {{- $pl = mul 10.0 (math.Floor (div (sub $pl 6) 10.0)) }}{{ $ph2 = mul 10.0 (math.Ceil (div (add $ph2 6) 10.0)) -}}
 {{- $sl = mul 2.0 (math.Floor (div (sub $sl 2) 2.0)) }}{{ $sh = mul 2.0 (math.Ceil (div (add $sh 2) 2.0)) -}}
 {{- $panels := slice
-  (dict "key" "pace_100_s" "med" "pace_med" "lo" $pl "hi" $ph2 "step" 10 "top" $Tp "clock" true
+  (dict "key" "pace_100_s" "med" "pace_med" "lo" $pl "hi" $ph2 "step" 10 "top" $Tp "clock" true "flip" false
         "title" (cond $nl "Tempo per 100 m (sneller is hoger)" "Pace per 100 m (faster is higher)"))
-  (dict "key" "swolf" "med" "swolf_med" "lo" $sl "hi" $sh "step" 2 "top" (add (add $Tp $ph) $gap) "clock" false
-        "title" (cond $nl "SWOLF (lager is beter, dus hoger in de grafiek)" "SWOLF (lower is better, so higher in the plot)")) -}}
+  (dict "key" "swolf" "med" "swolf_med" "lo" $sl "hi" $sh "step" 2 "top" (add (add $Tp $ph) $gap) "clock" false "flip" true
+        "title" (cond $nl "SWOLF (lager is beter)" "SWOLF (lower is better)")) -}}
 <figure class="tr-fig">
 <svg class="tr-chart" viewBox="0 0 {{ $W }} {{ $H }}" role="img" aria-label="{{ if $nl }}Zwemtempo en SWOLF per training{{ else }}Swim pace and SWOLF per session{{ end }}">
 {{- range $p := $panels }}
   {{- $top := $p.top }}{{ $lo := $p.lo }}{{ $rng := sub $p.hi $p.lo }}
+  {{- $base := cond $p.flip $p.hi $lo }}{{ $den := cond $p.flip (mul -1.0 $rng) $rng }}
   <text class="tr-tick tr-ptitle" x="{{ $L }}" y="{{ sub $top 4 }}">{{ $p.title }}</text>
   {{- range $v := seq (int $lo) $p.step (int $p.hi) }}
-    {{- $y := add $top (mul (div (sub (float $v) $lo) $rng) $ph) }}
+    {{- $y := add $top (mul (div (sub (float $v) $base) $den) $ph) }}
     <line class="tr-grid" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ printf "%.1f" $y }}" y2="{{ printf "%.1f" $y }}"/>
     <text class="tr-tick" x="{{ sub $L 5 }}" y="{{ printf "%.1f" (add $y 3.5) }}" text-anchor="end">{{ if $p.clock }}{{ printf "%d:%02d" (div $v 60) (mod $v 60) }}{{ else }}{{ $v }}{{ end }}</text>
   {{- end }}
@@ -42,10 +43,10 @@
     {{- $x := add $L (mul (div (float (sub $t.Unix $t0)) $span) $pw) }}
     {{- with index . $p.key }}
       {{- $v := math.Max $lo (math.Min $p.hi .) }}
-      <circle class="tr-pt" cx="{{ printf "%.1f" $x }}" cy="{{ printf "%.1f" (add $top (mul (div (sub $v $lo) $rng) $ph)) }}" r="2.2"/>
+      <circle class="tr-pt" cx="{{ printf "%.1f" $x }}" cy="{{ printf "%.1f" (add $top (mul (div (sub $v $base) $den) $ph)) }}" r="2.2"/>
     {{- end }}
     {{- with index . $p.med }}
-      {{- $pts = $pts | append (printf "%.1f,%.1f" $x (add $top (mul (div (sub . $lo) $rng) $ph))) }}
+      {{- $pts = $pts | append (printf "%.1f,%.1f" $x (add $top (mul (div (sub . $base) $den) $ph))) }}
     {{- end }}
   {{- end }}
   {{- $segs = $segs | append (delimit $pts " ") }}
