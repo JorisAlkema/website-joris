@@ -1,53 +1,75 @@
-{{- /* Swimming: pace per 100 m over time and the latest swims. Args: swim, nl, T. */ -}}
-{{- $s := .swim }}{{ $nl := .nl }}{{ $T := .T -}}
+{{- /* Swimming (25 m pool): pace and SWOLF per session, sharing a time axis.
+     Args: swim, nl, T. Both panels put "better" at the top. */ -}}
+{{- $s := .swim }}{{ $nl := .nl -}}
 {{- $rows := $s.sessions -}}
 <p>{{ if $nl -}}
-{{ $s.count }} zwemtrainingen sinds april 2025, samen {{ lang.FormatNumber 1 $s.total_km }} km, bijna allemaal vrije slag in het bad.
+{{ $s.count }} trainingen in een 25 m-bad sinds {{ time.Format "January 2006" (time.AsTime $s.since) }}, samen {{ lang.FormatNumber 1 $s.total_km }} km.
 {{- else -}}
-{{ $s.count }} swims since April 2025, {{ lang.FormatNumber 1 $s.total_km }} km in total, almost all freestyle in the pool.
+{{ $s.count }} sessions in a 25 m pool since {{ time.Format "January 2006" (time.AsTime $s.since) }}, {{ lang.FormatNumber 1 $s.total_km }} km in total.
 {{- end }}</p>
-
 {{- with $rows }}
-{{- $W := 560.0 }}{{ $H := 200.0 }}{{ $L := 38.0 }}{{ $R := 6.0 }}{{ $Tp := 8.0 }}{{ $B := 30.0 -}}
-{{- $pw := sub $W (add $L $R) }}{{ $ph := sub $H (add $Tp $B) -}}
+{{- $W := 560.0 }}{{ $L := 38.0 }}{{ $R := 6.0 }}{{ $ph := 120.0 }}{{ $gap := 34.0 }}{{ $Tp := 14.0 -}}
+{{- $H := add (add $Tp (mul $ph 2)) (add $gap 30) -}}
+{{- $pw := sub $W (add $L $R) -}}
 {{- $t0 := (time.AsTime (index $rows 0).date).Unix -}}
 {{- $t1 := (time.AsTime (index (last 1 $rows) 0).date).Unix -}}
 {{- $span := math.Max 1 (float (sub $t1 $t0)) -}}
-{{- $lo := 1000.0 }}{{ $hi := 0.0 -}}
-{{- range $rows }}{{ $lo = math.Min $lo .pace_100_s }}{{ $hi = math.Max $hi .pace_100_s }}{{ end -}}
-{{- $lo = mul 10.0 (math.Floor (div $lo 10.0)) }}{{ $hi = mul 10.0 (math.Ceil (div $hi 10.0)) -}}
-{{- $rng := math.Max 10 (sub $hi $lo) -}}
+{{- /* axis ranges from the 5th to 95th percentile-ish: clamp extreme sessions to the panel edge */ -}}
+{{- $pl := 1000.0 }}{{ $ph2 := 0.0 }}{{ $sl := 1000.0 }}{{ $sh := 0.0 -}}
+{{- range $rows }}{{ with .pace_med }}{{ $pl = math.Min $pl . }}{{ $ph2 = math.Max $ph2 . }}{{ end }}{{ with .swolf_med }}{{ $sl = math.Min $sl . }}{{ $sh = math.Max $sh . }}{{ end }}{{ end -}}
+{{- $pl = mul 10.0 (math.Floor (div (sub $pl 6) 10.0)) }}{{ $ph2 = mul 10.0 (math.Ceil (div (add $ph2 6) 10.0)) -}}
+{{- $sl = mul 2.0 (math.Floor (div (sub $sl 2) 2.0)) }}{{ $sh = mul 2.0 (math.Ceil (div (add $sh 2) 2.0)) -}}
+{{- $panels := slice
+  (dict "key" "pace_100_s" "med" "pace_med" "lo" $pl "hi" $ph2 "step" 10 "top" $Tp "clock" true
+        "title" (cond $nl "Tempo per 100 m (sneller is hoger)" "Pace per 100 m (faster is higher)"))
+  (dict "key" "swolf" "med" "swolf_med" "lo" $sl "hi" $sh "step" 2 "top" (add (add $Tp $ph) $gap) "clock" false
+        "title" (cond $nl "SWOLF (lager is beter, dus hoger in de grafiek)" "SWOLF (lower is better, so higher in the plot)")) -}}
 <figure class="tr-fig">
-<svg class="tr-chart" viewBox="0 0 {{ $W }} {{ $H }}" role="img" aria-label="{{ if $nl }}Zwemtempo per 100 m{{ else }}Swim pace per 100 m{{ end }}">
-  {{- range $v := seq (int $lo) 10 (int $hi) }}
-    {{- /* faster is higher: lo (fast) at the top */}}
-    {{- $y := add $Tp (mul (div (sub (float $v) $lo) $rng) $ph) }}
+<svg class="tr-chart" viewBox="0 0 {{ $W }} {{ $H }}" role="img" aria-label="{{ if $nl }}Zwemtempo en SWOLF per training{{ else }}Swim pace and SWOLF per session{{ end }}">
+{{- range $p := $panels }}
+  {{- $top := $p.top }}{{ $lo := $p.lo }}{{ $rng := sub $p.hi $p.lo }}
+  <text class="tr-tick tr-ptitle" x="{{ $L }}" y="{{ sub $top 4 }}">{{ $p.title }}</text>
+  {{- range $v := seq (int $lo) $p.step (int $p.hi) }}
+    {{- $y := add $top (mul (div (sub (float $v) $lo) $rng) $ph) }}
     <line class="tr-grid" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ printf "%.1f" $y }}" y2="{{ printf "%.1f" $y }}"/>
-    <text class="tr-tick" x="{{ sub $L 5 }}" y="{{ printf "%.1f" (add $y 3.5) }}" text-anchor="end">{{ printf "%d:%02d" (div $v 60) (mod $v 60) }}</text>
+    <text class="tr-tick" x="{{ sub $L 5 }}" y="{{ printf "%.1f" (add $y 3.5) }}" text-anchor="end">{{ if $p.clock }}{{ printf "%d:%02d" (div $v 60) (mod $v 60) }}{{ else }}{{ $v }}{{ end }}</text>
   {{- end }}
-  {{- $pts := slice }}
+  {{- $pts := slice }}{{ $segs := slice }}{{ $prev := 0 }}
+  {{- range $rows }}
+    {{- $t := time.AsTime .date }}
+    {{- if and $prev (gt (sub $t.Unix $prev) 3024000) }}{{ $segs = $segs | append (delimit $pts " ") }}{{ $pts = slice }}{{ end }}
+    {{- $prev = $t.Unix }}
+    {{- $x := add $L (mul (div (float (sub $t.Unix $t0)) $span) $pw) }}
+    {{- with index . $p.key }}
+      {{- $v := math.Max $lo (math.Min $p.hi .) }}
+      <circle class="tr-pt" cx="{{ printf "%.1f" $x }}" cy="{{ printf "%.1f" (add $top (mul (div (sub $v $lo) $rng) $ph)) }}" r="2.2"/>
+    {{- end }}
+    {{- with index . $p.med }}
+      {{- $pts = $pts | append (printf "%.1f,%.1f" $x (add $top (mul (div (sub . $lo) $rng) $ph))) }}
+    {{- end }}
+  {{- end }}
+  {{- $segs = $segs | append (delimit $pts " ") }}
+  {{- range $segs }}{{ if . }}
+  <polyline class="tr-line" points="{{ . }}"/>
+  {{- end }}{{ end }}
+  <line class="tr-axis" x1="{{ $L }}" x2="{{ $L }}" y1="{{ $top }}" y2="{{ add $top $ph }}"/>
+  <line class="tr-axis" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ add $top $ph }}" y2="{{ add $top $ph }}"/>
+{{- end }}
+  {{- $base := add (add $Tp (mul $ph 2)) $gap }}
   {{- $lastQ := "" }}
   {{- range $rows }}
     {{- $t := time.AsTime .date }}
-    {{- $x := add $L (mul (div (float (sub $t.Unix $t0)) $span) $pw) }}
-    {{- $y := add $Tp (mul (div (sub .pace_100_s $lo) $rng) $ph) }}
-    {{- $ya := add $Tp (mul (div (sub .avg_100_s $lo) $rng) $ph) }}
-    <circle class="tr-pt" cx="{{ printf "%.1f" $x }}" cy="{{ printf "%.1f" $y }}" r="2.4"><title>{{ time.Format "2 Jan 2006" $t }}: {{ printf "%d:%02d" (div (int .pace_100_s) 60) (mod (int .pace_100_s) 60) }} /100 m, {{ lang.FormatNumber 2 .km }} km</title></circle>
-    {{- $pts = $pts | append (printf "%.1f,%.1f" $x $ya) }}
     {{- $q := printf "%d-%d" $t.Year (int $t.Month) }}
     {{- if and (in (slice 1 4 7 10) (int $t.Month)) (ne $q $lastQ) }}{{ $lastQ = $q }}
-    <line class="tr-axis" x1="{{ printf "%.1f" $x }}" x2="{{ printf "%.1f" $x }}" y1="{{ add $Tp $ph }}" y2="{{ add (add $Tp $ph) 4 }}"/>
-    <text class="tr-tick" x="{{ printf "%.1f" $x }}" y="{{ add (add $Tp $ph) 16 }}" text-anchor="middle">{{ if eq (int $t.Month) 1 }}{{ $t.Year }}{{ else }}{{ time.Format "Jan" $t }}{{ end }}</text>
+    {{- $x := add $L (mul (div (float (sub $t.Unix $t0)) $span) $pw) }}
+    <text class="tr-tick" x="{{ printf "%.1f" $x }}" y="{{ add $base 16 }}" text-anchor="middle">{{ if eq (int $t.Month) 1 }}{{ $t.Year }}{{ else }}{{ time.Format "Jan" $t }}{{ end }}</text>
     {{- end }}
   {{- end }}
-  <polyline class="tr-line" points="{{ delimit $pts " " }}"/>
-  <line class="tr-axis" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ add $Tp $ph }}" y2="{{ add $Tp $ph }}"/>
-  <line class="tr-axis" x1="{{ $L }}" x2="{{ $L }}" y1="{{ $Tp }}" y2="{{ add $Tp $ph }}"/>
 </svg>
 <figcaption>{{ if $nl -}}
-Gemiddeld tempo per 100 m van elke zwembadtraining (bewegende tijd), sneller is hoger. Lijn: gemiddelde over zes trainingen.
+Elke stip is één training in een 25 m-bad; de lijn is de mediaan van zeven opeenvolgende trainingen en is onderbroken waar langer dan vijf weken niet is gezwommen. Tempo is de tijd van de gezwommen banen gedeeld door de afstand, zonder rust aan de kant. SWOLF is per baan de tijd in seconden plus het aantal slagen, gemiddeld over de banen vrije slag. Beide hangen af van wat er die dag op het programma stond (rustig of intervallen).
 {{- else -}}
-Average pace per 100 m of each pool session (moving time); faster is higher. Line: mean over six sessions.
+Each dot is one session in a 25 m pool; the line is the median of seven consecutive sessions, broken where there was no swimming for more than five weeks. Pace is the time of the swum lengths divided by the distance, without rest at the wall. SWOLF is, per length, the time in seconds plus the stroke count, averaged over the freestyle lengths. Both depend on what the session was (easy or intervals).
 {{- end }}</figcaption>
 </figure>
 {{- end }}

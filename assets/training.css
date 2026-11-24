@@ -74,3 +74,4 @@
 .tr-q-stats dd{margin:0}
 .tr-q-sport{grid-column:1/-1;font-size:.78em;font-style:italic;margin-top:.2em}
 .tr-pt{fill:var(--fill)}
+.tr-ptitle{font-style:italic}
