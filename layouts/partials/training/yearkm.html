@@ -35,6 +35,16 @@
     <polyline class="{{ if $cur }}tr-line{{ else }}tr-line tr-line-old{{ end }}" points="{{ delimit $pts " " }}"/>
     <text class="tr-tick{{ if not $cur }} tr-mut{{ end }}" x="{{ printf "%.1f" (add $lx 5) }}" y="{{ printf "%.1f" (add $ly 4) }}">{{ $yr.year }}: {{ lang.FormatNumber 0 $yr.total_km }} km</text>
   {{- end }}
+  {{- /* where the previous year stood on today's date */}}
+  {{- if ge $nY 2 }}
+    {{- $prev := index $years (sub $nY 2) }}{{ $cur := index $years (sub $nY 1) }}
+    {{- $lp := index (last 1 $cur.points) 0 }}
+    {{- $tx := add $L (mul (div (float (sub $lp.doy 1)) 365.0) $pw) }}
+    {{- $ty := sub $bot (mul (div $prev.km_at_today $ymax) $ph) }}
+    <line class="tr-axis" x1="{{ printf "%.1f" $tx }}" x2="{{ printf "%.1f" $tx }}" y1="{{ printf "%.1f" $ty }}" y2="{{ printf "%.1f" (sub $bot (mul (div $lp.km $ymax) $ph)) }}" stroke-dasharray="2 2"/>
+    <circle class="tr-med" cx="{{ printf "%.1f" $tx }}" cy="{{ printf "%.1f" $ty }}" r="3"/>
+    <text class="tr-tick" x="{{ printf "%.1f" (sub $tx 6) }}" y="{{ printf "%.1f" (sub $ty 8) }}" text-anchor="end">{{ if $nl }}{{ $prev.year }} op deze datum: {{ lang.FormatNumber 0 $prev.km_at_today }} km{{ else }}{{ $prev.year }} by this date: {{ lang.FormatNumber 0 $prev.km_at_today }} km{{ end }}</text>
+  {{- end }}
   <line class="tr-axis" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ $bot }}" y2="{{ $bot }}"/>
   <line class="tr-axis" x1="{{ $L }}" x2="{{ $L }}" y1="{{ $Tp }}" y2="{{ $bot }}"/>
   <text class="tr-tick" transform="translate(11 {{ add $Tp (div $ph 2) }}) rotate(-90)" text-anchor="middle">km</text>

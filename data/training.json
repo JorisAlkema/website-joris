@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T12:14:10Z",
+ "updated": "2026-11-24T12:17:52Z",
  "pbs": [
   {
    "event": "800 m",
@@ -173,7 +173,8 @@
    "swim_km": 4.8,
    "swim_n": 5,
    "swim_pace_100": "1:34",
-   "swolf": 33.0
+   "swolf": 33.0,
+   "swim_pace_100_s": 94.0
   },
   {
    "quarter": "2026 Q3",
@@ -187,7 +188,8 @@
    "swim_km": 12.8,
    "swim_n": 10,
    "swim_pace_100": "1:38",
-   "swolf": 35.0
+   "swolf": 35.0,
+   "swim_pace_100_s": 98.0
   },
   {
    "quarter": "2026 Q2",
@@ -201,7 +203,8 @@
    "swim_km": 28.5,
    "swim_n": 21,
    "swim_pace_100": "1:44",
-   "swolf": 37.0
+   "swolf": 37.0,
+   "swim_pace_100_s": 103.6
   },
   {
    "quarter": "2026 Q1",
@@ -215,7 +218,8 @@
    "swim_km": 26.9,
    "swim_n": 21,
    "swim_pace_100": "1:42",
-   "swolf": 35.0
+   "swolf": 35.0,
+   "swim_pace_100_s": 102.4
   },
   {
    "quarter": "2025 Q4",
@@ -229,7 +233,8 @@
    "swim_km": 14.9,
    "swim_n": 12,
    "swim_pace_100": "1:51",
-   "swolf": 37.0
+   "swolf": 37.0,
+   "swim_pace_100_s": 111.4
   },
   {
    "quarter": "2025 Q3",
@@ -243,7 +248,8 @@
    "swim_km": 2.8,
    "swim_n": 2,
    "swim_pace_100": "1:59",
-   "swolf": 42.0
+   "swolf": 42.0,
+   "swim_pace_100_s": 119.4
   },
   {
    "quarter": "2025 Q2",
@@ -257,7 +263,8 @@
    "swim_km": 17.4,
    "swim_n": 11,
    "swim_pace_100": "2:00",
-   "swolf": 42.0
+   "swolf": 42.0,
+   "swim_pace_100_s": 120.0
   }
  ],
  "intervals": {
@@ -569,6 +576,118 @@
       "pace_med_s": 228.7,
       "pace_min_s": 220.7,
       "pace_max_s": 235.0
+     }
+    ]
+   }
+  ]
+ },
+ "rep_quarters": {
+  "quarters": [
+   "2025 Q2",
+   "2025 Q3",
+   "2025 Q4",
+   "2026 Q1",
+   "2026 Q2",
+   "2026 Q3",
+   "2026 Q4"
+  ],
+  "lines": [
+   {
+    "label": "500–900 m",
+    "points": [
+     {
+      "pace_s": 218.0,
+      "sessions": 6
+     },
+     {
+      "pace_s": 214.4,
+      "sessions": 2
+     },
+     {
+      "pace_s": null,
+      "sessions": 0
+     },
+     {
+      "pace_s": 211.0,
+      "sessions": 5
+     },
+     {
+      "pace_s": 186.0,
+      "sessions": 3
+     },
+     {
+      "pace_s": 207.8,
+      "sessions": 3
+     },
+     {
+      "pace_s": 228.1,
+      "sessions": 1
+     }
+    ]
+   },
+   {
+    "label": "1000–1300 m",
+    "points": [
+     {
+      "pace_s": 213.0,
+      "sessions": 6
+     },
+     {
+      "pace_s": 212.0,
+      "sessions": 1
+     },
+     {
+      "pace_s": null,
+      "sessions": 0
+     },
+     {
+      "pace_s": 214.0,
+      "sessions": 2
+     },
+     {
+      "pace_s": null,
+      "sessions": 0
+     },
+     {
+      "pace_s": null,
+      "sessions": 0
+     },
+     {
+      "pace_s": 210.0,
+      "sessions": 7
+     }
+    ]
+   },
+   {
+    "label": "1400 m+",
+    "points": [
+     {
+      "pace_s": null,
+      "sessions": 0
+     },
+     {
+      "pace_s": null,
+      "sessions": 0
+     },
+     {
+      "pace_s": null,
+      "sessions": 0
+     },
+     {
+      "pace_s": 212.6,
+      "sessions": 1
+     },
+     {
+      "pace_s": 221.1,
+      "sessions": 1
+     },
+     {
+      "pace_s": null,
+      "sessions": 0
+     },
+     {
+      "pace_s": 215.0,
+      "sessions": 3
      }
     ]
    }
@@ -1889,7 +2008,8 @@
     }
    ],
    "total_km": 475.2,
-   "runs": 63
+   "runs": 63,
+   "km_at_today": 426.9
   },
   {
    "year": 2026,
@@ -2413,7 +2533,8 @@
     }
    ],
    "total_km": 1013.9,
-   "runs": 156
+   "runs": 156,
+   "km_at_today": 1013.9
   }
  ],
  "weekly": [

@@ -28,7 +28,7 @@
     <text class="tr-tick" x="{{ printf "%.1f" $x }}" y="{{ sub $Tp 4 }}">{{ time.Format "Jan" $t }}</text>
     {{- end }}
     {{- $op := cond (eq $c.km 0.0) 0.0 (cond (lt $c.km 6.0) 0.22 (cond (lt $c.km 10.0) 0.45 (cond (lt $c.km 14.0) 0.7 0.92))) }}
-    <rect class="tr-day{{ if eq $c.kind "int" }} tr-day-int{{ end }}{{ if eq $c.kind "race" }} tr-day-race{{ end }}" x="{{ printf "%.1f" $x }}" y="{{ printf "%.1f" $y }}" width="{{ printf "%.1f" $cs }}" height="{{ printf "%.1f" $cs }}"{{ if and (gt $op 0.0) (ne $c.kind "race") }} style="fill-opacity:{{ $op }}"{{ end }}><title>{{ time.Format "Mon 2 Jan 2006" $t }}: {{ if gt $c.km 0.0 }}{{ lang.FormatNumber 1 $c.km }} km{{ if eq $c.kind "int" }} ({{ if $nl }}intervallen{{ else }}intervals{{ end }}){{ end }}{{ if eq $c.kind "race" }} ({{ if $nl }}wedstrijd{{ else }}race{{ end }}){{ end }}{{ else }}{{ if $nl }}geen loop{{ else }}no run{{ end }}{{ end }}{{ if $c.swim }}, {{ if $nl }}zwemmen{{ else }}swim{{ end }}{{ end }}</title></rect>
+    <rect class="tr-day{{ if eq $c.kind "int" }} tr-day-int{{ end }}{{ if eq $c.kind "race" }} tr-day-race{{ end }}" x="{{ printf "%.1f" $x }}" y="{{ printf "%.1f" $y }}" width="{{ printf "%.1f" $cs }}" height="{{ printf "%.1f" $cs }}"{{ if and (gt $op 0.0) (eq $c.kind "") }} style="fill-opacity:{{ $op }}"{{ end }}><title>{{ time.Format "Mon 2 Jan 2006" $t }}: {{ if gt $c.km 0.0 }}{{ lang.FormatNumber 1 $c.km }} km{{ if eq $c.kind "int" }} ({{ if $nl }}intervallen{{ else }}intervals{{ end }}){{ end }}{{ if eq $c.kind "race" }} ({{ if $nl }}wedstrijd{{ else }}race{{ end }}){{ end }}{{ else }}{{ if $nl }}geen loop{{ else }}no run{{ end }}{{ end }}{{ if $c.swim }}, {{ if $nl }}zwemmen{{ else }}swim{{ end }}{{ end }}</title></rect>
     {{- if $c.swim }}
     <circle class="tr-swimdot" cx="{{ printf "%.1f" (add $x (div $cs 2)) }}" cy="{{ printf "%.1f" (add $y (div $cs 2)) }}" r="{{ printf "%.1f" (div $cs 6.5) }}"/>
     {{- end }}
@@ -48,8 +48,8 @@
   <text class="tr-tick" x="{{ $L }}" y="{{ add (add $bt $bh) 14 }}">{{ if $nl }}km per week{{ else }}km per week{{ end }}{{ if $partial }} ({{ if $nl }}laatste week loopt nog{{ else }}last week in progress{{ end }}){{ end }}</text>
 </svg>
 <figcaption>{{ if $nl -}}
-De laatste {{ $nw }} weken, één kolom per week (maandag boven). Grijswaarde: hardloopkilometers die dag (0, &lt;6, 6–10, 10–14, ≥14 km). Rode rand: intervaltraining; rood vlak: wedstrijd; stip: zwemmen. Onder: totaal per week.
+De laatste {{ $nw }} weken, één kolom per week (maandag boven). Grijs: rustige loop, donkerder is verder (&lt;6, 6–10, 10–14, ≥14 km). Rood: intervaltraining; rood met zwarte rand: wedstrijd; rondje: zwemmen. Onder: kilometers per week.
 {{- else -}}
-The last {{ $nw }} weeks, one column per week (Monday on top). Shade: running distance that day (0, &lt;6, 6–10, 10–14, ≥14 km). Red outline: interval session; red fill: race; dot: swim. Below: total per week.
+The last {{ $nw }} weeks, one column per week (Monday on top). Grey: easy run, darker is longer (&lt;6, 6–10, 10–14, ≥14 km). Red: interval session; red with a black border: race; circle: swim. Below: km per week.
 {{- end }}</figcaption>
 </figure>

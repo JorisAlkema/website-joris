@@ -1,57 +1,50 @@
-{{- /* Swimming (25 m pool): strokes per length against pace per 100 m, one dot per
-     session; the last three months in the accent colour. Shows whether faster
-     swimming comes with fewer strokes (longer stroke) or more (higher turnover).
-     Args: swim, nl. */ -}}
+{{- /* Swimming (25 m pool) per quarter: pace per 100 m as a line with the value
+     written at each point, and SWOLF as a row of numbers under the axis.
+     Args: swim, quarters (newest first), nl. */ -}}
 {{- $s := .swim }}{{ $nl := .nl -}}
-{{- $rows := where $s.sessions "strokes" "!=" nil -}}
+{{- $qs := slice }}{{ range .quarters }}{{ $qs = $qs | append . }}{{ end -}}
+{{- $qs = sort $qs "quarter" "asc" -}}
+{{- $qs = where $qs "swim_n" ">" 0 -}}
 <p>{{ if $nl -}}
 {{ $s.count }} trainingen in een 25 m-bad sinds {{ time.Format "January 2006" (time.AsTime $s.since) }}, samen {{ lang.FormatNumber 1 $s.total_km }} km.
 {{- else -}}
 {{ $s.count }} sessions in a 25 m pool since {{ time.Format "January 2006" (time.AsTime $s.since) }}, {{ lang.FormatNumber 1 $s.total_km }} km in total.
 {{- end }}</p>
-{{- with $rows }}
-{{- $W := 560.0 }}{{ $H := 300.0 }}{{ $L := 44.0 }}{{ $R := 10.0 }}{{ $Tp := 10.0 }}{{ $B := 36.0 -}}
-{{- $pw := sub $W (add $L $R) }}{{ $ph := sub $H (add $Tp $B) }}{{ $bot := add $Tp $ph -}}
-{{- $xl := 100.0 }}{{ $xh := 0.0 }}{{ $yl := 1000.0 }}{{ $yh := 0.0 -}}
-{{- range $rows }}{{ $xl = math.Min $xl .strokes }}{{ $xh = math.Max $xh .strokes }}{{ $yl = math.Min $yl .pace_100_s }}{{ $yh = math.Max $yh .pace_100_s }}{{ end -}}
-{{- $xl = math.Floor (sub $xl 0.5) }}{{ $xh = math.Ceil (add $xh 0.5) -}}
-{{- $yl = mul 10.0 (math.Floor (div (sub $yl 3) 10.0)) }}{{ $yh = mul 10.0 (math.Ceil (div (add $yh 3) 10.0)) -}}
-{{- $last := time.AsTime (index (last 1 $rows) 0).date -}}
-{{- $cut := ($last.AddDate 0 -3 0).Unix -}}
+{{- with $qs }}
+{{- $n := len $qs -}}
+{{- $W := 560.0 }}{{ $H := 250.0 }}{{ $L := 74.0 }}{{ $R := 24.0 }}{{ $Tp := 26.0 }}{{ $ph := 130.0 -}}
+{{- $bot := add $Tp $ph }}{{ $pw := sub $W (add $L $R) }}{{ $step := div $pw (float (math.Max 1 (sub $n 1))) -}}
+{{- $lo := 1000.0 }}{{ $hi := 0.0 }}{{ range $qs }}{{ $lo = math.Min $lo .swim_pace_100_s }}{{ $hi = math.Max $hi .swim_pace_100_s }}{{ end -}}
+{{- $lo = sub $lo 4 }}{{ $hi = add $hi 4 -}}
 <figure class="tr-fig">
-<svg class="tr-chart" viewBox="0 0 {{ $W }} {{ $H }}" role="img" aria-label="{{ if $nl }}Slagen per baan tegen tempo{{ else }}Strokes per length against pace{{ end }}">
-  {{- range $v := seq (int $yl) 10 (int $yh) }}
-    {{- $y := sub $bot (mul (div (sub (float $v) $yl) (sub $yh $yl)) $ph) }}
-    <line class="tr-grid" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ printf "%.1f" $y }}" y2="{{ printf "%.1f" $y }}"/>
-    <line class="tr-axis" x1="{{ $L }}" x2="{{ add $L 4 }}" y1="{{ printf "%.1f" $y }}" y2="{{ printf "%.1f" $y }}"/>
-    <text class="tr-tick" x="{{ sub $L 5 }}" y="{{ printf "%.1f" (add $y 4) }}" text-anchor="end">{{ printf "%d:%02d" (div $v 60) (mod $v 60) }}</text>
+<svg class="tr-chart" viewBox="0 0 {{ $W }} {{ $H }}" role="img" aria-label="{{ if $nl }}Zwemtempo per kwartaal{{ else }}Swim pace per quarter{{ end }}">
+  <text class="tr-tick tr-mut" x="0" y="{{ add $Tp 4 }}">{{ if $nl }}tempo{{ else }}pace{{ end }}</text>
+  <text class="tr-tick tr-mut" x="0" y="{{ add $Tp 18 }}">/100 m</text>
+  {{- $pts := slice }}
+  {{- range $i, $q := $qs }}
+    {{- $x := add $L (mul (float $i) $step) }}
+    {{- $y := sub $bot (mul (div (sub $q.swim_pace_100_s $lo) (sub $hi $lo)) $ph) }}
+    {{- $pts = $pts | append (printf "%.1f,%.1f" $x $y) }}
   {{- end }}
-  {{- range $v := seq (int $xl) 1 (int $xh) }}
-    {{- $x := add $L (mul (div (sub (float $v) $xl) (sub $xh $xl)) $pw) }}
-    <line class="tr-axis" x1="{{ printf "%.1f" $x }}" x2="{{ printf "%.1f" $x }}" y1="{{ $bot }}" y2="{{ sub $bot 4 }}"/>
-    <text class="tr-tick" x="{{ printf "%.1f" $x }}" y="{{ add $bot 15 }}" text-anchor="middle">{{ $v }}</text>
+  <polyline class="tr-line tr-line-big" points="{{ delimit $pts " " }}"/>
+  {{- range $i, $q := $qs }}
+    {{- $x := add $L (mul (float $i) $step) }}
+    {{- $y := sub $bot (mul (div (sub $q.swim_pace_100_s $lo) (sub $hi $lo)) $ph) }}
+    {{- $p := int (math.Round $q.swim_pace_100_s) }}
+    <circle class="tr-med" cx="{{ printf "%.1f" $x }}" cy="{{ printf "%.1f" $y }}" r="3.6"/>
+    <text class="tr-val" x="{{ printf "%.1f" $x }}" y="{{ printf "%.1f" (sub $y 9) }}" text-anchor="middle">{{ printf "%d:%02d" (div $p 60) (mod $p 60) }}</text>
+    <text class="tr-tick" x="{{ printf "%.1f" $x }}" y="{{ add $bot 26 }}" text-anchor="middle">{{ replace $q.quarter "Q" (cond $nl "K" "Q") }}{{ if $q.partial }}*{{ end }}</text>
+    <text class="tr-tick tr-mut" x="{{ printf "%.1f" $x }}" y="{{ add $bot 46 }}" text-anchor="middle">{{ $q.swim_n }}×</text>
+    <text class="tr-tick" x="{{ printf "%.1f" $x }}" y="{{ add $bot 66 }}" text-anchor="middle">{{ with $q.swolf }}{{ . }}{{ else }}–{{ end }}</text>
   {{- end }}
-  {{- range $rows }}
-    {{- $t := time.AsTime .date }}
-    {{- $x := add $L (mul (div (sub .strokes $xl) (sub $xh $xl)) $pw) }}
-    {{- $y := sub $bot (mul (div (sub .pace_100_s $yl) (sub $yh $yl)) $ph) }}
-    <circle class="{{ if ge $t.Unix $cut }}tr-sc-new{{ else }}tr-sc-old{{ end }}" cx="{{ printf "%.1f" $x }}" cy="{{ printf "%.1f" $y }}" r="3"><title>{{ time.Format "2 Jan 2006" $t }}: {{ lang.FormatNumber 1 .strokes }} {{ if $nl }}slagen/baan{{ else }}strokes/length{{ end }}, {{ printf "%d:%02d" (div (int .pace_100_s) 60) (mod (int .pace_100_s) 60) }} /100 m</title></circle>
-  {{- end }}
-  <rect class="tr-frame" x="{{ $L }}" y="{{ $Tp }}" width="{{ $pw }}" height="{{ $ph }}"/>
-  <text class="tr-tick" x="{{ add $L (div $pw 2) }}" y="{{ sub $H 4 }}" text-anchor="middle">{{ if $nl }}slagen per baan van 25 m{{ else }}strokes per 25 m length{{ end }}</text>
-  <text class="tr-tick" transform="translate(11 {{ add $Tp (div $ph 2) }}) rotate(-90)" text-anchor="middle">{{ if $nl }}tempo per 100 m{{ else }}pace per 100 m{{ end }}</text>
-  {{- /* legend */}}
-  {{- $lx := sub (sub $W $R) 168 }}
-  <rect class="tr-legend" x="{{ $lx }}" y="{{ $Tp }}" width="168" height="38"/>
-  <circle class="tr-sc-new" cx="{{ add $lx 12 }}" cy="{{ add $Tp 13 }}" r="3"/>
-  <text class="tr-tick" x="{{ add $lx 22 }}" y="{{ add $Tp 17 }}">{{ if $nl }}laatste drie maanden{{ else }}last three months{{ end }}</text>
-  <circle class="tr-sc-old" cx="{{ add $lx 12 }}" cy="{{ add $Tp 28 }}" r="3"/>
-  <text class="tr-tick" x="{{ add $lx 22 }}" y="{{ add $Tp 32 }}">{{ if $nl }}daarvoor{{ else }}earlier{{ end }}</text>
+  <line class="tr-axis" x1="{{ sub $L 10 }}" x2="{{ add (sub $W $R) 10 }}" y1="{{ add $bot 12 }}" y2="{{ add $bot 12 }}"/>
+  <text class="tr-tick tr-mut" x="0" y="{{ add $bot 46 }}">{{ if $nl }}trainingen{{ else }}sessions{{ end }}</text>
+  <text class="tr-tick tr-mut" x="0" y="{{ add $bot 66 }}">SWOLF</text>
 </svg>
 <figcaption>{{ if $nl -}}
-Elke stip is één training in een 25 m-bad: gemiddeld aantal slagen per baan vrije slag tegen het gemiddelde tempo (tijd van de gezwommen banen, zonder rust). Linksonder is sneller met minder slagen, dus een langere slag; rechtsonder is sneller door een hogere slagfrequentie.
+Gemiddeld zwemtempo per 100 m per kwartaal in een 25 m-bad; lager is sneller. Tempo is de tijd van de gezwommen banen gedeeld door de afstand, zonder rust aan de kant. SWOLF is per baan de tijd in seconden plus het aantal slagen (lager is efficiënter). * Lopend kwartaal.
 {{- else -}}
-Each dot is one session in a 25 m pool: mean freestyle strokes per length against mean pace (time of the swum lengths, without rest). Bottom left is faster with fewer strokes, so a longer stroke; bottom right is faster through a higher stroke rate.
+Average swim pace per 100 m per quarter in a 25 m pool; lower is faster. Pace is the time of the swum lengths divided by the distance, without rest at the wall. SWOLF is, per length, the time in seconds plus the stroke count (lower is more efficient). * Current quarter.
 {{- end }}</figcaption>
 </figure>
 {{- end }}

@@ -84,8 +84,8 @@
 
 /* Training log */
 .tr-day{fill:var(--fg);fill-opacity:0;stroke:var(--g3);stroke-width:.6}
-.tr-day-int{stroke:var(--acc);stroke-width:1.6}
-.tr-day-race{fill:var(--acc);fill-opacity:.9;stroke:var(--acc)}
+.tr-day-int{fill:var(--acc);fill-opacity:.42;stroke:var(--acc);stroke-width:.6}
+.tr-day-race{fill:var(--acc);fill-opacity:1;stroke:var(--fg);stroke-width:1.6}
 .tr-swimdot{fill:var(--bg);stroke:var(--fg);stroke-width:1}
 .tr-bar-part{fill-opacity:.45}
 
@@ -105,3 +105,5 @@
 .tr-sc-old{fill:none;stroke:var(--g1);stroke-width:1}
 .tr-sc-new{fill:var(--acc);fill-opacity:.85;stroke:var(--acc);stroke-width:1}
 @media(max-width:600px){.tr-hide-s{display:none}}
+.tr-val{font-size:13px;fill:var(--fg)}
+.tr-line-big{stroke-width:2}
