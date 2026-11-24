@@ -21,16 +21,6 @@
       {{- with .strokes_per_length }}<div><dt>{{ if $nl }}Slagen/baan{{ else }}Strokes/length{{ end }}</dt><dd>{{ lang.FormatNumber 1 . }}</dd></div>{{ end }}
       {{- with .avg_hr }}<div><dt>{{ $T.hr }}</dt><dd>{{ . }}</dd></div>{{ end }}
     </dl>
-    {{- with .reps }}
-    <ul class="tr-chips" aria-label="{{ if $nl }}Herhalingen{{ else }}Reps{{ end }}">
-      {{- range . }}<li>{{ .dist_m }} m <b>{{ .time }}</b></li>{{ end }}
-    </ul>
-    {{- end }}
   </li>
 {{- end }}
 </ol>
-<p class="tr-note">{{ if $nl -}}
-Alleen datums, geen tijdstippen of routes. Tijd is bewegende tijd. Snelste 100 m is de waarde van Garmin zelf en kan te snel zijn als een baan verkeerd is geteld; SWOLF is seconden plus slagen per baan. Herhalingen zijn automatisch uit de snelheid gehaald en naar 100 m afgerond; GPS op de baan is onnauwkeurig, dus de afstanden zijn bij benadering.
-{{- else -}}
-Dates only, no times of day or routes. Time is moving time. Fastest 100 m is Garmin's own value and can be too fast when a length is miscounted; SWOLF is seconds plus strokes per length. Reps are detected from the speed trace and rounded to 100 m; GPS on the track is imprecise, so distances are approximate.
-{{- end }}</p>
