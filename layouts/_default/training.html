@@ -10,68 +10,67 @@
   "updated" (cond $nl "Bijgewerkt" "Updated")
   "run" (cond $nl "Hardlopen" "Running")
   "swim" (cond $nl "Zwemmen" "Swimming")
-  "free" (cond $nl "vrije slag" "freestyle")
-  "time" (cond $nl "tijd" "time")
-  "Time" (cond $nl "Tijd" "Time")
-  "pbs" (cond $nl "Persoonlijke records" "Personal bests")
-  "date" (cond $nl "Datum" "Date")
-  "dist" (cond $nl "Afstand" "Distance")
-  "pace" (cond $nl "Tempo" "Pace")
-  "hr" (cond $nl "Gem. hartslag" "Avg HR")
-  "quarters" (cond $nl "Per kwartaal" "By quarter")
-  "weekly" (cond $nl "Kilometers per week" "Weekly distance")
-  "recent" (cond $nl "Recente trainingen" "Recent activities")
 -}}
 <p>{{ $T.intro }} <span class="tr-muted">{{ $T.updated }}: {{ time.Format "2 January 2006" (time.AsTime $d.updated) }}.</span></p>
 
 {{/* ---------------------------------------------------------------- PBs */}}
-<h2>{{ $T.pbs }}</h2>
-<div class="tr-pbs">
-  <section>
-    <h3>{{ $T.run }}</h3>
-    {{- $n := 0 }}
-    <div class="tr-cards">
+<h2>{{ if $nl }}Persoonlijke records{{ else }}Personal bests{{ end }}</h2>
+{{- $n := 0 }}
+<div class="tr-scroll">
+<table class="tr-table tr-pbt">
+  <thead><tr>
+    <th></th><th class="num">{{ if $nl }}Tijd{{ else }}Time{{ end }}</th><th class="num">{{ if $nl }}Tempo{{ else }}Pace{{ end }}</th>
+    <th>{{ if $nl }}Datum{{ else }}Date{{ end }}</th><th class="tr-hide-s">{{ if $nl }}Waar{{ else }}Where{{ end }}</th>
+  </tr></thead>
+  <tbody>
+    <tr class="tr-grp"><td colspan="5">{{ $T.run }}</td></tr>
     {{- range $d.pbs }}
-      <div class="tr-card">
-        <div class="tr-ev">{{ .event }}</div>
-        <div class="tr-big">{{ .time }}{{ with .split_of }}{{ $n = add $n 1 }}<sup class="tr-fn">{{ $n }}</sup>{{ end }}</div>
-        <div class="tr-small">{{ .pace }} /km<br>{{ time.Format "Jan 2006" (time.AsTime .date) }}{{ if eq .event "6.2 km" }}, Singelloop{{ end }}</div>
-      </div>
+    <tr>
+      <td>{{ .event }}</td>
+      <td class="num">{{ .time }}{{ with .split_of }}{{ $n = add $n 1 }}<sup>{{ $n }}</sup>{{ end }}</td>
+      <td class="num">{{ .pace }}<span class="tr-unit"> /km</span></td>
+      <td class="tr-nowrap">{{ time.Format "Jan 2006" (time.AsTime .date) }}</td>
+      <td class="tr-hide-s">{{ replaceRE ` \d+(\.\d+)? km$` "" (replaceRE `^.*\((.*)\)$` "$1" .race) }}</td>
+    </tr>
     {{- end }}
-    </div>
-  </section>
-  <section>
-    <h3>{{ $T.swim }} <span class="tr-h-sub">({{ $T.free }})</span></h3>
-    <div class="tr-cards">
+    <tr class="tr-grp"><td colspan="5">{{ $T.swim }} <span class="tr-h-sub">({{ if $nl }}vrije slag, 25 m-bad{{ else }}freestyle, 25 m pool{{ end }})</span></td></tr>
     {{- range $d.swim.pbs }}
-      <div class="tr-card">
-        <div class="tr-ev">{{ .event }}</div>
-        <div class="tr-big">{{ .time }}</div>
-        <div class="tr-small">{{ .pace_100 }} /100 m<br>{{ time.Format "Jan 2006" (time.AsTime .date) }}</div>
-      </div>
+    <tr>
+      <td>{{ .event }}</td>
+      <td class="num">{{ .time }}</td>
+      <td class="num">{{ .pace_100 }}<span class="tr-unit"> /100 m</span></td>
+      <td class="tr-nowrap">{{ time.Format "Jan 2006" (time.AsTime .date) }}</td>
+      <td class="tr-hide-s tr-muted">{{ if $nl }}in training{{ else }}in training{{ end }}</td>
+    </tr>
     {{- end }}
-    </div>
-  </section>
+  </tbody>
+</table>
 </div>
 {{- $k := 0 }}
 {{- range $d.pbs }}{{ with .split_of }}{{ $k = add $k 1 }}
 <p class="tr-note"><sup>{{ $k }}</sup> {{ if $nl }}Tussentijd bij 5 km in de {{ . }}, gemeten met het horloge.{{ else }}Split at 5 km in the {{ . }}, measured by the watch.{{ end }}</p>
 {{- end }}{{ end }}
 
+{{/* ---------------------------------------------------------------- calendar */}}
+<h2>{{ if $nl }}Trainingslog{{ else }}Training log{{ end }}</h2>
+{{ partial "training/calendar.html" (dict "cal" $d.calendar "nl" $nl) }}
+
+{{/* ---------------------------------------------------------------- intervals */}}
+{{- with $d.intervals.bins }}
+<h2>{{ if $nl }}Intervallen{{ else }}Intervals{{ end }}</h2>
+{{ partial "training/intervals.html" (dict "iv" $d.intervals "nl" $nl) }}
+{{- end }}
+
+{{/* ---------------------------------------------------------------- year over year */}}
+<h2>{{ if $nl }}Kilometers per jaar{{ else }}Distance per year{{ end }}</h2>
+{{ partial "training/yearkm.html" (dict "years" $d.year_km "nl" $nl) }}
+
 {{/* ---------------------------------------------------------------- quarters */}}
-<h2>{{ $T.quarters }}</h2>
-{{ partial "training/quarters.html" (dict "rows" $d.quarters "nl" $nl "T" $T) }}
-
-{{/* ---------------------------------------------------------------- weekly km */}}
-<h2>{{ $T.weekly }}</h2>
-{{ partial "training/weekly.html" (dict "rows" (last 52 $d.weekly) "nl" $nl) }}
-
-{{/* ---------------------------------------------------------------- recent */}}
-<h2>{{ $T.recent }}</h2>
-{{ partial "training/recent.html" (dict "rows" $d.recent "nl" $nl "T" $T) }}
+<h2>{{ if $nl }}Per kwartaal{{ else }}By quarter{{ end }}</h2>
+{{ partial "training/quarters.html" (dict "rows" $d.quarters "nl" $nl) }}
 
 {{/* ---------------------------------------------------------------- swimming */}}
 <h2>{{ $T.swim }}</h2>
-{{ partial "training/swim.html" (dict "swim" $d.swim "nl" $nl "T" $T) }}
+{{ partial "training/swim.html" (dict "swim" $d.swim "nl" $nl) }}
 {{- end }}
 {{ end }}

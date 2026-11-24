@@ -1,47 +1,23 @@
-{{- /* Running and swimming per calendar quarter, newest first, as one table. Args: rows, nl, T. */ -}}
-{{- $nl := .nl }}{{ $T := .T -}}
-<div class="tr-scroll">
+{{- /* Running volume per calendar quarter, newest first. Args: rows, nl. */ -}}
+{{- $nl := .nl -}}
 <table class="tr-table tr-qt">
-  <thead>
-    <tr>
-      <th></th>
-      <th colspan="4" class="tr-group">{{ $T.run }}</th>
-      <th class="tr-sep"></th>
-      <th colspan="4" class="tr-group">{{ $T.swim }} <span class="tr-h-sub">(25 m)</span></th>
-    </tr>
-    <tr>
-      <th>{{ if $nl }}Kwartaal{{ else }}Quarter{{ end }}</th>
-      <th class="num">km</th>
-      <th class="num">km/wk</th>
-      <th class="num">{{ if $nl }}langste{{ else }}longest{{ end }}</th>
-      <th class="num">/km</th>
-      <th class="tr-sep"></th>
-      <th class="num">km</th>
-      <th class="num">{{ if $nl }}keer{{ else }}swims{{ end }}</th>
-      <th class="num">/100 m</th>
-      <th class="num">SWOLF</th>
-    </tr>
-  </thead>
+  <thead><tr>
+    <th>{{ if $nl }}Kwartaal{{ else }}Quarter{{ end }}</th>
+    <th class="num">km</th>
+    <th class="num">{{ if $nl }}km/week{{ else }}km/week{{ end }}</th>
+    <th class="num">{{ if $nl }}lopen{{ else }}runs{{ end }}</th>
+    <th class="num">{{ if $nl }}langste{{ else }}longest{{ end }}</th>
+  </tr></thead>
   <tbody>
   {{- range .rows }}
     <tr>
-      <td class="tr-nowrap">{{ replace .quarter "Q" (cond $nl "K" "Q") }}{{ if .partial }}<span class="tr-muted">*</span>{{ end }}</td>
+      <td class="tr-nowrap">{{ replace .quarter "Q" (cond $nl "K" "Q") }}{{ if .partial }}*{{ end }}</td>
       <td class="num">{{ lang.FormatNumber 0 .run_km }}</td>
       <td class="num">{{ lang.FormatNumber 1 .km_per_week }}</td>
-      <td class="num">{{ with .max_run_km }}{{ lang.FormatNumber 1 . }}{{ else }}–{{ end }}</td>
-      <td class="num">{{ with .run_pace }}{{ . }}{{ else }}–{{ end }}</td>
-      <td class="tr-sep"></td>
-      <td class="num">{{ if .swim_n }}{{ lang.FormatNumber 1 .swim_km }}{{ else }}–{{ end }}</td>
-      <td class="num">{{ if .swim_n }}{{ .swim_n }}{{ else }}–{{ end }}</td>
-      <td class="num">{{ with .swim_pace_100 }}{{ . }}{{ else }}–{{ end }}</td>
-      <td class="num">{{ with .swolf }}{{ . }}{{ else }}–{{ end }}</td>
+      <td class="num">{{ .run_n }}</td>
+      <td class="num">{{ with .max_run_km }}{{ lang.FormatNumber 1 . }} km{{ else }}–{{ end }}</td>
     </tr>
   {{- end }}
   </tbody>
 </table>
-</div>
-<p class="tr-note">{{ if $nl -}}
-* Lopend kwartaal. Langste loop in km. Looptempo is het gemiddelde over alle lopen (bewegende tijd), dus inclusief rustige duurlopen. Zwemtempo zonder rust aan de kant; SWOLF is seconden plus slagen per baan, lager is beter.
-{{- else -}}
-* Current quarter. Longest run in km. Running pace is the average over all runs (moving time), easy runs included. Swim pace excludes rest at the wall; SWOLF is seconds plus strokes per length, lower is better.
-{{- end }}</p>
+<p class="tr-note">* {{ if $nl }}Lopend kwartaal.{{ else }}Current quarter.{{ end }}</p>

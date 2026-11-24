@@ -1,86 +1,57 @@
-{{- /* Swimming (25 m pool): pace (left axis) and SWOLF (right axis) per session.
-     Both axes run the normal way, so a falling line is an improvement. Args: swim, nl. */ -}}
+{{- /* Swimming (25 m pool): strokes per length against pace per 100 m, one dot per
+     session; the last three months in the accent colour. Shows whether faster
+     swimming comes with fewer strokes (longer stroke) or more (higher turnover).
+     Args: swim, nl. */ -}}
 {{- $s := .swim }}{{ $nl := .nl -}}
-{{- $rows := $s.sessions -}}
+{{- $rows := where $s.sessions "strokes" "!=" nil -}}
 <p>{{ if $nl -}}
 {{ $s.count }} trainingen in een 25 m-bad sinds {{ time.Format "January 2006" (time.AsTime $s.since) }}, samen {{ lang.FormatNumber 1 $s.total_km }} km.
 {{- else -}}
 {{ $s.count }} sessions in a 25 m pool since {{ time.Format "January 2006" (time.AsTime $s.since) }}, {{ lang.FormatNumber 1 $s.total_km }} km in total.
 {{- end }}</p>
 {{- with $rows }}
-{{- $W := 560.0 }}{{ $H := 250.0 }}{{ $L := 42.0 }}{{ $R := 34.0 }}{{ $T := 10.0 }}{{ $B := 26.0 -}}
-{{- $pw := sub $W (add $L $R) }}{{ $ph := sub $H (add $T $B) -}}
-{{- $t0 := (time.AsTime (index $rows 0).date).Unix -}}
-{{- $t1 := (time.AsTime (index (last 1 $rows) 0).date).Unix -}}
-{{- $span := math.Max 1 (float (sub $t1 $t0)) -}}
-{{- /* ranges follow the median lines; single sessions outside are drawn at the edge */ -}}
-{{- $pl := 1000.0 }}{{ $pu := 0.0 }}{{ $sl := 1000.0 }}{{ $su := 0.0 -}}
-{{- range $rows }}{{ with .pace_med }}{{ $pl = math.Min $pl . }}{{ $pu = math.Max $pu . }}{{ end }}{{ with .swolf_med }}{{ $sl = math.Min $sl . }}{{ $su = math.Max $su . }}{{ end }}{{ end -}}
-{{- $pl = mul 10.0 (math.Floor (div (sub $pl 8) 10.0)) }}{{ $pu = mul 10.0 (math.Ceil (div (add $pu 8) 10.0)) -}}
-{{- $sl = mul 2.0 (math.Floor (div (sub $sl 2) 2.0)) }}{{ $su = mul 2.0 (math.Ceil (div (add $su 2) 2.0)) -}}
-{{- $bot := add $T $ph -}}
+{{- $W := 560.0 }}{{ $H := 300.0 }}{{ $L := 44.0 }}{{ $R := 10.0 }}{{ $Tp := 10.0 }}{{ $B := 36.0 -}}
+{{- $pw := sub $W (add $L $R) }}{{ $ph := sub $H (add $Tp $B) }}{{ $bot := add $Tp $ph -}}
+{{- $xl := 100.0 }}{{ $xh := 0.0 }}{{ $yl := 1000.0 }}{{ $yh := 0.0 -}}
+{{- range $rows }}{{ $xl = math.Min $xl .strokes }}{{ $xh = math.Max $xh .strokes }}{{ $yl = math.Min $yl .pace_100_s }}{{ $yh = math.Max $yh .pace_100_s }}{{ end -}}
+{{- $xl = math.Floor (sub $xl 0.5) }}{{ $xh = math.Ceil (add $xh 0.5) -}}
+{{- $yl = mul 10.0 (math.Floor (div (sub $yl 3) 10.0)) }}{{ $yh = mul 10.0 (math.Ceil (div (add $yh 3) 10.0)) -}}
+{{- $last := time.AsTime (index (last 1 $rows) 0).date -}}
+{{- $cut := ($last.AddDate 0 -3 0).Unix -}}
 <figure class="tr-fig">
-<svg class="tr-chart" viewBox="0 0 {{ $W }} {{ $H }}" role="img" aria-label="{{ if $nl }}Zwemtempo en SWOLF per training{{ else }}Swim pace and SWOLF per session{{ end }}">
-  {{- /* left axis: pace */}}
-  {{- range $v := seq (int $pl) 10 (int $pu) }}
-    {{- $y := sub $bot (mul (div (sub (float $v) $pl) (sub $pu $pl)) $ph) }}
+<svg class="tr-chart" viewBox="0 0 {{ $W }} {{ $H }}" role="img" aria-label="{{ if $nl }}Slagen per baan tegen tempo{{ else }}Strokes per length against pace{{ end }}">
+  {{- range $v := seq (int $yl) 10 (int $yh) }}
+    {{- $y := sub $bot (mul (div (sub (float $v) $yl) (sub $yh $yl)) $ph) }}
     <line class="tr-grid" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ printf "%.1f" $y }}" y2="{{ printf "%.1f" $y }}"/>
     <line class="tr-axis" x1="{{ $L }}" x2="{{ add $L 4 }}" y1="{{ printf "%.1f" $y }}" y2="{{ printf "%.1f" $y }}"/>
     <text class="tr-tick" x="{{ sub $L 5 }}" y="{{ printf "%.1f" (add $y 4) }}" text-anchor="end">{{ printf "%d:%02d" (div $v 60) (mod $v 60) }}</text>
   {{- end }}
-  {{- /* right axis: SWOLF */}}
-  {{- range $v := seq (int $sl) 2 (int $su) }}
-    {{- $y := sub $bot (mul (div (sub (float $v) $sl) (sub $su $sl)) $ph) }}
-    <line class="tr-axis" x1="{{ sub (sub $W $R) 4 }}" x2="{{ sub $W $R }}" y1="{{ printf "%.1f" $y }}" y2="{{ printf "%.1f" $y }}"/>
-    <text class="tr-tick tr-acc-t" x="{{ add (sub $W $R) 5 }}" y="{{ printf "%.1f" (add $y 4) }}">{{ $v }}</text>
-  {{- end }}
-  {{- /* x ticks at the start of each quarter */}}
-  {{- $y0 := (time.AsTime (index $rows 0).date).Year }}{{ $y1 := (time.AsTime (index (last 1 $rows) 0).date).Year }}
-  {{- range $yy := seq $y0 $y1 }}{{ range $mm := slice 1 4 7 10 }}
-    {{- $td := time.AsTime (printf "%d-%02d-01" $yy $mm) }}
-    {{- if and (ge $td.Unix $t0) (le $td.Unix $t1) }}
-    {{- $x := add $L (mul (div (float (sub $td.Unix $t0)) $span) $pw) }}
+  {{- range $v := seq (int $xl) 1 (int $xh) }}
+    {{- $x := add $L (mul (div (sub (float $v) $xl) (sub $xh $xl)) $pw) }}
     <line class="tr-axis" x1="{{ printf "%.1f" $x }}" x2="{{ printf "%.1f" $x }}" y1="{{ $bot }}" y2="{{ sub $bot 4 }}"/>
-    <text class="tr-tick" x="{{ printf "%.1f" $x }}" y="{{ add $bot 15 }}" text-anchor="middle">{{ if eq $mm 1 }}{{ $yy }}{{ else }}{{ time.Format "Jan" $td }}{{ end }}</text>
-    {{- end }}
-  {{- end }}{{ end }}
-  {{- /* points and median lines, broken at gaps over five weeks */}}
-  {{- range $p := slice
-      (dict "key" "pace_100_s" "med" "pace_med" "lo" $pl "hi" $pu "pt" "tr-pt" "ln" "tr-line")
-      (dict "key" "swolf" "med" "swolf_med" "lo" $sl "hi" $su "pt" "tr-pt tr-pt-acc" "ln" "tr-line tr-line-acc") }}
-    {{- $rng := sub $p.hi $p.lo }}
-    {{- $pts := slice }}{{ $segs := slice }}{{ $prev := 0 }}
-    {{- range $rows }}
-      {{- $t := time.AsTime .date }}
-      {{- if and $prev (gt (sub $t.Unix $prev) 3024000) }}{{ $segs = $segs | append (delimit $pts " ") }}{{ $pts = slice }}{{ end }}
-      {{- $prev = $t.Unix }}
-      {{- $x := add $L (mul (div (float (sub $t.Unix $t0)) $span) $pw) }}
-      {{- with index . $p.key }}
-        {{- $v := math.Max $p.lo (math.Min $p.hi .) }}
-    <circle class="{{ $p.pt }}" cx="{{ printf "%.1f" $x }}" cy="{{ printf "%.1f" (sub $bot (mul (div (sub $v $p.lo) $rng) $ph)) }}" r="1.9"/>
-      {{- end }}
-      {{- with index . $p.med }}
-        {{- $pts = $pts | append (printf "%.1f,%.1f" $x (sub $bot (mul (div (sub . $p.lo) $rng) $ph))) }}
-      {{- end }}
-    {{- end }}
-    {{- $segs = $segs | append (delimit $pts " ") }}
-    {{- range $segs }}{{ if . }}
-    <polyline class="{{ $p.ln }}" points="{{ . }}"/>
-    {{- end }}{{ end }}
+    <text class="tr-tick" x="{{ printf "%.1f" $x }}" y="{{ add $bot 15 }}" text-anchor="middle">{{ $v }}</text>
   {{- end }}
-  <rect class="tr-frame" x="{{ $L }}" y="{{ $T }}" width="{{ $pw }}" height="{{ $ph }}"/>
+  {{- range $rows }}
+    {{- $t := time.AsTime .date }}
+    {{- $x := add $L (mul (div (sub .strokes $xl) (sub $xh $xl)) $pw) }}
+    {{- $y := sub $bot (mul (div (sub .pace_100_s $yl) (sub $yh $yl)) $ph) }}
+    <circle class="{{ if ge $t.Unix $cut }}tr-sc-new{{ else }}tr-sc-old{{ end }}" cx="{{ printf "%.1f" $x }}" cy="{{ printf "%.1f" $y }}" r="3"><title>{{ time.Format "2 Jan 2006" $t }}: {{ lang.FormatNumber 1 .strokes }} {{ if $nl }}slagen/baan{{ else }}strokes/length{{ end }}, {{ printf "%d:%02d" (div (int .pace_100_s) 60) (mod (int .pace_100_s) 60) }} /100 m</title></circle>
+  {{- end }}
+  <rect class="tr-frame" x="{{ $L }}" y="{{ $Tp }}" width="{{ $pw }}" height="{{ $ph }}"/>
+  <text class="tr-tick" x="{{ add $L (div $pw 2) }}" y="{{ sub $H 4 }}" text-anchor="middle">{{ if $nl }}slagen per baan van 25 m{{ else }}strokes per 25 m length{{ end }}</text>
+  <text class="tr-tick" transform="translate(11 {{ add $Tp (div $ph 2) }}) rotate(-90)" text-anchor="middle">{{ if $nl }}tempo per 100 m{{ else }}pace per 100 m{{ end }}</text>
   {{- /* legend */}}
-  {{- $lx := sub (sub $W $R) 150 }}{{ $ly := add $T 12 }}
-  <rect class="tr-legend" x="{{ $lx }}" y="{{ $T }}" width="150" height="40"/>
-  <line class="tr-line" x1="{{ add $lx 8 }}" x2="{{ add $lx 30 }}" y1="{{ add $ly 4 }}" y2="{{ add $ly 4 }}"/>
-  <text class="tr-tick" x="{{ add $lx 36 }}" y="{{ add $ly 8 }}">{{ if $nl }}tempo per 100 m{{ else }}pace per 100 m{{ end }}</text>
-  <line class="tr-line tr-line-acc" x1="{{ add $lx 8 }}" x2="{{ add $lx 30 }}" y1="{{ add $ly 20 }}" y2="{{ add $ly 20 }}"/>
-  <text class="tr-tick" x="{{ add $lx 36 }}" y="{{ add $ly 24 }}">SWOLF ({{ if $nl }}rechts{{ else }}right{{ end }})</text>
+  {{- $lx := sub (sub $W $R) 168 }}
+  <rect class="tr-legend" x="{{ $lx }}" y="{{ $Tp }}" width="168" height="38"/>
+  <circle class="tr-sc-new" cx="{{ add $lx 12 }}" cy="{{ add $Tp 13 }}" r="3"/>
+  <text class="tr-tick" x="{{ add $lx 22 }}" y="{{ add $Tp 17 }}">{{ if $nl }}laatste drie maanden{{ else }}last three months{{ end }}</text>
+  <circle class="tr-sc-old" cx="{{ add $lx 12 }}" cy="{{ add $Tp 28 }}" r="3"/>
+  <text class="tr-tick" x="{{ add $lx 22 }}" y="{{ add $Tp 32 }}">{{ if $nl }}daarvoor{{ else }}earlier{{ end }}</text>
 </svg>
 <figcaption>{{ if $nl -}}
-Zwemtempo per 100 m (links) en SWOLF (rechts) per training in een 25 m-bad. Voor beide is lager beter. Stippen: losse trainingen; lijnen: mediaan van zeven opeenvolgende trainingen, onderbroken waar langer dan vijf weken niet is gezwommen. Tempo is de tijd van de gezwommen banen gedeeld door de afstand, zonder rust aan de kant; SWOLF is per baan de tijd in seconden plus het aantal slagen, gemiddeld over de banen vrije slag. Beide hangen af van het soort training.
+Elke stip is één training in een 25 m-bad: gemiddeld aantal slagen per baan vrije slag tegen het gemiddelde tempo (tijd van de gezwommen banen, zonder rust). Linksonder is sneller met minder slagen, dus een langere slag; rechtsonder is sneller door een hogere slagfrequentie.
 {{- else -}}
-Swim pace per 100 m (left) and SWOLF (right) per session in a 25 m pool. Lower is better for both. Dots: single sessions; lines: median of seven consecutive sessions, broken where there was no swimming for more than five weeks. Pace is the time of the swum lengths divided by the distance, without rest at the wall; SWOLF is, per length, the time in seconds plus the stroke count, averaged over the freestyle lengths. Both depend on the kind of session.
+Each dot is one session in a 25 m pool: mean freestyle strokes per length against mean pace (time of the swum lengths, without rest). Bottom left is faster with fewer strokes, so a longer stroke; bottom right is faster through a higher stroke rate.
 {{- end }}</figcaption>
 </figure>
 {{- end }}

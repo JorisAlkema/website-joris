@@ -1,0 +1,47 @@
+{{- /* Cumulative running km through each year, by day of year. Lines are labelled at
+     their end. A year whose data starts late begins at its first run. Args: years, nl. */ -}}
+{{- $nl := .nl }}{{ $years := .years -}}
+{{- $W := 560.0 }}{{ $H := 240.0 }}{{ $L := 40.0 }}{{ $R := 70.0 }}{{ $Tp := 10.0 }}{{ $B := 24.0 -}}
+{{- $pw := sub $W (add $L $R) }}{{ $ph := sub $H (add $Tp $B) }}{{ $bot := add $Tp $ph -}}
+{{- $max := 100.0 }}{{ range $years }}{{ $max = math.Max $max .total_km }}{{ end -}}
+{{- $ymax := mul 200.0 (math.Ceil (div $max 200.0)) -}}
+{{- $nY := len $years -}}
+<figure class="tr-fig">
+<svg class="tr-chart" viewBox="0 0 {{ $W }} {{ $H }}" role="img" aria-label="{{ if $nl }}Cumulatieve kilometers per jaar{{ else }}Cumulative distance per year{{ end }}">
+  {{- range $v := seq 0 200 (int $ymax) }}
+    {{- $y := sub $bot (mul (div (float $v) $ymax) $ph) }}
+    <line class="tr-grid" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ printf "%.1f" $y }}" y2="{{ printf "%.1f" $y }}"/>
+    <text class="tr-tick" x="{{ sub $L 5 }}" y="{{ printf "%.1f" (add $y 4) }}" text-anchor="end">{{ $v }}</text>
+  {{- end }}
+  {{- range $i, $m := slice 1 2 3 4 5 6 7 8 9 10 11 12 }}
+    {{- $td := time.AsTime (printf "2001-%02d-01" $m) }}
+    {{- $x := add $L (mul (div (float (sub $td.YearDay 1)) 365.0) $pw) }}
+    <line class="tr-axis" x1="{{ printf "%.1f" $x }}" x2="{{ printf "%.1f" $x }}" y1="{{ $bot }}" y2="{{ sub $bot 4 }}"/>
+    {{- if eq (mod $i 2) 0 }}<text class="tr-tick" x="{{ printf "%.1f" $x }}" y="{{ add $bot 15 }}">{{ time.Format "Jan" $td }}</text>{{ end }}
+  {{- end }}
+  {{- range $j, $yr := $years }}
+    {{- $cur := eq (add $j 1) $nY }}
+    {{- $start := 1.0 }}{{ with $yr.first }}{{ $start = float (time.AsTime .).YearDay }}{{ end }}
+    {{- $pts := slice (printf "%.1f,%.1f" (add $L (mul (div (sub $start 1) 365.0) $pw)) $bot) }}
+    {{- $prevKm := 0.0 }}
+    {{- range $yr.points }}
+      {{- $x := add $L (mul (div (float (sub .doy 1)) 365.0) $pw) }}
+      {{- $pts = $pts | append (printf "%.1f,%.1f" $x (sub $bot (mul (div $prevKm $ymax) $ph))) (printf "%.1f,%.1f" $x (sub $bot (mul (div .km $ymax) $ph))) }}
+      {{- $prevKm = .km }}
+    {{- end }}
+    {{- $lp := index (last 1 $yr.points) 0 }}
+    {{- $lx := add $L (mul (div (float (sub $lp.doy 1)) 365.0) $pw) }}
+    {{- $ly := sub $bot (mul (div $lp.km $ymax) $ph) }}
+    <polyline class="{{ if $cur }}tr-line{{ else }}tr-line tr-line-old{{ end }}" points="{{ delimit $pts " " }}"/>
+    <text class="tr-tick{{ if not $cur }} tr-mut{{ end }}" x="{{ printf "%.1f" (add $lx 5) }}" y="{{ printf "%.1f" (add $ly 4) }}">{{ $yr.year }}: {{ lang.FormatNumber 0 $yr.total_km }} km</text>
+  {{- end }}
+  <line class="tr-axis" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ $bot }}" y2="{{ $bot }}"/>
+  <line class="tr-axis" x1="{{ $L }}" x2="{{ $L }}" y1="{{ $Tp }}" y2="{{ $bot }}"/>
+  <text class="tr-tick" transform="translate(11 {{ add $Tp (div $ph 2) }}) rotate(-90)" text-anchor="middle">km</text>
+</svg>
+<figcaption>{{ if $nl -}}
+Opgetelde hardloopkilometers door het jaar heen.{{ range $years }}{{ with .first }} De data van {{ (time.AsTime .).Year }} begint op {{ time.Format "2 January" (time.AsTime .) }}; daarvoor is niets bekend, niet nul.{{ end }}{{ end }}
+{{- else -}}
+Running distance added up through each year.{{ range $years }}{{ with .first }} Data for {{ (time.AsTime .).Year }} starts on {{ time.Format "2 January" (time.AsTime .) }}; before that it is unknown, not zero.{{ end }}{{ end }}
+{{- end }}</figcaption>
+</figure>

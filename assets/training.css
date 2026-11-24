@@ -76,3 +76,32 @@
 .tr-acc-t{fill:var(--acc)!important}
 .tr-frame{fill:none;stroke:var(--fg);stroke-width:.8}
 .tr-legend{fill:var(--bg);stroke:var(--fg);stroke-width:.6}
+
+/* PB table */
+.tr-pbt .tr-grp td{font-style:italic;padding-top:.5em;border-bottom:.5px solid var(--g2)}
+.tr-pbt sup{font-size:.7em;line-height:0}
+.tr-unit{color:var(--mut);font-size:.85em}
+
+/* Training log */
+.tr-day{fill:var(--fg);fill-opacity:0;stroke:var(--g3);stroke-width:.6}
+.tr-day-int{stroke:var(--acc);stroke-width:1.6}
+.tr-day-race{fill:var(--acc);fill-opacity:.9;stroke:var(--acc)}
+.tr-swimdot{fill:var(--bg);stroke:var(--fg);stroke-width:1}
+.tr-bar-part{fill-opacity:.45}
+
+/* Interval panels */
+.tr-panels{display:grid;grid-template-columns:1fr 1fr;gap:.4em 1em}
+.tr-panels svg:only-child{grid-column:1/-1}
+@media(max-width:600px){.tr-panels{grid-template-columns:1fr}}
+.tr-whisk{stroke:var(--g1);stroke-width:1}
+.tr-med{fill:var(--fg)}
+.tr-mut{fill:var(--mut)}
+.tr-ptitle{font-style:italic}
+
+/* Year over year */
+.tr-line-old{stroke:var(--g1);stroke-dasharray:4 3}
+
+/* Swim scatter */
+.tr-sc-old{fill:none;stroke:var(--g1);stroke-width:1}
+.tr-sc-new{fill:var(--acc);fill-opacity:.85;stroke:var(--acc);stroke-width:1}
+@media(max-width:600px){.tr-hide-s{display:none}}
