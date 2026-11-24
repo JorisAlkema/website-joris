@@ -1,0 +1,37 @@
+{{- /* Weekly running km as bars with the 4-week average as a line.
+     Args: rows (list of {week, run_km, avg4}), nl (bool). */ -}}
+{{- $rows := .rows -}}
+{{- $nl := .nl -}}
+{{- $W := 560.0 }}{{ $H := 220.0 }}{{ $L := 34.0 }}{{ $R := 6.0 }}{{ $Tp := 8.0 }}{{ $B := 30.0 -}}
+{{- $pw := sub $W (add $L $R) }}{{ $ph := sub $H (add $Tp $B) -}}
+{{- $n := len $rows -}}
+{{- $max := 10.0 -}}
+{{- range $rows }}{{ $max = math.Max $max .run_km .avg4 }}{{ end -}}
+{{- $ymax := mul (math.Ceil (div $max 10.0)) 10.0 -}}
+{{- $step := div $pw (float $n) -}}
+<figure class="tr-fig">
+<svg class="tr-chart" viewBox="0 0 {{ $W }} {{ $H }}" role="img" aria-label="{{ if $nl }}Kilometers per week{{ else }}Weekly distance{{ end }}">
+  {{- range $v := seq 0 10 (int $ymax) }}
+    {{- $y := sub (add $Tp $ph) (mul (div (float $v) $ymax) $ph) }}
+    <line class="tr-grid" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ printf "%.1f" $y }}" y2="{{ printf "%.1f" $y }}"/>
+    <text class="tr-tick" x="{{ sub $L 5 }}" y="{{ printf "%.1f" (add $y 3.5) }}" text-anchor="end">{{ $v }}</text>
+  {{- end }}
+  {{- $pts := slice }}
+  {{- range $i, $r := $rows }}
+    {{- $x := add $L (mul (float $i) $step) }}
+    {{- $h := mul (div $r.run_km $ymax) $ph }}
+    <rect class="tr-bar" x="{{ printf "%.1f" (add $x (mul $step 0.15)) }}" y="{{ printf "%.1f" (sub (add $Tp $ph) $h) }}" width="{{ printf "%.1f" (mul $step 0.7) }}" height="{{ printf "%.1f" $h }}"><title>{{ time.Format "2 Jan 2006" (time.AsTime $r.week) }}: {{ lang.FormatNumber 1 $r.run_km }} km</title></rect>
+    {{- $pts = $pts | append (printf "%.1f,%.1f" (add $x (mul $step 0.5)) (sub (add $Tp $ph) (mul (div $r.avg4 $ymax) $ph))) }}
+    {{- $t := time.AsTime $r.week }}
+    {{- if and (le $t.Day 7) (in (slice 1 4 7 10) (int $t.Month)) }}
+    <line class="tr-axis" x1="{{ printf "%.1f" $x }}" x2="{{ printf "%.1f" $x }}" y1="{{ add $Tp $ph }}" y2="{{ add (add $Tp $ph) 4 }}"/>
+    <text class="tr-tick" x="{{ printf "%.1f" $x }}" y="{{ add (add $Tp $ph) 16 }}" text-anchor="start">{{ if eq (int $t.Month) 1 }}{{ $t.Year }}{{ else }}{{ time.Format "Jan" $t }}{{ end }}</text>
+    {{- end }}
+  {{- end }}
+  <polyline class="tr-line" points="{{ delimit $pts " " }}"/>
+  <line class="tr-axis" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ add $Tp $ph }}" y2="{{ add $Tp $ph }}"/>
+  <line class="tr-axis" x1="{{ $L }}" x2="{{ $L }}" y1="{{ $Tp }}" y2="{{ add $Tp $ph }}"/>
+  <text class="tr-tick" transform="translate(9 {{ add $Tp (div $ph 2) }}) rotate(-90)" text-anchor="middle">km</text>
+</svg>
+<figcaption>{{ if $nl }}Hardloopkilometers per week (maandag tot en met zondag) over de laatste {{ $n }} weken. Staven: weektotaal; lijn: gemiddelde over vier weken.{{ else }}Running distance per week (Monday to Sunday) over the last {{ $n }} weeks. Bars: weekly total; line: four-week average.{{ end }}</figcaption>
+</figure>

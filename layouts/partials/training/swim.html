@@ -1,0 +1,84 @@
+{{- /* Swimming: pool bests, weekly swim km, recent swims. Args: swim, weekly, nl, T. */ -}}
+{{- $s := .swim }}{{ $nl := .nl }}{{ $T := .T }}{{ $rows := .weekly -}}
+<p>{{ if $nl -}}
+{{ $s.count }} zwemsessies sinds april 2025, samen {{ lang.FormatNumber 1 $s.total_km }} km, vooral in een bad van 25 m.
+{{- else -}}
+{{ $s.count }} swims since April 2025, {{ lang.FormatNumber 1 $s.total_km }} km in total, mostly in a 25 m pool.
+{{- end }}</p>
+
+<div class="tr-cards">
+{{- range $s.pbs }}
+  <div class="tr-card">
+    <div class="tr-ev">{{ .event }} {{ if $nl }}vrije slag{{ else }}freestyle{{ end }}</div>
+    <div class="tr-big">{{ .time }}</div>
+    <div class="tr-small">{{ time.Format "2 Jan 2006" (time.AsTime .date) }}</div>
+  </div>
+{{- end }}
+</div>
+<p class="tr-note">{{ if $nl -}}
+Snelste aaneengesloten banen vrije slag binnen één training (zonder rust ertussen), uit de baandata van het horloge. Banen met een duidelijk verkeerd geteld aantal slagen tellen niet mee.
+{{- else -}}
+Fastest consecutive freestyle lengths within one session (no rest in between), from the watch's length data. Lengths with a clearly miscounted stroke number are left out.
+{{- end }}</p>
+
+{{- $W := 560.0 }}{{ $H := 150.0 }}{{ $L := 34.0 }}{{ $R := 6.0 }}{{ $Tp := 8.0 }}{{ $B := 30.0 -}}
+{{- $pw := sub $W (add $L $R) }}{{ $ph := sub $H (add $Tp $B) -}}
+{{- $n := len $rows -}}
+{{- $max := 1.0 -}}
+{{- range $rows }}{{ $max = math.Max $max .swim_km }}{{ end -}}
+{{- $ymax := math.Ceil $max -}}
+{{- $step := div $pw (float $n) -}}
+<figure class="tr-fig">
+<svg class="tr-chart" viewBox="0 0 {{ $W }} {{ $H }}" role="img" aria-label="{{ if $nl }}Zwemkilometers per week{{ else }}Weekly swimming distance{{ end }}">
+  {{- range $v := seq 0 1 (int $ymax) }}
+    {{- $y := sub (add $Tp $ph) (mul (div (float $v) $ymax) $ph) }}
+    <line class="tr-grid" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ printf "%.1f" $y }}" y2="{{ printf "%.1f" $y }}"/>
+    <text class="tr-tick" x="{{ sub $L 5 }}" y="{{ printf "%.1f" (add $y 3.5) }}" text-anchor="end">{{ $v }}</text>
+  {{- end }}
+  {{- range $i, $r := $rows }}
+    {{- $x := add $L (mul (float $i) $step) }}
+    {{- $h := mul (div $r.swim_km $ymax) $ph }}
+    {{- if gt $r.swim_km 0 }}
+    <rect class="tr-bar" x="{{ printf "%.1f" (add $x (mul $step 0.15)) }}" y="{{ printf "%.1f" (sub (add $Tp $ph) $h) }}" width="{{ printf "%.1f" (mul $step 0.7) }}" height="{{ printf "%.1f" $h }}"><title>{{ time.Format "2 Jan 2006" (time.AsTime $r.week) }}: {{ lang.FormatNumber 2 $r.swim_km }} km</title></rect>
+    {{- end }}
+    {{- $t := time.AsTime $r.week }}
+    {{- if and (le $t.Day 7) (in (slice 1 4 7 10) (int $t.Month)) }}
+    <line class="tr-axis" x1="{{ printf "%.1f" $x }}" x2="{{ printf "%.1f" $x }}" y1="{{ add $Tp $ph }}" y2="{{ add (add $Tp $ph) 4 }}"/>
+    <text class="tr-tick" x="{{ printf "%.1f" $x }}" y="{{ add (add $Tp $ph) 16 }}" text-anchor="start">{{ if eq (int $t.Month) 1 }}{{ $t.Year }}{{ else }}{{ time.Format "Jan" $t }}{{ end }}</text>
+    {{- end }}
+  {{- end }}
+  <line class="tr-axis" x1="{{ $L }}" x2="{{ sub $W $R }}" y1="{{ add $Tp $ph }}" y2="{{ add $Tp $ph }}"/>
+  <line class="tr-axis" x1="{{ $L }}" x2="{{ $L }}" y1="{{ $Tp }}" y2="{{ add $Tp $ph }}"/>
+  <text class="tr-tick" transform="translate(9 {{ add $Tp (div $ph 2) }}) rotate(-90)" text-anchor="middle">km</text>
+</svg>
+<figcaption>{{ if $nl }}Zwemkilometers per week over de laatste {{ $n }} weken.{{ else }}Swimming distance per week over the last {{ $n }} weeks.{{ end }}</figcaption>
+</figure>
+
+<div class="tr-scroll">
+<table class="tr-table">
+  <thead><tr>
+    <th>{{ $T.date }}</th><th></th><th class="num">km</th><th class="num">{{ $T.time }}</th>
+    <th class="num">/100 m</th><th class="num">{{ if $nl }}snelste 100{{ else }}fastest 100{{ end }}</th>
+    <th class="num">SWOLF</th><th class="num">{{ if $nl }}slagen/baan{{ else }}strokes/length{{ end }}</th>
+  </tr></thead>
+  <tbody>
+  {{- range $s.recent }}
+    <tr>
+      <td class="tr-nowrap">{{ time.Format "2 Jan 2006" (time.AsTime .date) }}</td>
+      <td>{{ if eq .kind "pool" }}{{ if $nl }}bad{{ else }}pool{{ end }}{{ else }}{{ if $nl }}buitenwater{{ else }}open water{{ end }}{{ end }}</td>
+      <td class="num">{{ lang.FormatNumber 2 .km }}</td>
+      <td class="num">{{ .time }}</td>
+      <td class="num">{{ .pace_100 }}</td>
+      <td class="num">{{ with .fastest_100 }}{{ . }}{{ else }}–{{ end }}</td>
+      <td class="num">{{ with .swolf }}{{ . }}{{ else }}–{{ end }}</td>
+      <td class="num">{{ with .strokes_per_length }}{{ lang.FormatNumber 1 . }}{{ else }}–{{ end }}</td>
+    </tr>
+  {{- end }}
+  </tbody>
+</table>
+</div>
+<p class="tr-note">{{ if $nl -}}
+Tijd is bewegende tijd. Snelste 100 is de waarde van Garmin zelf en kan te snel zijn als een baan verkeerd is geteld. SWOLF is tijd per baan in seconden plus het aantal slagen per baan (lager is efficiënter).
+{{- else -}}
+Time is moving time. Fastest 100 is Garmin's own value and can be too fast when a length is miscounted. SWOLF is the time per length in seconds plus the strokes per length (lower is more efficient).
+{{- end }}</p>

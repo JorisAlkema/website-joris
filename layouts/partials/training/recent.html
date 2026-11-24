@@ -1,0 +1,33 @@
+{{- /* Feed of recent sessions. Args: rows, nl, T (labels). */ -}}
+{{- $nl := .nl }}{{ $T := .T -}}
+{{- $nlTitles := dict "Steady run" "Duurloop" "Pool swim" "Zwembad" "Open-water swim" "Buitenwater" -}}
+<ol class="tr-feed">
+{{- range .rows }}
+  {{- $title := .title }}
+  {{- if $nl }}
+    {{- with index $nlTitles $title }}{{ $title = . }}{{ end }}
+    {{- $title = replaceRE `^Run \+ (\d+) strides$` "Duurloop + $1 versnellingen" $title }}
+    {{- $title = replaceRE `^Race: ` "Wedstrijd: " $title }}
+  {{- end }}
+  <li class="tr-act">
+    <div class="tr-act-meta">{{ time.Format "Monday 2 January 2006" (time.AsTime .date) }} · {{ if eq .sport "run" }}{{ $T.run }}{{ else }}{{ $T.swim }}{{ end }}</div>
+    <div class="tr-act-title">{{ $title }}</div>
+    <dl class="tr-stats">
+      <div><dt>{{ $T.dist }}</dt><dd>{{ lang.FormatNumber 2 .km }} km</dd></div>
+      <div><dt>{{ $T.Time }}</dt><dd>{{ .time }}</dd></div>
+      <div><dt>{{ $T.pace }}</dt><dd>{{ .pace }}{{ if eq .sport "run" }} /km{{ else }} /100 m{{ end }}</dd></div>
+      {{- with .avg_hr }}<div><dt>{{ $T.hr }}</dt><dd>{{ . }}</dd></div>{{ end }}
+    </dl>
+    {{- with .reps }}
+    <ul class="tr-chips" aria-label="{{ if $nl }}Herhalingen{{ else }}Reps{{ end }}">
+      {{- range . }}<li>{{ .dist_m }} m <b>{{ .time }}</b></li>{{ end }}
+    </ul>
+    {{- end }}
+  </li>
+{{- end }}
+</ol>
+<p class="tr-note">{{ if $nl -}}
+Alleen datums, geen tijdstippen of routes. Tijd is bewegende tijd. Herhalingen zijn automatisch uit de snelheid gehaald en naar 100 m afgerond; GPS op de baan is onnauwkeurig, dus de afstanden zijn bij benadering.
+{{- else -}}
+Dates only, no times of day or routes. Time is moving time. Reps are detected from the speed trace and rounded to 100 m; GPS on the track is imprecise, so distances are approximate.
+{{- end }}</p>

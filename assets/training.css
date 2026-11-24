@@ -1,0 +1,56 @@
+/* Training page: plain tables, small cards and LaTeX-style figures. Colours from academic.css. */
+.tr-muted{color:var(--mut)}
+.tr-smaller{font-size:.85em}
+.tr-nowrap{white-space:nowrap}
+.tr-note{font-size:.82em;line-height:1.4;color:var(--mut);margin:.4em 0 .8em}
+.tr-note sup,.tr-small sup{font-size:.75em}
+
+/* Tables (booktabs-like, from academic.css) */
+.tr-scroll{overflow-x:auto;margin:.6em 0}
+.tr-table{width:100%;font-size:.88em;font-variant-numeric:tabular-nums}
+.tr-table th,.tr-table td{padding:.2em .5em;vertical-align:top}
+.tr-table th:first-child,.tr-table td:first-child{padding-left:0}
+.tr-table th:last-child,.tr-table td:last-child{padding-right:0}
+.tr-table .num{text-align:right;white-space:nowrap}
+.tr-totals thead tr:first-child th{border-bottom:0;padding-bottom:0}
+.tr-totals td:first-child{white-space:nowrap}
+.tr-totals .tr-group{text-align:center;border-bottom:.75px solid var(--fg)}
+
+/* Card grid (PBs) */
+.tr-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(8.2em,1fr));gap:.5em;margin:.6em 0}
+.tr-card{border:1px solid var(--g3);padding:.35em .55em .4em}
+.tr-ev{font-size:.88em}
+.tr-big{font-size:1.45em;font-variant-numeric:tabular-nums;line-height:1.2}
+.tr-small{font-size:.78em;color:var(--mut)}
+
+/* Figures */
+.tr-fig{margin:.8em 0 1.4em}
+.tr-fig figcaption{font-size:.85em;margin-top:.4em;color:var(--fg)}
+.tr-chart{display:block;width:100%;height:auto;overflow:visible}
+.tr-chart text{font-family:inherit;fill:var(--fg)}
+.tr-tick{font-size:12px}
+.tr-axis{stroke:var(--fg);stroke-width:.8}
+.tr-grid{stroke:var(--row);stroke-width:.6}
+.tr-bar{fill:var(--fill)}
+.tr-line{fill:none;stroke:var(--fg);stroke-width:1.4;stroke-linejoin:round}
+.tr-dot{fill:var(--bg);stroke:var(--acc);stroke-width:1.6}
+
+/* Activity feed */
+.tr-feed{list-style:none;padding:0;margin:.6em 0}
+.tr-act{border-top:1px solid var(--g3);padding:.55em 0 .6em}
+.tr-act:last-child{border-bottom:1px solid var(--g3)}
+.tr-act-meta{font-size:.8em;color:var(--mut)}
+.tr-act-title{font-weight:700;margin:.05em 0 .2em}
+.tr-stats{display:flex;flex-wrap:wrap;gap:.2em 1.4em;margin:0;font-variant-numeric:tabular-nums}
+.tr-stats div{min-width:0}
+.tr-stats dt{font-size:.72em;color:var(--mut)}
+.tr-stats dd{margin:0}
+.tr-chips{list-style:none;padding:0;margin:.4em 0 0;display:flex;flex-wrap:wrap;gap:.3em}
+.tr-chips li{border:1px solid var(--g3);padding:0 .4em;font-size:.8em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tr-chips b{font-weight:400;font-family:"CMU Typewriter Text","Latin Modern Mono",Courier,monospace}
+
+@media(max-width:600px){
+  .tr-tick{font-size:15px}
+  .tr-table{font-size:.8em}
+  .tr-stats{gap:.2em 1em}
+}
